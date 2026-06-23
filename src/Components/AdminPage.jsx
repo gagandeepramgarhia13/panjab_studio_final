@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, ImageIcon, Video, Trash2, LogOut,
   Menu, X, Eye, CheckCircle, AlertCircle, FolderOpen,
-  Film, Camera, ChevronRight, CloudUpload,
+  Film, Camera, ChevronRight, CloudUpload, Mail, MailOpen, Phone, User,
 } from "lucide-react";
 import { supabase, BUCKETS } from "../supabase";
 
@@ -70,9 +70,9 @@ function MediaCard({ item, onDelete, onPreview }) {
         {item.type === "photo"
           ? <img src={item.url} alt={item.name} className="w-full h-full object-cover" />
           : <div className="w-full h-full bg-black flex flex-col items-center justify-center gap-2">
-              <Film size={32} className="text-[#C8A96A]" />
-              <span className="text-white/50 text-xs px-2 text-center truncate w-full">{item.name}</span>
-            </div>}
+            <Film size={32} className="text-[#C8A96A]" />
+            <span className="text-white/50 text-xs px-2 text-center truncate w-full">{item.name}</span>
+          </div>}
         <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3">
           <button onClick={() => onPreview(item)}
             className="w-9 h-9 rounded-full bg-[#C8A96A] flex items-center justify-center hover:bg-[#b89558] transition-colors">
@@ -110,6 +110,58 @@ function PreviewModal({ item, onClose }) {
   );
 }
 
+// ── Message Card ─────────────────────────────────────────────────────────────
+function MessageCard({ msg, onMarkRead, onDelete }) {
+  return (
+    <div className={`relative rounded-xl border p-5 transition-all duration-300
+      ${msg.is_read ? "bg-white/5 border-white/10" : "bg-[#C8A96A]/10 border-[#C8A96A]/40"}`}>
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-2">
+          {!msg.is_read && <span className="w-2 h-2 rounded-full bg-[#C8A96A]" />}
+          <p className="text-white font-semibold text-sm flex items-center gap-2">
+            <User size={14} className="text-[#C8A96A]" /> {msg.name}
+          </p>
+        </div>
+        <p className="text-white/30 text-xs whitespace-nowrap">
+          {new Date(msg.created_at).toLocaleString()}
+        </p>
+      </div>
+
+      <div className="flex flex-wrap gap-4 mt-2 text-white/50 text-xs">
+        <span className="flex items-center gap-1">
+          <Mail size={12} /> {msg.email}
+        </span>
+        {msg.phone && (
+          <span className="flex items-center gap-1">
+            <Phone size={12} /> {msg.phone}
+          </span>
+        )}
+      </div>
+
+      <p className="text-white/80 text-sm mt-3 leading-relaxed whitespace-pre-wrap">
+        {msg.message}
+      </p>
+
+      <div className="flex items-center gap-2 mt-4">
+        {!msg.is_read && (
+          <button
+            onClick={() => onMarkRead(msg.id)}
+            className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-[#C8A96A] text-black hover:bg-[#b89558] transition-colors"
+          >
+            <MailOpen size={13} /> Mark as read
+          </button>
+        )}
+        <button
+          onClick={() => onDelete(msg.id)}
+          className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
+        >
+          <Trash2 size={13} /> Delete
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ── Stat Card ────────────────────────────────────────────────────────────────
 function StatCard({ label, value, icon: Icon }) {
   return (
@@ -126,13 +178,18 @@ function StatCard({ label, value, icon: Icon }) {
 }
 
 // ── Nav Item ─────────────────────────────────────────────────────────────────
-function NavItem({ icon: Icon, label, active, onClick }) {
+function NavItem({ icon: Icon, label, active, onClick, badge }) {
   return (
     <button onClick={onClick}
       className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
         ${active ? "bg-[#C8A96A] text-black" : "text-white/50 hover:text-white hover:bg-white/5"}`}>
       <Icon size={18} />
       <span>{label}</span>
+      {badge > 0 && !active && (
+        <span className="ml-auto bg-[#C8A96A] text-black text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">
+          {badge}
+        </span>
+      )}
       {active && <ChevronRight size={14} className="ml-auto" />}
     </button>
   );
@@ -152,6 +209,7 @@ export default function AdminPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [videos, setVideos] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [toasts, setToasts] = useState([]);
   const [preview, setPreview] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -164,7 +222,7 @@ export default function AdminPage() {
     setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 3500);
   }, []);
 
-  // ── Load existing files from Supabase on mount ───────────────────────────
+  // ── Load existing files + messages from Supabase on mount ────────────────
   useEffect(() => {
     async function loadMedia() {
       try {
@@ -193,8 +251,16 @@ export default function AdminPage() {
             return { id: uid(), name: f.name, url: data.publicUrl, type: "video", size: fmtSize(f.metadata?.size || 0), path: f.name };
           });
         setVideos(videoItems);
+
+        // Load contact submissions
+        const { data: msgData, error: msgErr } = await supabase
+          .from("contact_submissions")
+          .select("*")
+          .order("created_at", { ascending: false });
+        if (msgErr) throw msgErr;
+        setMessages(msgData || []);
       } catch (err) {
-        toast("Could not load media. Check Supabase config.", "error");
+        toast("Could not load data. Check Supabase config.", "error");
         console.error(err);
       } finally {
         setLoading(false);
@@ -238,10 +304,32 @@ export default function AdminPage() {
     toast("Removed from cloud");
   }, [toast]);
 
+  // ── Mark message as read ───────────────────────────────────────────────────
+  const markMessageRead = useCallback(async (id) => {
+    const { error } = await supabase
+      .from("contact_submissions")
+      .update({ is_read: true })
+      .eq("id", id);
+    if (error) { toast("Failed to update message", "error"); return; }
+    setMessages((m) => m.map((x) => (x.id === id ? { ...x, is_read: true } : x)));
+  }, [toast]);
+
+  // ── Delete message ─────────────────────────────────────────────────────────
+  const deleteMessage = useCallback(async (id) => {
+    const { error } = await supabase
+      .from("contact_submissions")
+      .delete()
+      .eq("id", id);
+    if (error) { toast("Failed to delete message", "error"); return; }
+    setMessages((m) => m.filter((x) => x.id !== id));
+    toast("Message deleted");
+  }, [toast]);
+
   const navItems = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "photos", label: "Photos", icon: Camera },
     { id: "videos", label: "Videos", icon: Video },
+    { id: "messages", label: "Messages", icon: Mail, badge: messages.filter(m => !m.is_read).length },
   ];
 
   return (
@@ -332,7 +420,7 @@ export default function AdminPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <StatCard label="Total Photos" value={photos.length} icon={ImageIcon} />
                     <StatCard label="Total Videos" value={videos.length} icon={Video} />
-                    <StatCard label="Total Files" value={photos.length + videos.length} icon={FolderOpen} />
+                    <StatCard label="New Messages" value={messages.filter(m => !m.is_read).length} icon={Mail} />
                   </div>
                   <div>
                     <h3 className="text-white/60 text-xs uppercase tracking-widest mb-4">Quick Upload</h3>
@@ -376,10 +464,10 @@ export default function AdminPage() {
                   {photos.length === 0
                     ? <div className="text-center py-16 text-white/20"><ImageIcon size={40} className="mx-auto mb-3" /><p className="text-sm">No photos yet.</p></div>
                     : <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                        {photos.map((item) => (
-                          <MediaCard key={item.id} item={item} onDelete={deleteItem} onPreview={setPreview} />
-                        ))}
-                      </div>}
+                      {photos.map((item) => (
+                        <MediaCard key={item.id} item={item} onDelete={deleteItem} onPreview={setPreview} />
+                      ))}
+                    </div>}
                 </div>
               )}
 
@@ -395,10 +483,29 @@ export default function AdminPage() {
                   {videos.length === 0
                     ? <div className="text-center py-16 text-white/20"><Video size={40} className="mx-auto mb-3" /><p className="text-sm">No videos yet.</p></div>
                     : <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                        {videos.map((item) => (
-                          <MediaCard key={item.id} item={item} onDelete={deleteItem} onPreview={setPreview} />
-                        ))}
-                      </div>}
+                      {videos.map((item) => (
+                        <MediaCard key={item.id} item={item} onDelete={deleteItem} onPreview={setPreview} />
+                      ))}
+                    </div>}
+                </div>
+              )}
+
+              {/* Messages */}
+              {section === "messages" && (
+                <div className="space-y-6 max-w-3xl">
+                  <div>
+                    <h2 className="text-white text-2xl font-bold">Messages</h2>
+                    <p className="text-white/40 text-sm mt-1">
+                      {messages.length} submission{messages.length !== 1 ? "s" : ""} from your contact form
+                    </p>
+                  </div>
+                  {messages.length === 0
+                    ? <div className="text-center py-16 text-white/20"><Mail size={40} className="mx-auto mb-3" /><p className="text-sm">No messages yet.</p></div>
+                    : <div className="space-y-3">
+                      {messages.map((msg) => (
+                        <MessageCard key={msg.id} msg={msg} onMarkRead={markMessageRead} onDelete={deleteMessage} />
+                      ))}
+                    </div>}
                 </div>
               )}
             </>
