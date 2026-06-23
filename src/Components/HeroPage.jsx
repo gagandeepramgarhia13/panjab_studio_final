@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { followLinks } from "../utility/data";
+
 
 const Hero = () => {
-  
+
   return (
     <div className="relative h-[90vh] w-full overflow-hidden font-sans text-white">
 
@@ -21,23 +23,29 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-transparent"></div>
       <div className="absolute inset-0 bg-black/50"></div>
 
+
       {/* =========================
           🔥 FOLLOW US (DESKTOP)
       ========================== */}
       <div className="hidden md:flex absolute left-8 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-4">
+        
+        {/* 🔹 Black Glow Background
+        <div className="absolute inset-0 -z-10 flex items-center justify-center">
+          <div className="w-32 h-64 bg-black/60 blur-3xl rounded-full"></div>
+        </div> */}
 
         <div className="bg-white/20 backdrop-blur-md px-3 py-4 rounded-md flex flex-col items-center gap-5">
-          <a href="https://www.instagram.com/panjabstudiosuk/" target="_blank" className="text-white text-lg hover:text-yellow-400 transition">
-            <i className="ri-instagram-line"></i>
-          </a>
-
-          <a href="#" className="text-white text-lg hover:text-yellow-400 transition">
-            <i className="ri-linkedin-line"></i>
-          </a>
-
-          <a href="#" className="text-white text-lg hover:text-yellow-400 transition">
-            <i className="ri-youtube-line"></i>
-          </a>
+          {followLinks.map((link) => (
+            <a
+              key={link.id}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white text-lg hover:text-yellow-400 transition"
+            >
+              <i className={link.icon}></i>
+            </a>
+          ))}
         </div>
 
         <div className="w-[1px] h-16 bg-white/40"></div>
@@ -46,6 +54,7 @@ const Hero = () => {
           FOLLOW US
         </span>
       </div>
+
 
       {/* =========================
           📱 FOLLOW US (MOBILE)
@@ -104,7 +113,7 @@ const Hero = () => {
         </div>
 
       </main>
-    </div>
+    </div >
   );
 };
 

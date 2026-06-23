@@ -1,3 +1,5 @@
+import { socialLinks } from "../utility/data";
+
 export default function HomeInsta() {
     const images = [
         "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d",
@@ -46,14 +48,15 @@ export default function HomeInsta() {
                     </div>
                 ))}
             </div>
-                {/* Button */}
-                <a href="">
-                    <button className="border border-white text-white px-6 mt-5 py-2 hover:bg-white hover:text-black transition">
-                        VISIT INSTAGARM
-                    </button>
-                </a>
+            {/* Button */}
+            <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer">
+                <button className="border border-white text-white px-6 mt-5 py-2 hover:bg-white hover:text-black transition">
+                    VISIT INSTAGRAM
+                </button>
+            </a>
 
 
         </section>
     );
 }
+

@@ -50,3 +50,15 @@ const videos = [
     { src: "/videos/v2.mp4" },
     { src: "/videos/v3.mp4" },
 ];
+
+// instagram links
+export const socialLinks = {
+    instagram: "https://www.instagram.com/panjabstudiosuk?igsh=aHMyOXRseG81emN5",
+};
+
+// social links (desktop follow bar)
+export const followLinks = [
+    { id: 1, icon: "ri-instagram-line", url: "https://www.instagram.com/panjabstudiosuk/" },
+    { id: 2, icon: "ri-linkedin-line", url: "#" },
+    { id: 3, icon: "ri-youtube-line", url: "#" },
+];
