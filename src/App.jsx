@@ -15,6 +15,13 @@ import Contact from "./Components/Contact";
 import AdminPage from "./Components/AdminPage";
 import AdminLogin from "./Components/AdminLogin";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import TermsAndConditions from "./Components/TermsAndConditions";
+import PrivacyPolicy from "./Components/PrivacyPolicy";
+import FAQ from "./Components/FAQ";
+import OurMission from "./Components/OurMission";
+
+
+
 
 function App() {
   const location = useLocation();
@@ -84,9 +91,23 @@ function App() {
             </ProtectedRoute>
           }
         />
+        {/* ✅ Term and conditions */}
+        <Route path="/terms" element={<TermsAndConditions />} />
+
+        {/* ✅ PrivacyPolicy */}
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+
+        {/* ✅ FAQ */}
+        <Route path="/faq" element={<FAQ />} />
+
+        <Route path="/our-mission" element={<OurMission />} />
+
+
       </Routes>
 
       {!isAdmin && <Footer />}
+
+
     </>
   );
 }

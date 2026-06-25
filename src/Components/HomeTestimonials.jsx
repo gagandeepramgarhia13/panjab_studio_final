@@ -34,7 +34,7 @@ export default function HomeTestimonials() {
 
         {/* Button */}
         <Link
-          to="/about"
+          to="/testimonials"
           className="border border-black px-6 py-2 hover:bg-black hover:text-white transition"
         >
           Testimonials

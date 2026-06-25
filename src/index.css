@@ -1,6 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  10% { transform: rotate(-15deg); }
+  20% { transform: rotate(15deg); }
+  30% { transform: rotate(-10deg); }
+  40% { transform: rotate(10deg); }
+  50% { transform: rotate(0deg); }
+}
 
 body {
   /* background-image: url("https://i.pinimg.com/736x/da/f7/05/daf7055241a078960474ad4cefdd0db5.jpg"); */
@@ -13,6 +21,7 @@ body {
   /* background-color:#E9FEFF; */
   /* color: white; */
 }
+
 
 /* 🔥 Fix center scaling */
 .slick-slide > div {

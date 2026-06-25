@@ -57,8 +57,16 @@ export const socialLinks = {
 };
 
 // social links (desktop follow bar)
+// export const followLinks = [
+//     { id: 1, icon: "ri-instagram-line", url: "https://www.instagram.com/panjabstudiosuk/" },
+//     { id: 2, icon: "ri-tiktok-line", url: "https://www.tiktok.com/@panjabstudiosuk?_r=1&_t=ZS-97RlUde3L53" },
+//     { id: 3, icon: "ri-youtube-line", url: "https://www.youtube.com/@panjabstudiosuk" },
+// ];
+
+// social links (desktop follow bar)
 export const followLinks = [
     { id: 1, icon: "ri-instagram-line", url: "https://www.instagram.com/panjabstudiosuk/" },
-    { id: 2, icon: "ri-linkedin-line", url: "#" },
-    { id: 3, icon: "ri-youtube-line", url: "#" },
+    { id: 2, icon: "ri-tiktok-line", url: "https://www.tiktok.com/@panjabstudiosuk?_r=1&_t=ZS-97RlUde3L53" },
+    { id: 3, icon: "ri-youtube-line", url: "https://www.youtube.com/@panjabstudiosuk" },
+    { id: 4, icon: "ri-facebook-line", url: "https://www.facebook.com/panjabstudiosuk" },
 ];

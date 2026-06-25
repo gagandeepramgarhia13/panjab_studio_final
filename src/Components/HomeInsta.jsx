@@ -20,7 +20,7 @@ export default function HomeInsta() {
                 </h2>
                 <a href="">
                     <p className="text-gray-400 mt-2">
-                        @insta_id
+                        @panjabstudiosuk
                     </p>
                 </a>
             </div>

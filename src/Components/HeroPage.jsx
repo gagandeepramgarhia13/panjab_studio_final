@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { followLinks } from "../utility/data";
 
-
 const Hero = () => {
+  const [contactOpen, setContactOpen] = useState(false);
+  const phoneNumber = "+919876543210"; // 🔁 replace with your real number
 
   return (
     <div className="relative h-[90vh] w-full overflow-hidden font-sans text-white">
@@ -28,11 +29,6 @@ const Hero = () => {
           🔥 FOLLOW US (DESKTOP)
       ========================== */}
       <div className="hidden md:flex absolute left-8 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-4">
-        
-        {/* 🔹 Black Glow Background
-        <div className="absolute inset-0 -z-10 flex items-center justify-center">
-          <div className="w-32 h-64 bg-black/60 blur-3xl rounded-full"></div>
-        </div> */}
 
         <div className="bg-white/20 backdrop-blur-md px-3 py-4 rounded-md flex flex-col items-center gap-5">
           {followLinks.map((link) => (
@@ -50,7 +46,7 @@ const Hero = () => {
 
         <div className="w-[1px] h-16 bg-white/40"></div>
 
-        <span className="text-xs tracking-[3px] rotate-90">
+        <span className="text-[12px] leading-[6rem] tracking-[3px] -rotate-90 ">
           FOLLOW US
         </span>
       </div>
@@ -63,17 +59,17 @@ const Hero = () => {
 
         <div className="bg-white/20 backdrop-blur-md px-6 py-3 rounded-full flex items-center gap-6">
 
-          <a href="#" className="text-white text-xl hover:text-yellow-400 transition">
-            <i className="ri-instagram-line"></i>
-          </a>
-
-          <a href="#" className="text-white text-xl hover:text-yellow-400 transition">
-            <i className="ri-linkedin-line"></i>
-          </a>
-
-          <a href="#" className="text-white text-xl hover:text-yellow-400 transition">
-            <i className="ri-youtube-line"></i>
-          </a>
+          {followLinks.map((link) => (
+            <a
+              key={link.id}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white text-lg hover:text-yellow-400 transition"
+            >
+              <i className={link.icon}></i>
+            </a>
+          ))}
 
         </div>
 
@@ -83,6 +79,7 @@ const Hero = () => {
       <main className="relative z-10 flex items-center justify-center h-full text-center px-6">
 
         <div className="max-w-3xl flex flex-col items-center">
+
 
           {/* Logo */}
           <div className="relative flex items-center justify-center mb-4">
@@ -94,6 +91,7 @@ const Hero = () => {
               className="relative w-24 md:w-32"
             />
           </div>
+
 
           {/* Heading */}
           <h1 className="text-3xl md:text-6xl font-serif mb-6 leading-tight">
@@ -113,7 +111,56 @@ const Hero = () => {
         </div>
 
       </main>
-    </div >
+
+      {/* =========================
+          📞 FLOATING CONTACT US BUTTON
+      ========================== */}
+      <div className="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-3">
+
+        {/* Expanded options */}
+        {contactOpen && (
+          <div className="flex flex-col gap-3 mb-1">
+            {/* WhatsApp */}
+            <a
+              href={`https://wa.me/${phoneNumber.replace(/[^\d]/g, "")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-[#25D366] text-white pl-4 pr-5 py-3 rounded-full shadow-lg hover:scale-105 transition-transform"
+            >
+              <i className="ri-whatsapp-line text-xl"></i>
+              <span className="text-sm font-semibold">WhatsApp</span>
+            </a>
+
+            {/* Call */}
+            <a
+              href={`tel:${phoneNumber}`}
+              className="flex items-center gap-2 bg-[#C8A96A] text-black pl-4 pr-5 py-3 rounded-full shadow-lg hover:scale-105 transition-transform"
+            >
+              <i className="ri-phone-line text-xl"></i>
+              <span className="text-sm font-semibold">Call Us</span>
+            </a>
+          </div>
+        )}
+
+        {/* Main toggle button with pulse rings */}
+        <button
+          onClick={() => setContactOpen((o) => !o)}
+          className="relative w-14 h-14 rounded-full bg-black text-white flex items-center justify-center shadow-xl hover:scale-105 transition-transform"
+        >
+          {/* Pulse rings — only animate when closed */}
+          {!contactOpen && (
+            <>
+              <span className="absolute inset-0 rounded-full bg-[#C8A96A]/60 animate-ping"></span>
+              <span className="absolute inset-0 rounded-full bg-[#C8A96A]/40 animate-ping [animation-delay:0.5s]"></span>
+            </>
+          )}
+
+          {/* Icon sits above the rings */}
+          <i className={`relative z-10 text-2xl ${contactOpen ? "ri-close-line" : "ri-phone-line animate-[wiggle_2s_ease-in-out_infinite]"}`}></i>
+        </button>
+      </div>
+
+    </div>
   );
 };
 
