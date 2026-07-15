@@ -4,7 +4,7 @@ import { followLinks } from "../utility/data";
 
 const Hero = () => {
   const [contactOpen, setContactOpen] = useState(false);
-  const phoneNumber = "+919876543210"; // 🔁 replace with your real number
+  const phoneNumber = "+447873600056";
 
   return (
     <div className="relative h-[90vh] w-full overflow-hidden font-sans text-white">
@@ -44,6 +44,7 @@ const Hero = () => {
           ))}
         </div>
 
+
         <div className="w-[1px] h-16 bg-white/40"></div>
 
         <span className="text-[12px] leading-[6rem] tracking-[3px] -rotate-90 ">
@@ -76,13 +77,13 @@ const Hero = () => {
       </div>
 
       {/* 🔹 Center Content */}
-      <main className="relative z-10 flex items-center justify-center h-full text-center px-6">
+      <main className="relative z-10 flex items-end pb-6 justify-center h-full text-center px-6">
 
         <div className="max-w-3xl flex flex-col items-center">
 
 
           {/* Logo */}
-          <div className="relative flex items-center justify-center mb-4">
+          {/* <div className="relative flex items-center justify-center mb-4">
             <div className="absolute w-28 h-28 bg-gradient-to-r from-yellow-400/40 via-yellow-200/20 to-transparent blur-2xl rounded-full"></div>
 
             <img
@@ -90,11 +91,11 @@ const Hero = () => {
               alt="Logo"
               className="relative w-24 md:w-32"
             />
-          </div>
+          </div> */}
 
 
           {/* Heading */}
-          <h1 className="text-3xl md:text-6xl font-serif mb-6 leading-tight">
+          <h1 className="text-3xl md:text-5xl font-serif mb-6 leading-tight">
             <span className="italic font-light">
               Crafting Timeless Visual Stories
             </span>

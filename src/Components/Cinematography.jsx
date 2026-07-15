@@ -1,11 +1,20 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase, BUCKETS } from "../supabase";
+
+const categories = [
+  { label: "Weddings", path: "/cinematography/wedding-videos", icon: "💍" },
+  { label: "Live Events", path: "/cinematography/live-events-videos", icon: "🎤" },
+  { label: "Music Videos", path: "/cinematography/music-videos", icon: "🎵" },
+  { label: "Commercial Videos", path: "/cinematography/commercial-videos", icon: "🎬" },
+];
 
 export default function Cinematography() {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const videoRefs = useRef([]);
   const [activeIndex, setActiveIndex] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchVideos() {
@@ -42,6 +51,7 @@ export default function Cinematography() {
 
   return (
     <section className="w-full min-h-screen">
+
       {/* Hero */}
       <div className="relative w-full h-[90vh] flex justify-center items-center px-4 md:px-10 overflow-hidden">
         <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
@@ -53,6 +63,25 @@ export default function Cinematography() {
           <img src="/panjab_logo/5.png" alt="logo" className="h-32 mx-auto object-contain" />
           <h3 className="text-2xl md:text-3xl font-semibold text-white">Your Story. Cinematically Told.</h3>
           <p className="italic text-gray-300">Every love story deserves to be told like a film—raw, emotional, and unforgettable.</p>
+        </div>
+      </div>
+
+      {/* Category Buttons */}
+      <div className="px-4 md:px-10 mt-12 mb-8">
+        <h3 className="text-white/60 text-xs uppercase tracking-widest text-center mb-6">
+          Browse by Category
+        </h3>
+        <div className="flex flex-wrap justify-center gap-4">
+          {categories.map((cat) => (
+            <button
+              key={cat.path}
+              onClick={() => navigate(cat.path)}
+              className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full hover:bg-[#C8A96A] hover:text-black hover:border-[#C8A96A] transition-all duration-300 font-medium text-sm"
+            >
+              <span>{cat.icon}</span>
+              {cat.label}
+            </button>
+          ))}
         </div>
       </div>
 

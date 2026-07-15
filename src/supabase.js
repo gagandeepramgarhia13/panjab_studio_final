@@ -5,8 +5,15 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Storage bucket names (already created in Supabase dashboard)
 export const BUCKETS = {
   photos: "photos",
   videos: "videos",
+  liveEvents: "live-events",
+  weddings: "weddings",
+  portraitShoot: "portrait-shoot",
+  commercialPhotos: "commercial-photos",   // ← for photography
+  liveEventsVideos: "live-events-videos",
+  weddingVideos: "wedding-videos",
+  musicVideos: "music-videos",
+  commercialVideos: "commercial-videos",   // ← for cinematography
 };

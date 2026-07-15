@@ -20,8 +20,17 @@ import PrivacyPolicy from "./Components/PrivacyPolicy";
 import FAQ from "./Components/FAQ";
 import OurMission from "./Components/OurMission";
 
+// Photography categories
+import LiveEvents from "./Components/LiveEvents";
+import Weddings from "./Components/Weddings";
+import PortraitShoot from "./Components/PortraitShoot";
+import CommercialPhotos from "./Components/CommercialPhotos";
 
-
+// Cinematography categories
+import WeddingVideos from "./Components/WeddingVideos";
+import LiveEventsVideos from "./Components/LiveEventsVideos";
+import MusicVideos from "./Components/MusicVideos";
+import CommercialVideos from "./Components/CommercialVideos";
 
 function App() {
   const location = useLocation();
@@ -53,7 +62,8 @@ function App() {
       {!isAdmin && <Navbar />}
 
       <Routes>
-        {/* Home Page */}
+
+        {/* ✅ Home Page */}
         <Route path="/" element={
           <>
             <HeroPage />
@@ -64,50 +74,48 @@ function App() {
           </>
         } />
 
-        {/* About Page */}
+        {/* ✅ About Page */}
         <Route path="/about" element={<About />} />
 
-        {/* ✅ Photography Page — now fetches from Supabase */}
-        <Route path="/photography" element={<Photography />} />
-
-        {/* ✅ Cinematography Page — now fetches from Supabase */}
-        <Route path="/cinematography" element={<Cinematography />} />
-
-        {/* ✅ Testimonials Page */}
-        <Route path="/testimonials" element={<Testimonials images={images} />} />
-
-        {/* ✅ Contact Page */}
-        <Route path="/contact" element={<Contact images={images} />} />
-
-        {/* ✅ Admin Login */}
-        <Route path="/admin/login" element={<AdminLogin />} />
-
-        {/* ✅ Admin Page — protected */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <AdminPage />
-            </ProtectedRoute>
-          }
-        />
-        {/* ✅ Term and conditions */}
-        <Route path="/terms" element={<TermsAndConditions />} />
-
-        {/* ✅ PrivacyPolicy */}
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-
-        {/* ✅ FAQ */}
-        <Route path="/faq" element={<FAQ />} />
-
+        {/* ✅ Our Mission */}
         <Route path="/our-mission" element={<OurMission />} />
 
+        {/* ✅ Photography */}
+        <Route path="/photography" element={<Photography />} />
+        <Route path="/photography/weddings" element={<Weddings />} />
+        <Route path="/photography/live-events" element={<LiveEvents />} />
+        <Route path="/photography/portrait-shoot" element={<PortraitShoot />} />
+        <Route path="/photography/commercial-photos" element={<CommercialPhotos />} />
+
+        {/* ✅ Cinematography */}
+        <Route path="/cinematography" element={<Cinematography />} />
+        <Route path="/cinematography/wedding-videos" element={<WeddingVideos />} />
+        <Route path="/cinematography/live-events-videos" element={<LiveEventsVideos />} />
+        <Route path="/cinematography/music-videos" element={<MusicVideos />} />
+        <Route path="/cinematography/commercial-videos" element={<CommercialVideos />} />
+
+        {/* ✅ Testimonials */}
+        <Route path="/testimonials" element={<Testimonials images={images} />} />
+
+        {/* ✅ Contact */}
+        <Route path="/contact" element={<Contact images={images} />} />
+
+        {/* ✅ Admin */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin" element={
+          <ProtectedRoute>
+            <AdminPage />
+          </ProtectedRoute>
+        } />
+
+        {/* ✅ Legal */}
+        <Route path="/terms" element={<TermsAndConditions />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/faq" element={<FAQ />} />
 
       </Routes>
 
       {!isAdmin && <Footer />}
-
-
     </>
   );
 }
