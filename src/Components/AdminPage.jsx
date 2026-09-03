@@ -4,6 +4,7 @@ import {
   LayoutDashboard, ImageIcon, Video, Trash2, LogOut,
   Menu, X, Eye, CheckCircle, AlertCircle, FolderOpen,
   Film, Camera, ChevronRight, CloudUpload, Mail, MailOpen, Phone, User,
+  ChevronDown,
 } from "lucide-react";
 import { supabase, BUCKETS } from "../supabase";
 
@@ -126,35 +127,20 @@ function MessageCard({ msg, onMarkRead, onDelete }) {
           {new Date(msg.created_at).toLocaleString()}
         </p>
       </div>
-
       <div className="flex flex-wrap gap-4 mt-2 text-white/60 text-xs">
-        <span className="flex items-center gap-1">
-          <Mail size={12} /> {msg.email}
-        </span>
-        {msg.phone && (
-          <span className="flex items-center gap-1">
-            <Phone size={12} /> {msg.phone}
-          </span>
-        )}
+        <span className="flex items-center gap-1"><Mail size={12} /> {msg.email}</span>
+        {msg.phone && <span className="flex items-center gap-1"><Phone size={12} /> {msg.phone}</span>}
       </div>
-
-      <p className="text-white/90 text-sm mt-3 leading-relaxed whitespace-pre-wrap">
-        {msg.message}
-      </p>
-
+      <p className="text-white/90 text-sm mt-3 leading-relaxed whitespace-pre-wrap">{msg.message}</p>
       <div className="flex items-center gap-2 mt-4">
         {!msg.is_read && (
-          <button
-            onClick={() => onMarkRead(msg.id)}
-            className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-[#C8A96A] text-black hover:bg-[#b89558] transition-colors"
-          >
+          <button onClick={() => onMarkRead(msg.id)}
+            className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-[#C8A96A] text-black hover:bg-[#b89558] transition-colors">
             <MailOpen size={13} /> Mark as read
           </button>
         )}
-        <button
-          onClick={() => onDelete(msg.id)}
-          className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-red-500/15 text-red-300 hover:bg-red-500/25 transition-colors border border-red-400/20"
-        >
+        <button onClick={() => onDelete(msg.id)}
+          className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-red-500/15 text-red-300 hover:bg-red-500/25 transition-colors border border-red-400/20">
           <Trash2 size={13} /> Delete
         </button>
       </div>
@@ -178,19 +164,41 @@ function StatCard({ label, value, icon: Icon }) {
 }
 
 // ── Nav Item ─────────────────────────────────────────────────────────────────
-function NavItem({ icon: Icon, label, active, onClick, badge }) {
+function NavItem({ icon: Icon, label, active, onClick, badge, children, expandable, expanded, onToggle }) {
   return (
-    <button onClick={onClick}
-      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
-        ${active ? "bg-[#C8A96A] text-black shadow-md" : "text-white/60 hover:text-white hover:bg-white/10"}`}>
-      <Icon size={18} />
-      <span>{label}</span>
-      {badge > 0 && !active && (
-        <span className="ml-auto bg-[#C8A96A] text-black text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">
-          {badge}
-        </span>
+    <div>
+      <button
+        onClick={expandable ? onToggle : onClick}
+        className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
+          ${active ? "bg-[#C8A96A] text-black shadow-md" : "text-white/60 hover:text-white hover:bg-white/10"}`}>
+        <Icon size={18} />
+        <span>{label}</span>
+        {badge > 0 && !active && (
+          <span className="ml-auto bg-[#C8A96A] text-black text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">
+            {badge}
+          </span>
+        )}
+        {expandable && (
+          <ChevronDown size={14} className={`ml-auto transition-transform duration-200 ${expanded ? "rotate-180" : ""}`} />
+        )}
+        {active && !expandable && <ChevronRight size={14} className="ml-auto" />}
+      </button>
+      {expandable && expanded && (
+        <div className="ml-4 mt-1 flex flex-col gap-1">
+          {children}
+        </div>
       )}
-      {active && <ChevronRight size={14} className="ml-auto" />}
+    </div>
+  );
+}
+
+function SubNavItem({ label, active, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`w-full text-left px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200
+        ${active ? "bg-[#C8A96A]/20 text-[#C8A96A]" : "text-white/40 hover:text-white hover:bg-white/5"}`}>
+      {label}
     </button>
   );
 }
@@ -202,11 +210,136 @@ const fmtSize = (bytes) => bytes < 1048576
   ? `${(bytes / 1024).toFixed(0)} KB`
   : `${(bytes / 1048576).toFixed(1)} MB`;
 
+const PHOTO_CATEGORIES = [
+  { id: "photos", label: "All Photos", bucket: "photos", type: "photo" },
+  { id: "weddings", label: "💍 Weddings", bucket: "weddings", type: "photo" },
+  { id: "live-events", label: "🎤 Live Events", bucket: "liveEvents", type: "photo" },
+  { id: "portrait-shoot", label: "📸 Portrait Shoot", bucket: "portraitShoot", type: "photo" },
+  { id: "commercial-photos", label: "🏢 Commercial", bucket: "commercialPhotos", type: "photo" },
+  { id: "team", label: "👥 Team Members", bucket: "team", type: "photo" },  // ← add this
+];
+
+const VIDEO_CATEGORIES = [
+  { id: "videos", label: "All Videos", bucket: "videos", type: "video" },
+  { id: "wedding-videos", label: "💍 Weddings", bucket: "weddingVideos", type: "video" },
+  { id: "live-events-videos", label: "🎤 Live Events", bucket: "liveEventsVideos", type: "video" },
+  { id: "music-videos", label: "🎵 Music Videos", bucket: "musicVideos", type: "video" },
+  { id: "commercial-videos", label: "🎬 Commercial", bucket: "commercialVideos", type: "video" },
+];
+
+// ── Category Upload Section ───────────────────────────────────────────────────
+function CategorySection({ category, toast, uploading, setUploading }) {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [preview, setPreview] = useState(null);
+
+  useEffect(() => {
+    async function load() {
+      const bucketKey = category.bucket;
+      const bucketName = BUCKETS[bucketKey];
+      if (!bucketName) { setLoading(false); return; }
+
+      const { data, error } = await supabase.storage
+        .from(bucketName)
+        .list("", { limit: 200, sortBy: { column: "created_at", order: "desc" } });
+
+      if (!error && data) {
+        const mapped = data
+          .filter(f => f.name !== ".emptyFolderPlaceholder")
+          .map(f => {
+            const { data: urlData } = supabase.storage.from(bucketName).getPublicUrl(f.name);
+            return { id: uid(), name: f.name, url: urlData.publicUrl, type: category.type, size: fmtSize(f.metadata?.size || 0), path: f.name };
+          });
+        setItems(mapped);
+      }
+      setLoading(false);
+    }
+    load();
+  }, [category]);
+
+  const handleUpload = async (files) => {
+    setUploading(true);
+    const bucketName = BUCKETS[category.bucket];
+    const results = [];
+
+    for (const file of files) {
+      const fileName = `${Date.now()}_${file.name.replace(/\s+/g, "_")}`;
+      const { error } = await supabase.storage.from(bucketName).upload(fileName, file, { upsert: false });
+      if (error) { toast(`Failed to upload ${file.name}`, "error"); continue; }
+      const { data } = supabase.storage.from(bucketName).getPublicUrl(fileName);
+      results.push({ id: uid(), name: file.name, url: data.publicUrl, type: category.type, size: fmtSize(file.size), path: fileName });
+    }
+
+    if (results.length) {
+      setItems(p => [...results, ...p]);
+      toast(`${results.length} file${results.length > 1 ? "s" : ""} uploaded ☁️`);
+    }
+    setUploading(false);
+  };
+
+  const handleDelete = async (item) => {
+    const { error } = await supabase.storage.from(BUCKETS[category.bucket]).remove([item.path]);
+    if (error) { toast("Delete failed", "error"); return; }
+    setItems(p => p.filter(x => x.id !== item.id));
+    toast("Removed from cloud");
+  };
+
+  const accept = category.type === "photo"
+    ? ".jpg,.jpeg,.png,.webp,.gif"
+    : ".mp4,.mov,.webm,.avi,.mkv";
+
+  const icon = category.type === "photo" ? Camera : Film;
+
+  return (
+    <div className="space-y-6 max-w-5xl">
+      <div>
+        <h2 className="text-white text-2xl font-bold">{category.label}</h2>
+        <p className="text-white/50 text-sm mt-1">
+          {items.length} file{items.length !== 1 ? "s" : ""} · saved to <span className="text-[#C8A96A]">{BUCKETS[category.bucket]}</span> bucket
+        </p>
+      </div>
+
+      <DropZone
+        accept={accept}
+        label={category.type === "photo" ? "photos" : "videos"}
+        icon={icon}
+        onFiles={handleUpload}
+        uploading={uploading}
+      />
+
+      {loading ? (
+        <div className="flex justify-center py-10">
+          <div className="w-8 h-8 border-2 border-[#C8A96A] border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : items.length === 0 ? (
+        <div className="text-center py-16 text-white/30">
+          {category.type === "photo"
+            ? <ImageIcon size={40} className="mx-auto mb-3" />
+            : <Video size={40} className="mx-auto mb-3" />}
+          <p className="text-sm">No files yet. Drop some above.</p>
+        </div>
+      ) : (
+        <div className={`grid gap-3 ${category.type === "photo"
+          ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+          : "grid-cols-2 sm:grid-cols-3 md:grid-cols-4"}`}>
+          {items.map((item) => (
+            <MediaCard key={item.id} item={item} onDelete={handleDelete} onPreview={setPreview} />
+          ))}
+        </div>
+      )}
+
+      <PreviewModal item={preview} onClose={() => setPreview(null)} />
+    </div>
+  );
+}
+
 // ── Main ─────────────────────────────────────────────────────────────────────
 export default function AdminPage() {
   const navigate = useNavigate();
   const [section, setSection] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [photoExpanded, setPhotoExpanded] = useState(false);
+  const [videoExpanded, setVideoExpanded] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [videos, setVideos] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -227,7 +360,6 @@ export default function AdminPage() {
         const { data: photoFiles, error: photoErr } = await supabase.storage
           .from(BUCKETS.photos).list("", { limit: 200, sortBy: { column: "created_at", order: "desc" } });
         if (photoErr) throw photoErr;
-
         const photoItems = (photoFiles || [])
           .filter(f => f.name !== ".emptyFolderPlaceholder")
           .map(f => {
@@ -239,7 +371,6 @@ export default function AdminPage() {
         const { data: videoFiles, error: videoErr } = await supabase.storage
           .from(BUCKETS.videos).list("", { limit: 200, sortBy: { column: "created_at", order: "desc" } });
         if (videoErr) throw videoErr;
-
         const videoItems = (videoFiles || [])
           .filter(f => f.name !== ".emptyFolderPlaceholder")
           .map(f => {
@@ -249,14 +380,11 @@ export default function AdminPage() {
         setVideos(videoItems);
 
         const { data: msgData, error: msgErr } = await supabase
-          .from("contact_submissions")
-          .select("*")
-          .order("created_at", { ascending: false });
+          .from("contact_submissions").select("*").order("created_at", { ascending: false });
         if (msgErr) throw msgErr;
         setMessages(msgData || []);
       } catch (err) {
-        toast("Could not load data. Check Supabase config.", "error");
-        console.error(err);
+        toast("Could not load data.", "error");
       } finally {
         setLoading(false);
       }
@@ -268,22 +396,17 @@ export default function AdminPage() {
     setUploading(true);
     const bucket = mediaType === "photo" ? BUCKETS.photos : BUCKETS.videos;
     const results = [];
-
     for (const file of files) {
       const fileName = `${Date.now()}_${file.name.replace(/\s+/g, "_")}`;
       const { error } = await supabase.storage.from(bucket).upload(fileName, file, { upsert: false });
-      if (error) {
-        toast(`Failed to upload ${file.name}`, "error");
-        continue;
-      }
+      if (error) { toast(`Failed to upload ${file.name}`, "error"); continue; }
       const { data } = supabase.storage.from(bucket).getPublicUrl(fileName);
       results.push({ id: uid(), name: file.name, url: data.publicUrl, type: mediaType, size: fmtSize(file.size), path: fileName });
     }
-
     if (results.length) {
       if (mediaType === "photo") setPhotos((p) => [...results, ...p]);
       else setVideos((v) => [...results, ...v]);
-      toast(`${results.length} ${mediaType}${results.length > 1 ? "s" : ""} uploaded to cloud ☁️`);
+      toast(`${results.length} ${mediaType}${results.length > 1 ? "s" : ""} uploaded ☁️`);
     }
     setUploading(false);
   }, [toast]);
@@ -298,30 +421,26 @@ export default function AdminPage() {
   }, [toast]);
 
   const markMessageRead = useCallback(async (id) => {
-    const { error } = await supabase
-      .from("contact_submissions")
-      .update({ is_read: true })
-      .eq("id", id);
+    const { error } = await supabase.from("contact_submissions").update({ is_read: true }).eq("id", id);
     if (error) { toast("Failed to update message", "error"); return; }
     setMessages((m) => m.map((x) => (x.id === id ? { ...x, is_read: true } : x)));
   }, [toast]);
 
   const deleteMessage = useCallback(async (id) => {
-    const { error } = await supabase
-      .from("contact_submissions")
-      .delete()
-      .eq("id", id);
+    const { error } = await supabase.from("contact_submissions").delete().eq("id", id);
     if (error) { toast("Failed to delete message", "error"); return; }
     setMessages((m) => m.filter((x) => x.id !== id));
     toast("Message deleted");
   }, [toast]);
 
-  const navItems = [
-    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { id: "photos", label: "Photos", icon: Camera },
-    { id: "videos", label: "Videos", icon: Video },
-    { id: "messages", label: "Messages", icon: Mail, badge: messages.filter(m => !m.is_read).length },
-  ];
+  const handleSection = (id) => {
+    setSection(id);
+    setSidebarOpen(false);
+  };
+
+  // Find current category if it's a subcategory
+  const currentPhotoCategory = PHOTO_CATEGORIES.find(c => c.id === section);
+  const currentVideoCategory = VIDEO_CATEGORIES.find(c => c.id === section);
 
   return (
     <div className="relative min-h-screen flex font-sans bg-[#0a0a0a]">
@@ -330,12 +449,17 @@ export default function AdminPage() {
 
       {/* Sidebar */}
       <aside className={`fixed md:static top-0 left-0 h-full w-64 bg-white/10 backdrop-blur-2xl border-r border-white/10
-        flex flex-col z-50 transition-transform duration-300
+        flex flex-col z-50 transition-transform duration-300 overflow-y-auto
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
         <div className="px-6 py-6 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#C8A96A] flex items-center justify-center shadow-md">
-              <Camera size={18} className="text-black" />
+            <div className="flex items-center">
+              <img
+                src="/panjab_logo/1.png"
+                alt="logo"
+                className="h-14 w-auto cursor-pointer object-contain"
+                onClick={() => handleNavigation("/")}
+              />
             </div>
             <div>
               <p className="text-white font-bold text-sm leading-tight">Panjab Studio</p>
@@ -343,12 +467,49 @@ export default function AdminPage() {
             </div>
           </div>
         </div>
+
         <nav className="flex-1 px-4 py-6 flex flex-col gap-1">
-          {navItems.map((item) => (
-            <NavItem key={item.id} {...item} active={section === item.id}
-              onClick={() => { setSection(item.id); setSidebarOpen(false); }} />
-          ))}
+
+          {/* Dashboard */}
+          <NavItem icon={LayoutDashboard} label="Dashboard" active={section === "dashboard"}
+            onClick={() => handleSection("dashboard")} />
+
+          {/* Photography group */}
+          <NavItem
+            icon={Camera} label="Photography"
+            active={!!currentPhotoCategory}
+            expandable expanded={photoExpanded}
+            onToggle={() => setPhotoExpanded(p => !p)}
+          >
+            {PHOTO_CATEGORIES.map(cat => (
+              <SubNavItem key={cat.id} label={cat.label}
+                active={section === cat.id}
+                onClick={() => handleSection(cat.id)} />
+            ))}
+          </NavItem>
+
+          {/* Cinematography group */}
+          <NavItem
+            icon={Film} label="Cinematography"
+            active={!!currentVideoCategory}
+            expandable expanded={videoExpanded}
+            onToggle={() => setVideoExpanded(p => !p)}
+          >
+            {VIDEO_CATEGORIES.map(cat => (
+              <SubNavItem key={cat.id} label={cat.label}
+                active={section === cat.id}
+                onClick={() => handleSection(cat.id)} />
+            ))}
+          </NavItem>
+
+          {/* Messages */}
+          <NavItem icon={Mail} label="Messages"
+            active={section === "messages"}
+            badge={messages.filter(m => !m.is_read).length}
+            onClick={() => handleSection("messages")} />
+
         </nav>
+
         <div className="px-4 py-4 border-t border-white/10">
           <button
             onClick={async () => { await supabase.auth.signOut(); navigate("/admin/login"); }}
@@ -373,7 +534,7 @@ export default function AdminPage() {
             </button>
             <div>
               <h1 className="text-white font-semibold text-sm capitalize">
-                {section === "dashboard" ? "Overview" : section}
+                {section === "dashboard" ? "Overview" : (currentPhotoCategory?.label || currentVideoCategory?.label || section)}
               </h1>
               <p className="text-white/40 text-xs hidden sm:block">Panjab Studio · Media Manager</p>
             </div>
@@ -386,11 +547,16 @@ export default function AdminPage() {
               </div>
             )}
             <div className="flex items-center gap-2 text-[#C8A96A]/70 text-xs">
-              <CloudUpload size={14} /> Supabase
+              <span>Punjab Studio</span>
             </div>
-            <div className="w-8 h-8 rounded-full bg-[#C8A96A] flex items-center justify-center shadow-md">
-              <span className="text-black text-xs font-bold">PS</span>
-            </div>
+            {/* <div className="flex items-center">
+            <img
+              src="/panjab_logo/1.png"
+              alt="logo"
+              className="h-12 w-auto cursor-pointer object-contain"
+              onClick={() => handleNavigation("/")}
+            />
+          </div> */}
           </div>
         </header>
 
@@ -404,7 +570,7 @@ export default function AdminPage() {
             <>
               {/* Dashboard */}
               {section === "dashboard" && (
-                <div className="space-y-8 max-w-4xl">
+                <div className="space-y-8 ">
                   <div>
                     <h2 className="text-white text-2xl font-bold">Welcome back</h2>
                     <p className="text-white/50 text-sm mt-1">All uploads are saved to Supabase cloud.</p>
@@ -418,16 +584,16 @@ export default function AdminPage() {
                     <h3 className="text-white/70 text-xs uppercase tracking-widest mb-4">Quick Upload</h3>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 hover:border-[#C8A96A]/50 hover:bg-white/15 transition-all cursor-pointer shadow-lg"
-                        onClick={() => setSection("photos")}>
+                        onClick={() => { setPhotoExpanded(true); handleSection("photos"); }}>
                         <Camera size={24} className="text-[#C8A96A] mb-3" />
                         <p className="text-white font-semibold text-sm">Upload Photos</p>
-                        <p className="text-white/50 text-xs mt-1">Saved to Supabase · Shows on Photography page</p>
+                        <p className="text-white/50 text-xs mt-1">General gallery · Photography page</p>
                       </div>
                       <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 hover:border-[#C8A96A]/50 hover:bg-white/15 transition-all cursor-pointer shadow-lg"
-                        onClick={() => setSection("videos")}>
+                        onClick={() => { setVideoExpanded(true); handleSection("videos"); }}>
                         <Film size={24} className="text-[#C8A96A] mb-3" />
                         <p className="text-white font-semibold text-sm">Upload Videos</p>
-                        <p className="text-white/50 text-xs mt-1">Saved to Supabase · Shows on Cinematography page</p>
+                        <p className="text-white/50 text-xs mt-1">General gallery · Cinematography page</p>
                       </div>
                     </div>
                   </div>
@@ -444,42 +610,26 @@ export default function AdminPage() {
                 </div>
               )}
 
-              {/* Photos */}
-              {section === "photos" && (
-                <div className="space-y-6 max-w-5xl">
-                  <div>
-                    <h2 className="text-white text-2xl font-bold">Photos</h2>
-                    <p className="text-white/50 text-sm mt-1">{photos.length} photo{photos.length !== 1 ? "s" : ""} · saved to Supabase</p>
-                  </div>
-                  <DropZone accept=".jpg,.jpeg,.png,.webp,.gif" label="photos" icon={Camera}
-                    onFiles={(files) => addFiles(files, "photo")} uploading={uploading} />
-                  {photos.length === 0
-                    ? <div className="text-center py-16 text-white/30"><ImageIcon size={40} className="mx-auto mb-3" /><p className="text-sm">No photos yet.</p></div>
-                    : <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                      {photos.map((item) => (
-                        <MediaCard key={item.id} item={item} onDelete={deleteItem} onPreview={setPreview} />
-                      ))}
-                    </div>}
-                </div>
+              {/* Photography categories */}
+              {currentPhotoCategory && (
+                <CategorySection
+                  key={section}
+                  category={currentPhotoCategory}
+                  toast={toast}
+                  uploading={uploading}
+                  setUploading={setUploading}
+                />
               )}
 
-              {/* Videos */}
-              {section === "videos" && (
-                <div className="space-y-6 max-w-5xl">
-                  <div>
-                    <h2 className="text-white text-2xl font-bold">Videos</h2>
-                    <p className="text-white/50 text-sm mt-1">{videos.length} video{videos.length !== 1 ? "s" : ""} · saved to Supabase</p>
-                  </div>
-                  <DropZone accept=".mp4,.mov,.webm,.avi,.mkv" label="videos" icon={Film}
-                    onFiles={(files) => addFiles(files, "video")} uploading={uploading} />
-                  {videos.length === 0
-                    ? <div className="text-center py-16 text-white/30"><Video size={40} className="mx-auto mb-3" /><p className="text-sm">No videos yet.</p></div>
-                    : <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                      {videos.map((item) => (
-                        <MediaCard key={item.id} item={item} onDelete={deleteItem} onPreview={setPreview} />
-                      ))}
-                    </div>}
-                </div>
+              {/* Cinematography categories */}
+              {currentVideoCategory && (
+                <CategorySection
+                  key={section}
+                  category={currentVideoCategory}
+                  toast={toast}
+                  uploading={uploading}
+                  setUploading={setUploading}
+                />
               )}
 
               {/* Messages */}

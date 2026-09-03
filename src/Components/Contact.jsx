@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { supabase } from "../supabase";
 import { followLinks } from "../utility/data";
+import Button from "./Button";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });

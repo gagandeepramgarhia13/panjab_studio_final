@@ -1,9 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import Button from "./Button";
 
 export default function About() {
-  const navigate = useNavigate();
-
   return (
     <section className="relative w-full min-h-screen bg-[url('https://i.pinimg.com/1200x/96/7d/db/967ddb68db475eec28ccb46fb152c3f6.jpg')] bg-cover bg-center bg-fixed">
 
@@ -25,7 +23,7 @@ export default function About() {
 
             <p className="text-gray-200 leading-relaxed">
               At <span className="font-semibold text-white">Panjab Studio</span>,
-              we don’t just capture moments—we tell stories.
+              we don't just capture moments—we tell stories.
             </p>
 
             <p className="text-gray-200 leading-relaxed">
@@ -33,15 +31,12 @@ export default function About() {
             </p>
 
             <p className="text-gray-200 leading-relaxed">
-              Our goal is to create timeless memories you’ll cherish forever.
+              Our goal is to create timeless memories you'll cherish forever.
             </p>
 
-            <button
-              onClick={() => navigate("/contact")}
-              className="mt-4 px-6 py-3 bg-white text-black rounded-full hover:bg-gray-200 transition"
-            >
+            <Button to="/contact" variant="white" size="responsive">
               Contact Us →
-            </button>
+            </Button>
           </div>
 
           {/* RIGHT IMAGE */}
@@ -85,12 +80,9 @@ export default function About() {
               Every frame is crafted to feel alive—even years later.
             </p>
 
-            <button
-              onClick={() => navigate("/our-mission")}
-              className="mt-4 px-6 py-3 bg-white text-black rounded-full hover:bg-gray-200 transition"
-            >
+            <Button to="/our-mission" variant="white" size="responsive">
               Learn More →
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -101,11 +93,11 @@ export default function About() {
           {/* LEFT CONTENT */}
           <div className="space-y-6">
             <h2 className="text-3xl md:text-5xl font-semibold">
-              Let’s Connect
+              Let's Connect
             </h2>
 
             <p className="text-gray-200">
-              Every story is unique—and we’re here to capture yours.
+              Every story is unique—and we're here to capture yours.
             </p>
 
             <p className="text-gray-200">
@@ -113,15 +105,12 @@ export default function About() {
             </p>
 
             <p className="text-gray-200">
-              Reach out—we’d love to connect.
+              Reach out—we'd love to connect.
             </p>
 
-            <button
-              onClick={() => navigate("/contact")}
-              className="mt-4 px-6 py-3 bg-white text-black rounded-full hover:bg-gray-200 transition"
-            >
+            <Button to="/contact" variant="white" size="responsive">
               Contact Us →
-            </button>
+            </Button>
           </div>
 
           {/* RIGHT IMAGE */}

@@ -11,9 +11,10 @@ export const BUCKETS = {
   liveEvents: "live-events",
   weddings: "weddings",
   portraitShoot: "portrait-shoot",
-  commercialPhotos: "commercial-photos",   // ← for photography
+  commercialPhotos: "commercial-photos",
   liveEventsVideos: "live-events-videos",
   weddingVideos: "wedding-videos",
   musicVideos: "music-videos",
-  commercialVideos: "commercial-videos",   // ← for cinematography
+  commercialVideos: "commercial-videos",
+  team: "team",
 };

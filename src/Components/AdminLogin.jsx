@@ -39,8 +39,13 @@ export default function AdminLogin() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-[#C8A96A] flex items-center justify-center mb-4">
-            <Camera size={26} className="text-black" />
+          <div className="flex items-center">
+            <img
+              src="/panjab_logo/1.png"
+              alt="logo"
+              className="h-20 cursor-pointer object-contain"
+              onClick={() => handleNavigation("/")}
+            />
           </div>
           <h1 className="text-white font-bold text-xl">Panjab Studio</h1>
           <p className="text-[#C8A96A] text-sm mt-1">Admin Login</p>
