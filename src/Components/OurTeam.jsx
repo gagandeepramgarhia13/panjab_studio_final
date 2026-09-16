@@ -46,7 +46,7 @@ export default function OurTeam({ fullPage = false }) {
           <div
             className="relative w-full aspect-square overflow-hidden rounded-2xl"
             style={{
-              boxShadow: "0 20px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(200,169,106,0.1)",
+              boxShadow: "0 20px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(107,38,56,0.1)",
             }}
           >
             <img
@@ -61,7 +61,7 @@ export default function OurTeam({ fullPage = false }) {
             {/* Gold border on hover */}
             <div
               className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400"
-              style={{ boxShadow: "inset 0 0 0 1.5px rgba(200,169,106,0.6)" }}
+              style={{ boxShadow: "inset 0 0 0 1.5px rgba(107,38,56,0.6)" }}
             />
 
             {/* Zoom icon hint */}
@@ -92,7 +92,7 @@ export default function OurTeam({ fullPage = false }) {
         {/* Close button */}
         <button
           onClick={() => setSelected(null)}
-          className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-[#C8A96A] hover:text-black hover:border-[#C8A96A] transition-all duration-300"
+          className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-[#6B2638] hover:text-white hover:border-[#6B2638] transition-all duration-300"
         >
           <X size={18} />
         </button>
@@ -102,7 +102,7 @@ export default function OurTeam({ fullPage = false }) {
           src={selected}
           alt="Team member"
           className="w-full max-h-[80vh] object-contain rounded-2xl"
-          style={{ boxShadow: "0 40px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(200,169,106,0.15)" }}
+          style={{ boxShadow: "0 40px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(107,38,56,0.15)" }}
         />
       </div>
     </div>
@@ -111,29 +111,29 @@ export default function OurTeam({ fullPage = false }) {
   // ── Home section version ──────────────────────────────────────────────────
   if (!fullPage) {
     if (loading) return (
-      <section className="w-full py-20 bg-[#0a0a0a] flex justify-center">
-        <div className="w-10 h-10 border-2 border-[#C8A96A] border-t-transparent rounded-full animate-spin" />
+      <section className="w-full py-20 bg-[var(--background)] flex justify-center">
+        <div className="w-10 h-10 border-2 border-[#6B2638] border-t-transparent rounded-full animate-spin" />
       </section>
     );
     if (members.length === 0) return null;
 
     return (
-      <section className="relative w-full bg-[#0a0a0a] py-16 sm:py-20 md:py-24 px-4 sm:px-6 overflow-hidden">
+      <section className="relative w-full bg-[var(--background)] py-16 sm:py-20 md:py-24 px-4 sm:px-6 overflow-hidden">
         <SectionGlow variant="dark" />
         <div className="relative z-10 text-center mb-12 sm:mb-16">
-          <span className="text-[#C8A96A] text-xs tracking-[5px] uppercase font-medium">
+          <span className="text-[#6B2638] text-xs tracking-[5px] uppercase font-medium">
             The People Behind The Lens
           </span>
           <h2
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-white mt-3"
-            style={{ textShadow: "0 0 40px rgba(200,169,106,0.15)" }}
+            style={{ textShadow: "0 0 40px rgba(107,38,56,0.15)" }}
           >
             Meet Our Team
           </h2>
           <div className="flex items-center justify-center gap-3 mt-4">
-            <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#C8A96A]/40" />
-            <div className="w-1.5 h-1.5 rounded-full bg-[#C8A96A]/60" />
-            <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#C8A96A]/40" />
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#6B2638]/40" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[#6B2638]/60" />
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#6B2638]/40" />
           </div>
         </div>
 
@@ -152,30 +152,30 @@ export default function OurTeam({ fullPage = false }) {
 
   // ── Full page version ─────────────────────────────────────────────────────
   return (
-    <section className="w-full min-h-screen bg-[#0a0a0a] flex flex-col">
+    <section className="w-full min-h-screen bg-[var(--background)] flex flex-col">
 
       {/* Hero */}
       <div className="relative w-full h-[50vh] sm:h-[60vh] flex justify-center items-center px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-[#0a0a0a]" />
         <div
           className="absolute inset-0"
-          style={{ background: "radial-gradient(ellipse at center, rgba(200,169,106,0.12) 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(ellipse at center, rgba(107,38,56,0.12) 0%, transparent 70%)" }}
         />
 
         <div className="relative z-10 text-center space-y-4">
-          <span className="text-[#C8A96A] text-xs tracking-[5px] uppercase font-medium">
+          <span className="text-[#6B2638] text-xs tracking-[5px] uppercase font-medium">
             The People Behind The Lens
           </span>
           <h1
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white"
-            style={{ textShadow: "0 0 60px rgba(200,169,106,0.2)" }}
+            style={{ textShadow: "0 0 60px rgba(107,38,56,0.2)" }}
           >
             Meet Our Team
           </h1>
           <div className="flex items-center justify-center gap-3 mt-3">
-            <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#C8A96A]/40" />
-            <div className="w-1.5 h-1.5 rounded-full bg-[#C8A96A]/60" />
-            <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#C8A96A]/40" />
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#6B2638]/40" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[#6B2638]/60" />
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#6B2638]/40" />
           </div>
           <p className="text-white/40 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
             Passionate professionals dedicated to capturing your most precious moments.
@@ -188,13 +188,13 @@ export default function OurTeam({ fullPage = false }) {
         <SectionGlow variant="dark" />
         {loading ? (
           <div className="relative z-10 flex justify-center py-20">
-            <div className="w-10 h-10 border-2 border-[#C8A96A] border-t-transparent rounded-full animate-spin" />
+            <div className="w-10 h-10 border-2 border-[#6B2638] border-t-transparent rounded-full animate-spin" />
           </div>
         ) : members.length === 0 ? (
           <div className="relative z-10 text-center py-24 text-white/30">
             <p className="text-lg">No team members added yet.</p>
             <p className="text-sm mt-2">
-              Visit <span className="text-[#C8A96A]">/admin</span> → Photography → 👥 Team Members to upload.
+              Visit <span className="text-[#6B2638]">/admin</span> → Photography → 👥 Team Members to upload.
             </p>
           </div>
         ) : <div className="relative z-10">{grid}</div>}

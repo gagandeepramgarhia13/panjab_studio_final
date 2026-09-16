@@ -15,7 +15,7 @@ export default function About() {
 
         {/* 🔥 ABOUT */}
         <div className="relative z-10 max-w-7xl w-full grid md:grid-cols-2 gap-10 items-center mt-16
-          bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-10 shadow-xl transition-transform duration-500 hover:-translate-y-1 hover:border-[#C8A96A]/30">
+          bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-10 shadow-xl transition-transform duration-500 hover:-translate-y-1 hover:border-[#6B2638]/30">
 
           {/* LEFT CONTENT */}
           <div className="space-y-6">
@@ -53,7 +53,7 @@ export default function About() {
 
         {/* 🔥 MISSION */}
         <div className="relative z-10 max-w-7xl w-full grid md:grid-cols-2 gap-10 mt-16 items-center
-          bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-10 shadow-xl transition-transform duration-500 hover:-translate-y-1 hover:border-[#C8A96A]/30">
+          bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-10 shadow-xl transition-transform duration-500 hover:-translate-y-1 hover:border-[#6B2638]/30">
 
           {/* LEFT IMAGE */}
           <div className="relative group overflow-hidden rounded-3xl">
@@ -90,7 +90,7 @@ export default function About() {
 
         {/* 🔥 LET'S CONNECT */}
         <div className="relative z-10 max-w-7xl w-full grid md:grid-cols-2 gap-10 mt-16 items-center
-          bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-10 shadow-xl transition-transform duration-500 hover:-translate-y-1 hover:border-[#C8A96A]/30">
+          bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-10 shadow-xl transition-transform duration-500 hover:-translate-y-1 hover:border-[#6B2638]/30">
 
           {/* LEFT CONTENT */}
           <div className="space-y-6">

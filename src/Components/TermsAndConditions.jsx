@@ -45,14 +45,14 @@ export default function TermsAndConditions() {
     ];
 
     return (
-        <section className="relative w-full min-h-screen overflow-hidden bg-[#0a0a0a]">
+        <section className="relative w-full min-h-screen overflow-hidden bg-[var(--background)]">
 
             {/* Animated gradient background */}
             <div
                 className="absolute inset-0 opacity-80"
                 style={{
                     backgroundImage:
-                        "linear-gradient(120deg, #E5E5E5, #3a2e1f, #E5E5E5, #B27B52, #2a1f15)",
+                        "linear-gradient(120deg, #E5E5E5, #3a1620, #E5E5E5, #85354A, #2a141a)",
                     backgroundSize: "400% 400%",
                     animation: "gradientMove 18s ease infinite",
                 }}

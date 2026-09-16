@@ -63,13 +63,13 @@ export default function PortraitShoot() {
         <SectionGlow variant="light" />
         {loading ? (
           <div className="relative z-10 flex flex-col items-center justify-center py-24 gap-4">
-            <div className="w-10 h-10 border-2 border-[#C8A96A] border-t-transparent rounded-full animate-spin" />
+            <div className="w-10 h-10 border-2 border-[#6B2638] border-t-transparent rounded-full animate-spin" />
             <p className="text-white/40 text-sm">Loading photos…</p>
           </div>
         ) : images.length === 0 ? (
           <div className="relative z-10 text-center py-24 text-white/30">
             <p className="text-lg">No photos uploaded yet.</p>
-            <p className="text-sm mt-2">Upload to the <span className="text-[#C8A96A]">portrait-shoot</span> bucket in Admin.</p>
+            <p className="text-sm mt-2">Upload to the <span className="text-[#6B2638]">portrait-shoot</span> bucket in Admin.</p>
           </div>
         ) : (
           <div className="relative z-10 [column-count:2] md:[column-count:3] lg:[column-count:4] [column-gap:1rem]">
@@ -77,7 +77,7 @@ export default function PortraitShoot() {
               <div key={img.src} className="relative mb-4 overflow-hidden rounded-xl group break-inside-avoid transition-transform duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.35)]">
                 <img src={img.src} alt={`portrait-${index}`} className="w-full h-auto block transition duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
-                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ boxShadow: "inset 0 0 0 2px rgba(200,169,106,0.7)" }} />
+                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ boxShadow: "inset 0 0 0 2px rgba(107,38,56,0.7)" }} />
                 <button onClick={() => setSelected(img.src)}
                   className="absolute bottom-3 right-3 z-20 flex items-center gap-2 bg-white/90 text-black text-sm font-semibold px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition hover:bg-white">
                   <Maximize2 size={15} /> View

@@ -51,7 +51,7 @@ export default function OurMission() {
           {pillars.map((pillar, index) => (
             <div
               key={index}
-              className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-8 shadow-xl hover:border-[#C8A96A]/40 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_25px_50px_-15px_rgba(200,169,106,0.25)]"
+              className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-8 shadow-xl hover:border-[#6B2638]/40 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_25px_50px_-15px_rgba(107,38,56,0.25)]"
             >
               <h3 className="text-xl md:text-2xl font-semibold mb-3">
                 {pillar.title}

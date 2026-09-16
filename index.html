@@ -2,7 +2,36 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- 🔹 Theme init — runs before anything paints so the page never
+         flashes the wrong theme. Reads the saved preference (light / dark /
+         system) from localStorage, resolves "system" against the OS/browser
+         color-scheme preference, and stamps data-theme on <html> right away.
+         ThemeToggle.jsx re-runs this same resolution logic after mount and
+         whenever the preference or the OS setting changes. -->
+    <script>
+      (function () {
+        try {
+          var STORAGE_KEY = "panjab-theme";
+          var stored = localStorage.getItem(STORAGE_KEY) || "system";
+          var resolved =
+            stored === "system"
+              ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+              : stored;
+          document.documentElement.setAttribute("data-theme", resolved);
+          document.documentElement.setAttribute("data-theme-pref", stored);
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      })();
+    </script>
+    <!-- 🔹 Favicon — the actual Panjab Studios camera mark (cropped from the
+         real logo), replacing the old generic placeholder icon. -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#09090B" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panjab Studios</title>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">

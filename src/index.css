@@ -1,6 +1,62 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ============================================================================
+   THEME TOKENS — Burgundy + Dusty Rose + Ivory + Charcoal
+   Centralized design tokens so components reference `var(--x)` instead of
+   hardcoded colors. `data-theme` is stamped on <html> by the inline script
+   in index.html (before first paint, to avoid a flash) and kept in sync by
+   ThemeToggle.jsx. `:root` (no attribute yet) falls back to the dark palette
+   so anything that renders before the init script runs still looks right.
+   ============================================================================ */
+:root,
+:root[data-theme="dark"] {
+  --background: #09090b;
+  --background-secondary: #111014;
+  --surface: #161216;
+  --surface-glass: rgba(22, 18, 22, 0.55);
+  --text-primary: #f6f0ea;
+  --text-secondary: #afa3a6;
+  --accent: #6b2638;
+  --accent-hover: #85354a;
+  --accent-soft: #b9828c;
+  --accent-softer: #d8bfc2;
+  --border: rgba(246, 240, 234, 0.1);
+  --border-strong: rgba(246, 240, 234, 0.18);
+  --shadow: rgba(0, 0, 0, 0.55);
+  --glow: rgba(133, 53, 74, 0.35);
+  --glow-soft: rgba(185, 130, 140, 0.2);
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --background: #f7f2ee;
+  --background-secondary: #efe7e3;
+  --surface: #ffffff;
+  --surface-glass: rgba(255, 255, 255, 0.6);
+  --text-primary: #211b1d;
+  --text-secondary: #75696b;
+  --accent: #6b2638;
+  --accent-hover: #85354a;
+  --accent-soft: #b9828c;
+  --accent-softer: #d8bfc2;
+  --border: rgba(33, 27, 29, 0.1);
+  --border-strong: rgba(33, 27, 29, 0.16);
+  --shadow: rgba(120, 90, 95, 0.18);
+  --glow: rgba(185, 130, 140, 0.28);
+  --glow-soft: rgba(185, 130, 140, 0.16);
+  color-scheme: light;
+}
+
+/* Smooth, premium cross-fade whenever the theme changes — scoped to the
+   properties that actually change, so it never fights layout or hover
+   transforms elsewhere on the page. */
+body,
+body * {
+  transition: background-color 0.35s ease, border-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
+}
+
 @keyframes wiggle {
   0%, 100% { transform: rotate(0deg); }
   10% { transform: rotate(-15deg); }
@@ -53,15 +109,33 @@
   100% { transform: translate(calc(-50% - 3%), calc(-50% + 4%)) rotate(-6deg) scale(1.04); }
 }
 
-/* 🔥 3D gold text effect for main headings — a soft layered depth + glow,
-   used sitewide so hero/section titles all share the same premium feel as
-   the Our Team page. Works on both light and dark backgrounds. */
+/* 🔥 3D accent text effect for main headings — a soft layered depth + glow
+   (dusty-rose/burgundy now, was gold), used sitewide so hero/section titles
+   share the same premium feel. Works on both themes via CSS variables. Also
+   carries the subtle "3D hover" requirement: a gentle perspective tilt on
+   hover/mouse-over, kept small and elegant (never shaky or aggressive), and
+   automatically applies to virtually every major heading site-wide since
+   they already carry this class. */
 .text-3d-gold {
+  display: inline-block;
   text-shadow:
-    0 1px 0 rgba(200,169,106,0.35),
-    0 2px 0 rgba(200,169,106,0.25),
-    0 3px 6px rgba(0,0,0,0.25),
-    0 0 40px rgba(200,169,106,0.18);
+    0 1px 0 var(--glow-soft),
+    0 2px 0 var(--glow-soft),
+    0 3px 6px var(--shadow),
+    0 0 40px var(--glow);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.4s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .text-3d-gold:hover {
+    transform: perspective(600px) rotateX(4deg) rotateY(-3deg) translateY(-2px);
+    text-shadow:
+      0 2px 0 var(--glow-soft),
+      0 4px 10px var(--shadow),
+      0 0 55px var(--glow);
+  }
 }
 
 /* 🔥 3D perspective wrapper for TiltCard.jsx — cheap on paint, keeps the
@@ -75,11 +149,14 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  /* 🔥 Premium dark-luxury base — deep charcoal/black with a faint gold
-     ambient glow at the top, so any section without its own explicit
-     background (or a "light" legacy section) reads as dark by default. */
-  background-color: #0a0a0b;
-  background-image: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,169,106,0.07), transparent 60%);
+  /* 🔥 Theme-aware base — deep cinematic charcoal in dark mode, warm ivory
+     editorial in light mode, both with a very subtle burgundy/rose ambient
+     glow at the top. Reacts instantly to data-theme via the CSS variables
+     above, so any section without its own explicit background follows the
+     active theme automatically. */
+  background-color: var(--background);
+  background-image: radial-gradient(ellipse 80% 60% at 50% 0%, var(--glow-soft), transparent 60%);
+  color: var(--text-primary);
 }
 
 

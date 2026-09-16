@@ -2,7 +2,7 @@ import { socialLinks } from "../utility/data";
 
 export default function HomeInsta() {
     return (
-        <section className="w-full py-16 px-4 bg-[#181819] flex items-center flex-col ">
+        <section className="w-full py-16 px-4 bg-[var(--surface)] flex items-center flex-col ">
 
             {/* Heading */}
             <div className="text-center mb-10">
@@ -10,7 +10,7 @@ export default function HomeInsta() {
                     Follow Us on Instagram
                 </h2>
                 <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer">
-                    <p className="text-gray-400 mt-2 hover:text-[#C8A96A] transition">
+                    <p className="text-gray-400 mt-2 hover:text-[#6B2638] transition">
                         @panjabstudiosuk
                     </p>
                 </a>

@@ -19,8 +19,8 @@ export default function SectionGlow({ variant = "light", className = "" }) {
         className="absolute left-1/2 top-1/2 w-[70rem] h-[70rem] -translate-x-1/2 -translate-y-1/2"
         style={{
           background: isDark
-            ? "conic-gradient(from 90deg at 50% 50%, rgba(200,169,106,0.20), rgba(90,75,56,0.10) 30%, transparent 55%, rgba(200,169,106,0.14) 80%, rgba(200,169,106,0.20))"
-            : "conic-gradient(from 90deg at 50% 50%, rgba(200,169,106,0.14), rgba(232,205,143,0.10) 30%, transparent 55%, rgba(90,75,56,0.08) 80%, rgba(200,169,106,0.14))",
+            ? "conic-gradient(from 90deg at 50% 50%, rgba(107,38,56,0.20), rgba(58,22,32,0.10) 30%, transparent 55%, rgba(107,38,56,0.14) 80%, rgba(107,38,56,0.20))"
+            : "conic-gradient(from 90deg at 50% 50%, rgba(107,38,56,0.14), rgba(184,130,140,0.10) 30%, transparent 55%, rgba(58,22,32,0.08) 80%, rgba(107,38,56,0.14))",
           filter: "blur(90px)",
           opacity: isDark ? 0.9 : 0.7,
           animation: "auroraDrift 26s ease-in-out infinite alternate",
@@ -32,8 +32,8 @@ export default function SectionGlow({ variant = "light", className = "" }) {
         className="absolute left-1/2 top-1/2 w-[42rem] h-[42rem] -translate-x-1/2 -translate-y-1/2"
         style={{
           background: isDark
-            ? "conic-gradient(from 0deg, rgba(200,169,106,0.16), transparent 25%, transparent 75%, rgba(200,169,106,0.16))"
-            : "conic-gradient(from 0deg, rgba(200,169,106,0.12), transparent 25%, transparent 75%, rgba(200,169,106,0.12))",
+            ? "conic-gradient(from 0deg, rgba(107,38,56,0.16), transparent 25%, transparent 75%, rgba(107,38,56,0.16))"
+            : "conic-gradient(from 0deg, rgba(107,38,56,0.12), transparent 25%, transparent 75%, rgba(107,38,56,0.12))",
           borderRadius: "50%",
           filter: "blur(60px)",
           animation: "spinSlow 40s linear infinite",
@@ -45,7 +45,7 @@ export default function SectionGlow({ variant = "light", className = "" }) {
         className="absolute -top-24 -left-16 w-72 h-72 sm:w-96 sm:h-96 rounded-full blur-3xl"
         style={{
           background:
-            "radial-gradient(circle, rgba(200,169,106,0.45) 0%, rgba(200,169,106,0) 70%)",
+            "radial-gradient(circle, rgba(107,38,56,0.45) 0%, rgba(107,38,56,0) 70%)",
           opacity: isDark ? 0.5 : 0.35,
           animation: "floatSlow 16s ease-in-out infinite",
         }}
@@ -56,8 +56,8 @@ export default function SectionGlow({ variant = "light", className = "" }) {
         className="absolute -bottom-28 -right-20 w-80 h-80 sm:w-[28rem] sm:h-[28rem] rounded-full blur-3xl"
         style={{
           background: isDark
-            ? "radial-gradient(circle, rgba(232,205,143,0.35) 0%, rgba(232,205,143,0) 70%)"
-            : "radial-gradient(circle, rgba(90,75,56,0.16) 0%, rgba(90,75,56,0) 70%)",
+            ? "radial-gradient(circle, rgba(184,130,140,0.35) 0%, rgba(184,130,140,0) 70%)"
+            : "radial-gradient(circle, rgba(58,22,32,0.16) 0%, rgba(58,22,32,0) 70%)",
           opacity: isDark ? 0.45 : 0.3,
           animation: "floatSlower 20s ease-in-out infinite",
         }}
@@ -67,18 +67,18 @@ export default function SectionGlow({ variant = "light", className = "" }) {
       <div
         className="absolute top-[20%] right-[18%] w-2 h-2 rounded-full"
         style={{
-          background: "#C8A96A",
+          background: "#6B2638",
           opacity: isDark ? 0.6 : 0.4,
-          boxShadow: "0 0 12px 4px rgba(200,169,106,0.5)",
+          boxShadow: "0 0 12px 4px rgba(107,38,56,0.5)",
           animation: "particleDrift 9s ease-in-out infinite",
         }}
       />
       <div
         className="absolute bottom-[25%] left-[12%] w-1.5 h-1.5 rounded-full"
         style={{
-          background: "#C8A96A",
+          background: "#6B2638",
           opacity: isDark ? 0.5 : 0.35,
-          boxShadow: "0 0 10px 3px rgba(200,169,106,0.45)",
+          boxShadow: "0 0 10px 3px rgba(107,38,56,0.45)",
           animation: "particleDrift 12s ease-in-out infinite 2s",
         }}
       />

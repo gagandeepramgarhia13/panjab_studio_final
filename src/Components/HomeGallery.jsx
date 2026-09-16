@@ -38,7 +38,7 @@ export default function HomeGallery() {
     }, []);
 
     return (
-        <section className="relative w-full overflow-hidden bg-[#181819] bg-no-repeat bg-cover py-16 px-4">
+        <section className="relative w-full overflow-hidden bg-[var(--surface)] bg-no-repeat bg-cover py-16 px-4">
             <SectionGlow variant="dark" />
             <div className="relative z-10">
 
@@ -55,7 +55,7 @@ export default function HomeGallery() {
             {/* Gallery Layout */}
             {loading ? (
                 <div className="flex justify-center py-16">
-                    <div className="w-10 h-10 border-2 border-[#C8A96A] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-10 h-10 border-2 border-[#6B2638] border-t-transparent rounded-full animate-spin" />
                 </div>
             ) : images.length === 0 ? (
                 <div className="text-center text-white/30 py-16">
@@ -65,7 +65,7 @@ export default function HomeGallery() {
                 <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 md:h-[500px] tilt-perspective">
 
                     {/* LEFT BIG IMAGE */}
-                    <TiltCard max={4} className="group md:col-span-2 md:row-span-2 h-[200px] md:h-full overflow-hidden rounded-xl shadow-[0_10px_35px_rgba(0,0,0,0.4)] hover:-translate-y-1 hover:shadow-[0_25px_55px_-10px_rgba(200,169,106,0.3)]">
+                    <TiltCard max={4} className="group md:col-span-2 md:row-span-2 h-[200px] md:h-full overflow-hidden rounded-xl shadow-[0_10px_35px_rgba(0,0,0,0.4)] hover:-translate-y-1 hover:shadow-[0_25px_55px_-10px_rgba(107,38,56,0.3)]">
                         <img
                             src={images[0]}
                             alt=""
@@ -78,7 +78,7 @@ export default function HomeGallery() {
                         <TiltCard
                             key={index}
                             max={4}
-                            className="group h-[200px] md:h-full overflow-hidden rounded-xl shadow-[0_10px_35px_rgba(0,0,0,0.4)] hover:-translate-y-1 hover:shadow-[0_25px_55px_-10px_rgba(200,169,106,0.3)]"
+                            className="group h-[200px] md:h-full overflow-hidden rounded-xl shadow-[0_10px_35px_rgba(0,0,0,0.4)] hover:-translate-y-1 hover:shadow-[0_25px_55px_-10px_rgba(107,38,56,0.3)]"
                         >
                             <img
                                 src={img}

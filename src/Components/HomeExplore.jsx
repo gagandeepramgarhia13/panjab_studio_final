@@ -7,12 +7,12 @@ export default function HomeExplore() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#141415] py-14 sm:py-20 md:py-24 px-4 sm:px-6">
+    <section className="relative w-full overflow-hidden bg-[var(--surface)] py-14 sm:py-20 md:py-24 px-4 sm:px-6">
       <SectionGlow variant="dark" />
       <div className="relative z-10 max-w-6xl mx-auto">
 
         <div className="text-center mb-8 sm:mb-14" data-aos="fade-up">
-          <span className="text-xs tracking-[4px] uppercase text-[#C8A96A]/70 font-medium">
+          <span className="text-xs tracking-[4px] uppercase text-[#6B2638]/70 font-medium">
             More To Discover
           </span>
           <h2 className="text-3d-gold text-2xl sm:text-4xl md:text-5xl font-semibold text-white mt-1 leading-tight">
@@ -39,7 +39,7 @@ export default function HomeExplore() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
               <div
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ boxShadow: "inset 0 0 0 2px rgba(200,169,106,0.85)" }}
+                style={{ boxShadow: "inset 0 0 0 2px rgba(107,38,56,0.85)" }}
               />
               <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 text-left">
                 <h3 className="text-white font-semibold text-base sm:text-lg">
@@ -48,7 +48,7 @@ export default function HomeExplore() {
                 <p className="text-white/70 text-[11px] sm:text-xs mt-1 leading-relaxed">
                   {page.desc}
                 </p>
-                <span className="inline-flex items-center gap-1 text-[#C8A96A] text-[11px] sm:text-xs font-medium mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="inline-flex items-center gap-1 text-[#6B2638] text-[11px] sm:text-xs font-medium mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   Learn More →
                 </span>
               </div>

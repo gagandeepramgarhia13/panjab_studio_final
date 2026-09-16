@@ -62,13 +62,13 @@ export default function CommercialVideos() {
                 <SectionGlow variant="light" />
                 {loading ? (
                     <div className="relative z-10 flex flex-col items-center justify-center py-24 gap-4">
-                        <div className="w-10 h-10 border-2 border-[#C8A96A] border-t-transparent rounded-full animate-spin" />
+                        <div className="w-10 h-10 border-2 border-[#6B2638] border-t-transparent rounded-full animate-spin" />
                         <p className="text-white/40 text-sm">Loading videos…</p>
                     </div>
                 ) : videos.length === 0 ? (
                     <div className="relative z-10 text-center py-24 text-white/30">
                         <p className="text-lg">No videos uploaded yet.</p>
-                        <p className="text-sm mt-2">Upload to the <span className="text-[#C8A96A]">commercial-videos</span> bucket in Admin.</p>
+                        <p className="text-sm mt-2">Upload to the <span className="text-[#6B2638]">commercial-videos</span> bucket in Admin.</p>
                     </div>
                 ) : (
                     <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -82,7 +82,7 @@ export default function CommercialVideos() {
                                     muted
                                 />
                                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition pointer-events-none"></div>
-                                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ boxShadow: "inset 0 0 0 2px rgba(200,169,106,0.7)" }} />
+                                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ boxShadow: "inset 0 0 0 2px rgba(107,38,56,0.7)" }} />
                                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                                     <div className="bg-white/80 text-black rounded-full px-4 py-2 text-sm font-semibold">
                                         ▶ click to play
