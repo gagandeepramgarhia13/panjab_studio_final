@@ -27,7 +27,7 @@ export default function WhatWeDo() {
               data-aos="fade-up"
               data-aos-duration="700"
               data-aos-delay={index * 120}
-              className="group aspect-square flex flex-col items-center justify-center text-center p-6 rounded-2xl bg-transparent hover:bg-white/[0.05] hover:backdrop-blur-md hover:shadow-[0_25px_55px_-15px_rgba(107,38,56,0.3)] hover:-translate-y-2"
+              className="group aspect-square flex flex-col items-center justify-center text-center p-6 rounded-2xl bg-transparent hover:bg-white/[0.05] hover:backdrop-blur-md hover:shadow-[0_25px_55px_-15px_rgba(200,164,93,0.3)] hover:-translate-y-2"
             >
               <img
                 src={item.logo}
@@ -50,7 +50,7 @@ export default function WhatWeDo() {
               About Panjab Studio
             </h2>
             <p className="text-gray-300 leading-relaxed">
-              At <span className="font-semibold text-[#6B2638]">Panjab Studio</span>,
+              At <span className="font-semibold text-[#C8A45D]">Panjab Studio</span>,
               we don't just capture moments—we tell stories.
             </p>
             <p className="text-gray-300 leading-relaxed">
@@ -61,7 +61,7 @@ export default function WhatWeDo() {
             </p>
             <Link
               to="/contact"
-              className="inline-block mt-4 px-6 py-3 bg-[#6B2638] text-white rounded-full hover:bg-white transition hover:-translate-y-0.5 hover:shadow-[0_15px_35px_-8px_rgba(107,38,56,0.5)]"
+              className="inline-block mt-4 px-6 py-3 bg-[#C8A45D] text-black rounded-full hover:bg-white transition hover:-translate-y-0.5 hover:shadow-[0_15px_35px_-8px_rgba(200,164,93,0.5)]"
             >
               Contact Us →
             </Link>
@@ -69,13 +69,13 @@ export default function WhatWeDo() {
 
           {/* Right Image */}
           <div className="relative group">
-            <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-[#6B2638]/40 via-transparent to-transparent blur-2xl opacity-70 -z-10" />
+            <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-[#C8A45D]/40 via-transparent to-transparent blur-2xl opacity-70 -z-10" />
             <img
               src="https://i.pinimg.com/1200x/79/52/58/795258031ab9e309c0f449a0bb5e154d.jpg"
               alt="about"
               className="w-full h-[400px] md:h-[500px] object-cover rounded-3xl shadow-[0_30px_60px_-20px_rgba(0,0,0,0.35)] transition-transform duration-700 group-hover:scale-[1.02] group-hover:-rotate-1"
             />
-            <div className="absolute inset-0 rounded-3xl ring-1 ring-[#6B2638]/20 pointer-events-none" />
+            <div className="absolute inset-0 rounded-3xl ring-1 ring-[#C8A45D]/20 pointer-events-none" />
           </div>
 
         </div>

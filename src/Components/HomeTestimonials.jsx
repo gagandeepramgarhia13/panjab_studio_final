@@ -20,7 +20,7 @@ export default function HomeTestimonials() {
 
         {/* Quote Icon */}
         <div className="flex justify-center mb-6">
-          <FaQuoteRight className="text-5xl text-[#6B2638]/25" />
+          <FaQuoteRight className="text-5xl text-[#C8A45D]/25" />
         </div>
 
         {/* Testimonial Card */}
@@ -31,7 +31,7 @@ export default function HomeTestimonials() {
           </p>
 
           {/* Stars */}
-          <div className="flex justify-center gap-2 text-[#6B2638]">
+          <div className="flex justify-center gap-2 text-[#C8A45D]">
             {[...Array(5)].map((_, i) => (
               <FaStar key={i} />
             ))}
@@ -41,7 +41,7 @@ export default function HomeTestimonials() {
         {/* Button */}
         <Link
           to="/testimonials"
-          className="inline-block mt-10 border border-[#6B2638]/50 text-white px-6 py-2 rounded-full hover:bg-[#6B2638] hover:text-white hover:border-[#6B2638] transition"
+          className="inline-block mt-10 border border-[#C8A45D]/50 text-white px-6 py-2 rounded-full hover:bg-[#C8A45D] hover:text-black hover:border-[#C8A45D] transition"
         >
           Testimonials
         </Link>

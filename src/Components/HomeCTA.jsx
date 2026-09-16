@@ -15,7 +15,7 @@ export default function HomeCTA() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/75 to-black/90" />
 
       <div className="relative z-10 max-w-3xl mx-auto text-center" data-aos="zoom-in">
-        <span className="text-xs tracking-[4px] uppercase text-[#6B2638] font-medium">
+        <span className="text-xs tracking-[4px] uppercase text-[#C8A45D] font-medium">
           Let's Create Together
         </span>
         <h2 className="text-2xl sm:text-4xl md:text-5xl font-semibold text-white mt-3 leading-tight">
@@ -29,7 +29,7 @@ export default function HomeCTA() {
         <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-8">
           <Link
             to="/contact"
-            className="px-6 sm:px-7 py-3 bg-[#6B2638] text-white font-medium rounded-full hover:bg-white transition-all duration-300 text-sm sm:text-base hover:-translate-y-0.5 hover:shadow-[0_15px_35px_-8px_rgba(107,38,56,0.6)]"
+            className="px-6 sm:px-7 py-3 bg-[#C8A45D] text-black font-medium rounded-full hover:bg-white transition-all duration-300 text-sm sm:text-base hover:-translate-y-0.5 hover:shadow-[0_15px_35px_-8px_rgba(200,164,93,0.6)]"
           >
             Get In Touch →
           </Link>

@@ -34,7 +34,7 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen bg-[var(--background)] flex items-center justify-center px-4 font-sans">
       {/* Gold accent line at top */}
-      <div className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#6B2638] to-transparent" />
+      <div className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#C8A45D] to-transparent" />
 
       <div className="w-full max-w-md">
         {/* Logo */}
@@ -48,7 +48,7 @@ export default function AdminLogin() {
             />
           </div>
           <h1 className="text-white font-bold text-xl">Panjab Studio</h1>
-          <p className="text-[#6B2638] text-sm mt-1">Admin Login</p>
+          <p className="text-[#C8A45D] text-sm mt-1">Admin Login</p>
         </div>
 
         {/* Card */}
@@ -68,7 +68,7 @@ export default function AdminLogin() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@panjabstudio.com"
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[#6B2638]/60 transition-colors"
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[#C8A45D]/60 transition-colors"
               />
             </div>
           </div>
@@ -85,7 +85,7 @@ export default function AdminLogin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-10 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[#6B2638]/60 transition-colors"
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-10 pr-10 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[#C8A45D]/60 transition-colors"
               />
               <button
                 type="button"
@@ -107,7 +107,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#6B2638] text-white font-semibold text-sm rounded-xl py-3 hover:bg-[#85354A] transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
+            className="w-full bg-[#C8A45D] text-black font-semibold text-sm rounded-xl py-3 hover:bg-[#E0C27A] transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
           >
             {loading ? (
               <>

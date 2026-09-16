@@ -69,7 +69,7 @@ export default function FAQ() {
                 className="absolute inset-0 opacity-80"
                 style={{
                     backgroundImage:
-                        "linear-gradient(120deg, #E5E5E5, #3a1620, #E5E5E5, #85354A, #2a141a)",
+                        "linear-gradient(120deg, #E5E5E5, #3a2e1f, #E5E5E5, #E0C27A, #2a1f15)",
                     backgroundSize: "400% 400%",
                     animation: "gradientMove 18s ease infinite",
                 }}

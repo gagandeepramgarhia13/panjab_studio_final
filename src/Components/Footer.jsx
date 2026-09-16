@@ -39,7 +39,7 @@ export default function Footer() {
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 flex items-center justify-center rounded-full border border-white/20 text-white hover:bg-[#6B2638] hover:text-white hover:border-[#6B2638] transition-all duration-300 cursor-pointer"
+              className="w-10 h-10 flex items-center justify-center rounded-full border border-white/20 text-white hover:bg-[#C8A45D] hover:text-black hover:border-[#C8A45D] transition-all duration-300 cursor-pointer"
             >
               <i className={`${icon} text-base`}></i>
             </a>
@@ -48,13 +48,13 @@ export default function Footer() {
 
         {/* 🔹 Links */}
         <div className="flex flex-wrap justify-center gap-6 text-xs md:text-sm tracking-[3px] uppercase mb-10">
-          <Link to="/faq" className="text-gray-300 hover:text-[#6B2638] transition-colors">
+          <Link to="/faq" className="text-gray-300 hover:text-[#C8A45D] transition-colors">
             Frequently Asked Questions
           </Link>
-          <Link to="/terms" className="text-gray-300 hover:text-[#6B2638] transition-colors">
+          <Link to="/terms" className="text-gray-300 hover:text-[#C8A45D] transition-colors">
             Terms & Conditions
           </Link>
-          <Link to="/privacy" className="text-gray-300 hover:text-[#6B2638] transition-colors">
+          <Link to="/privacy" className="text-gray-300 hover:text-[#C8A45D] transition-colors">
             Privacy Policy
           </Link>
         </div>
@@ -70,7 +70,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Gagandeep Ramgarhia on LinkedIn"
-            className="inline-flex items-center justify-center w-6 h-6 rounded-full border border-white/20 text-gray-400 hover:text-[var(--text-primary)] hover:bg-[#6B2638] hover:border-[#6B2638] transition-all duration-300"
+            className="inline-flex items-center justify-center w-6 h-6 rounded-full border border-white/20 text-gray-400 hover:text-[var(--text-primary)] hover:bg-[#C8A45D] hover:border-[#C8A45D] transition-all duration-300"
           >
             <FaLinkedin size={12} />
           </a>
@@ -83,7 +83,7 @@ export default function Footer() {
           text clear of both fixed buttons on short/mobile screens. */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className={`fixed bottom-4 left-4 sm:bottom-6 sm:left-6 bg-[#6B2638] text-white w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full hover:bg-white transition-all duration-300 z-[1000000] shadow-[0_10px_25px_-8px_rgba(107,38,56,0.6)]
+        className={`fixed bottom-4 left-4 sm:bottom-6 sm:left-6 bg-[#C8A45D] text-black w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full hover:bg-white transition-all duration-300 z-[1000000] shadow-[0_10px_25px_-8px_rgba(200,164,93,0.6)]
           ${showScrollTop ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none"}`}
       >
         ↑

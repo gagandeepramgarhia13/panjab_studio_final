@@ -1,49 +1,42 @@
-import { Sun, Moon, Monitor } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import useTheme from "../useTheme";
 
-const options = [
-  { key: "light", icon: Sun, label: "Light" },
-  { key: "dark", icon: Moon, label: "Dark" },
-  { key: "system", icon: Monitor, label: "System" },
-];
-
-// Premium segmented Light / Dark / System control — a compact glass pill,
-// not a generic checkbox/select. Fully driven by CSS variables so it looks
-// correct (ivory-on-dark, dark-on-ivory) in both themes without any
-// conditional class logic, and the active option gets the burgundy fill
-// the rest of the site uses for active/selected states.
+// Compact two-state Dark/White luxury switch — a single pill with a
+// sliding gold knob and a moon/sun icon, not a segmented 3-option control.
+// Fully driven by CSS variables so it looks correct in both themes.
 export default function ThemeToggle({ className = "" }) {
-  const { pref, setPref } = useTheme();
+  const { theme, toggle } = useTheme();
+  const isDark = theme === "dark";
 
   return (
-    <div
-      className={`inline-flex items-center gap-0.5 p-1 rounded-full border backdrop-blur-md ${className}`}
-      style={{ background: "var(--surface-glass)", borderColor: "var(--border)" }}
-      role="radiogroup"
-      aria-label="Theme"
+    <button
+      type="button"
+      onClick={toggle}
+      role="switch"
+      aria-checked={isDark}
+      aria-label={isDark ? "Switch to White mode" : "Switch to Dark mode"}
+      title={isDark ? "Switch to White mode" : "Switch to Dark mode"}
+      className={`relative inline-flex items-center w-12 h-[26px] rounded-full border transition-colors duration-300 flex-shrink-0 ${className}`}
+      style={{
+        background: "var(--surface-glass)",
+        borderColor: "var(--border-strong)",
+        backdropFilter: "blur(10px)",
+      }}
     >
-      {options.map(({ key, icon: Icon, label }) => {
-        const active = pref === key;
-        return (
-          <button
-            key={key}
-            type="button"
-            role="radio"
-            aria-checked={active}
-            aria-label={label}
-            title={label}
-            onClick={() => setPref(key)}
-            className="relative flex items-center justify-center w-7 h-7 rounded-full transition-all duration-300"
-            style={{
-              background: active ? "var(--accent)" : "transparent",
-              color: active ? "#F6F0EA" : "var(--text-secondary)",
-              boxShadow: active ? "0 4px 14px -4px var(--glow)" : "none",
-            }}
-          >
-            <Icon size={13} strokeWidth={2.25} />
-          </button>
-        );
-      })}
-    </div>
+      <span
+        className="absolute top-[2px] left-[2px] flex items-center justify-center w-[20px] h-[20px] rounded-full transition-transform duration-300 ease-out"
+        style={{
+          transform: isDark ? "translateX(0)" : "translateX(22px)",
+          background: "linear-gradient(135deg, var(--accent-hover), var(--accent))",
+          boxShadow: "0 2px 8px -2px var(--glow)",
+        }}
+      >
+        {isDark ? (
+          <Moon size={12} strokeWidth={2.25} className="text-black/70" />
+        ) : (
+          <Sun size={12} strokeWidth={2.25} className="text-black/70" />
+        )}
+      </span>
+    </button>
   );
 }

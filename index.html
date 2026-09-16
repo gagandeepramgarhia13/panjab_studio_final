@@ -3,27 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <!-- 🔹 Theme init — runs before anything paints so the page never
-         flashes the wrong theme. Reads the saved preference (light / dark /
-         system) from localStorage, resolves "system" against the OS/browser
-         color-scheme preference, and stamps data-theme on <html> right away.
-         ThemeToggle.jsx re-runs this same resolution logic after mount and
-         whenever the preference or the OS setting changes. -->
+         flashes the wrong theme. Reads the saved Dark/White choice from
+         localStorage (defaulting to Dark) and stamps data-theme on <html>
+         right away. ThemeToggle.jsx keeps this in sync after mount. -->
     <script>
       (function () {
         try {
           var STORAGE_KEY = "panjab-theme";
-          var stored = localStorage.getItem(STORAGE_KEY) || "system";
-          var resolved =
-            stored === "system"
-              ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-              : stored;
+          var stored = localStorage.getItem(STORAGE_KEY);
+          var resolved = stored === "light" ? "light" : "dark";
           document.documentElement.setAttribute("data-theme", resolved);
-          document.documentElement.setAttribute("data-theme-pref", stored);
         } catch (e) {
           document.documentElement.setAttribute("data-theme", "dark");
         }
       })();
     </script>
+    <!-- 🔹 Fonts — editorial serif for headings, clean sans for body. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <!-- 🔹 Favicon — the actual Panjab Studios camera mark (cropped from the
          real logo), replacing the old generic placeholder icon. -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -31,7 +32,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="theme-color" content="#09090B" />
+    <meta name="theme-color" content="#070707" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panjab Studios</title>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">

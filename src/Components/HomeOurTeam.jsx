@@ -42,7 +42,7 @@ export default function HomeOurTeam() {
         {/* Top row — heading + button */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
           <div>
-            <span className="text-xs tracking-[4px] uppercase text-[#6B2638]/70 font-medium">
+            <span className="text-xs tracking-[4px] uppercase text-[#C8A45D]/70 font-medium">
               The People Behind The Lens
             </span>
             <h2 className="text-3d-gold text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-1 leading-tight">
@@ -52,7 +52,7 @@ export default function HomeOurTeam() {
 
           <button
             onClick={() => navigate("/team")}
-            className="self-start sm:self-auto inline-flex items-center gap-2 px-5 py-2.5 bg-[#6B2638] text-white text-sm font-medium rounded-full hover:bg-white transition-all duration-300 flex-shrink-0 hover:-translate-y-0.5 hover:shadow-[0_15px_35px_-8px_rgba(107,38,56,0.5)]"
+            className="self-start sm:self-auto inline-flex items-center gap-2 px-5 py-2.5 bg-[#C8A45D] text-black text-sm font-medium rounded-full hover:bg-white transition-all duration-300 flex-shrink-0 hover:-translate-y-0.5 hover:shadow-[0_15px_35px_-8px_rgba(200,164,93,0.5)]"
           >
             View Full Team →
           </button>
@@ -84,7 +84,7 @@ export default function HomeOurTeam() {
               {/* Gold border on hover */}
               <div
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ boxShadow: "inset 0 0 0 2px rgba(107,38,56,0.7)" }}
+                style={{ boxShadow: "inset 0 0 0 2px rgba(200,164,93,0.7)" }}
               />
             </TiltCard>
           ))}

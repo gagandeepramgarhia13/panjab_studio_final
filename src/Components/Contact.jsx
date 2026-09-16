@@ -88,7 +88,7 @@ export default function Contact() {
           {/* LEFT */}
           <div className="space-y-4 sm:space-y-5 md:space-y-6
             bg-white/10 backdrop-blur-xl border border-white/20
-            rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10 shadow-[0_25px_60px_-20px_rgba(0,0,0,0.5)] transition-transform duration-500 hover:-translate-y-1 hover:border-[#6B2638]/30">
+            rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10 shadow-[0_25px_60px_-20px_rgba(0,0,0,0.5)] transition-transform duration-500 hover:-translate-y-1 hover:border-[#C8A45D]/30">
 
             <h3 className="text-lg sm:text-xl md:text-3xl font-semibold">
               Let’s Talk
@@ -126,7 +126,7 @@ export default function Contact() {
 
           {/* RIGHT FORM */}
           <div className="bg-white/10 backdrop-blur-xl border border-white/20
-            rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10 shadow-[0_25px_60px_-20px_rgba(0,0,0,0.5)] transition-transform duration-500 hover:-translate-y-1 hover:border-[#6B2638]/30">
+            rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10 shadow-[0_25px_60px_-20px_rgba(0,0,0,0.5)] transition-transform duration-500 hover:-translate-y-1 hover:border-[#C8A45D]/30">
 
             <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 md:space-y-5">
 
@@ -212,7 +212,7 @@ export default function Contact() {
         <div className="max-w-7xl w-full mt-8 sm:mt-10 md:mt-16
           bg-white/10 backdrop-blur-xl border border-white/20
           rounded-xl sm:rounded-2xl md:rounded-3xl
-          p-4 sm:p-6 md:p-10 text-center shadow-[0_25px_60px_-20px_rgba(0,0,0,0.5)] transition-transform duration-500 hover:-translate-y-1 hover:border-[#6B2638]/30">
+          p-4 sm:p-6 md:p-10 text-center shadow-[0_25px_60px_-20px_rgba(0,0,0,0.5)] transition-transform duration-500 hover:-translate-y-1 hover:border-[#C8A45D]/30">
 
           <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3">
             Visit Us

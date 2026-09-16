@@ -40,7 +40,7 @@ export default function TiltCard({ children, className = "", max = 6, glare = tr
 
     if (glare && glareRef.current) {
       glareRef.current.style.opacity = "1";
-      glareRef.current.style.background = `radial-gradient(circle at ${px * 100}% ${py * 100}%, rgba(200,169,106,0.25), transparent 60%)`;
+      glareRef.current.style.background = `radial-gradient(circle at ${px * 100}% ${py * 100}%, rgba(200,164,93,0.28), transparent 60%)`;
     }
   };
 

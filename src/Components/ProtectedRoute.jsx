@@ -20,7 +20,7 @@ export default function ProtectedRoute({ children }) {
   if (session === undefined) {
     return (
       <div className="min-h-screen bg-[var(--background)] flex items-center justify-center">
-        <div className="w-10 h-10 border-2 border-[#6B2638] border-t-transparent rounded-full animate-spin" />
+        <div className="w-10 h-10 border-2 border-[#C8A45D] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }

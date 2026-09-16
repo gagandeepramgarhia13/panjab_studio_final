@@ -11,9 +11,9 @@ export default function Button({ children, onClick, href, to, variant = "primary
 
   const variants = {
     outline: "border border-white text-white hover:bg-white hover:text-black",
-    primary: "bg-[#6B2638] text-white hover:bg-[#85354A]",
-    white: "bg-white text-[var(--text-primary)] hover:bg-[#6B2638] hover:text-white border border-white hover:border-[#6B2638]",
-    ghost: "bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-[#6B2638] hover:text-white hover:border-[#6B2638]",
+    primary: "bg-[#C8A45D] text-black hover:bg-[#E0C27A]",
+    white: "bg-white text-[var(--text-primary)] hover:bg-[#C8A45D] hover:text-black border border-white hover:border-[#C8A45D]",
+    ghost: "bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-[#C8A45D] hover:text-black hover:border-[#C8A45D]",
   };
 
   const base = `inline-flex items-center justify-center gap-2 font-medium rounded-full transition-all duration-300 ${sizes[size]} ${variants[variant]} ${className}`;

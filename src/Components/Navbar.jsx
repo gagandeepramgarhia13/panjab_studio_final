@@ -37,13 +37,13 @@ export default function Navbar() {
     path === "/" ? location.pathname === "/" : location.pathname.startsWith(path);
 
   const navItemClass = (path) =>
-    `relative cursor-pointer transition-colors duration-300 [text-shadow:1px_1px_3px_rgba(0,0,0,0.7)] hover:text-[#6B2638] ${
-      isActive(path) ? "text-[#6B2638] after:content-[''] after:absolute after:-bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-1 after:h-1 after:rounded-full after:bg-[#6B2638]" : "text-white"
+    `relative cursor-pointer transition-colors duration-300 [text-shadow:1px_1px_3px_rgba(0,0,0,0.7)] hover:text-[#C8A45D] ${
+      isActive(path) ? "text-[#C8A45D] after:content-[''] after:absolute after:-bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-1 after:h-1 after:rounded-full after:bg-[#C8A45D]" : "text-white"
     }`;
 
   const mobileNavItemClass = (path) =>
-    `cursor-pointer px-4 py-2.5 font-medium text-sm hover:bg-white/10 hover:text-[#6B2638] transition-colors ${
-      isActive(path) ? "text-[#6B2638] bg-white/5 border-l-2 border-[#6B2638]" : "text-white"
+    `cursor-pointer px-4 py-2.5 font-medium text-sm hover:bg-white/10 hover:text-[#C8A45D] transition-colors ${
+      isActive(path) ? "text-[#C8A45D] bg-white/5 border-l-2 border-[#C8A45D]" : "text-white"
     }`;
 
   useEffect(() => {
@@ -64,9 +64,9 @@ export default function Navbar() {
   // Solid, high-contrast dropdown panel — was bg-white/10 (near-transparent),
   // which made it unreadable over bright hero images. Now a near-opaque
   // dark gradient with a gold edge + lifted shadow for a premium 3D feel.
-  const dropdownClass = "absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 w-56 origin-top rounded-2xl border border-[#6B2638]/25 bg-gradient-to-b from-[#161216] to-[#09090B] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_0_1px_rgba(107,38,56,0.06)] [animation:dropdownIn_0.22s_cubic-bezier(0.16,1,0.3,1)] overflow-hidden";
-  const dropdownItemClass = "group/item relative isolate block w-full text-left px-4 py-2.5 text-sm text-white/85 transition-colors duration-300 hover:text-white overflow-hidden";
-  const dropdownItemSweep = "pointer-events-none absolute inset-0 -z-10 origin-left scale-x-0 bg-gradient-to-r from-[#6B2638] to-[#D8BFC2] transition-transform duration-300 ease-out group-hover/item:scale-x-100";
+  const dropdownClass = "absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 w-56 origin-top rounded-2xl border border-[#C8A45D]/25 bg-gradient-to-b from-[#141414] to-[#070707] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_0_1px_rgba(200,164,93,0.06)] [animation:dropdownIn_0.22s_cubic-bezier(0.16,1,0.3,1)] overflow-hidden";
+  const dropdownItemClass = "group/item relative isolate block w-full text-left px-4 py-2.5 text-sm text-white/85 transition-colors duration-300 hover:text-black overflow-hidden";
+  const dropdownItemSweep = "pointer-events-none absolute inset-0 -z-10 origin-left scale-x-0 bg-gradient-to-r from-[#C8A45D] to-[#D8C79F] transition-transform duration-300 ease-out group-hover/item:scale-x-100";
 
   return (
     <div className="fixed w-full z-[9999] top-0">
@@ -86,7 +86,7 @@ export default function Navbar() {
           <div className="flex items-center justify-center gap-3">
             {followLinks.map((link) => (
               <a key={link.id} href={link.url} target="_blank" rel="noopener noreferrer"
-                className="text-white text-base hover:text-[#6B2638] transition">
+                className="text-white text-base hover:text-[#C8A45D] transition">
                 <i className={link.icon}></i>
               </a>
             ))}
@@ -128,7 +128,7 @@ export default function Navbar() {
               {photoDropdown && <div className="absolute top-full left-0 w-full h-4" />}
               {photoDropdown && (
                 <div className={dropdownClass}>
-                  <div className="h-[3px] bg-gradient-to-r from-transparent via-[#6B2638] to-transparent" />
+                  <div className="h-[3px] bg-gradient-to-r from-transparent via-[#C8A45D] to-transparent" />
                   <div className="py-1">
                     {photographyItems.map((item) => (
                       <button key={item.path} onClick={() => handleNavigation(item.path)} className={dropdownItemClass}>
@@ -136,9 +136,9 @@ export default function Navbar() {
                         {item.label}
                       </button>
                     ))}
-                    <div className="border-t border-[#6B2638]/15">
+                    <div className="border-t border-[#C8A45D]/15">
                       <button onClick={() => handleNavigation("/photography")}
-                        className="w-full text-left px-4 py-2.5 text-[#6B2638] text-xs hover:bg-white/5 transition-colors">
+                        className="w-full text-left px-4 py-2.5 text-[#C8A45D] text-xs hover:bg-white/5 transition-colors">
                         View All →
                       </button>
                     </div>
@@ -159,7 +159,7 @@ export default function Navbar() {
               {cineDropdown && <div className="absolute top-full left-0 w-full h-4" />}
               {cineDropdown && (
                 <div className={dropdownClass}>
-                  <div className="h-[3px] bg-gradient-to-r from-transparent via-[#6B2638] to-transparent" />
+                  <div className="h-[3px] bg-gradient-to-r from-transparent via-[#C8A45D] to-transparent" />
                   <div className="py-1">
                     {cinematographyItems.map((item) => (
                       <button key={item.path} onClick={() => handleNavigation(item.path)} className={dropdownItemClass}>
@@ -167,9 +167,9 @@ export default function Navbar() {
                         {item.label}
                       </button>
                     ))}
-                    <div className="border-t border-[#6B2638]/15">
+                    <div className="border-t border-[#C8A45D]/15">
                       <button onClick={() => handleNavigation("/cinematography")}
-                        className="w-full text-left px-4 py-2.5 text-[#6B2638] text-xs hover:bg-white/5 transition-colors">
+                        className="w-full text-left px-4 py-2.5 text-[#C8A45D] text-xs hover:bg-white/5 transition-colors">
                         View All →
                       </button>
                     </div>
@@ -208,8 +208,8 @@ export default function Navbar() {
 
       {/* Mobile Dropdown */}
       {isOpen && (
-        <div className="mx-4 mt-1 bg-gradient-to-b from-[#161216]/98 to-[#09090B]/98 backdrop-blur-xl border border-[#6B2638]/20 rounded-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.8)] lg:hidden overflow-hidden [animation:menuIn_0.22s_cubic-bezier(0.16,1,0.3,1)]">
-          <div className="h-[3px] bg-gradient-to-r from-transparent via-[#6B2638] to-transparent" />
+        <div className="mx-4 mt-1 bg-gradient-to-b from-[#141414]/98 to-[#070707]/98 backdrop-blur-xl border border-[#C8A45D]/20 rounded-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.8)] lg:hidden overflow-hidden [animation:menuIn_0.22s_cubic-bezier(0.16,1,0.3,1)]">
+          <div className="h-[3px] bg-gradient-to-r from-transparent via-[#C8A45D] to-transparent" />
           <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/10">
             <span className="text-white/60 text-xs uppercase tracking-widest">Theme</span>
             <ThemeToggle />
@@ -229,15 +229,15 @@ export default function Navbar() {
                 <ChevronDown size={14} className={`transition-transform duration-200 ${mobilePhoto ? "rotate-180" : ""}`} />
               </button>
               {mobilePhoto && (
-                <div className="bg-black/30 border-t border-[#6B2638]/10">
+                <div className="bg-black/30 border-t border-[#C8A45D]/10">
                   {photographyItems.map((item) => (
                     <button key={item.path} onClick={() => handleNavigation(item.path)}
-                      className="w-full text-left px-8 py-2 text-white/70 text-sm hover:bg-[#6B2638] hover:text-white transition-colors">
+                      className="w-full text-left px-8 py-2 text-white/70 text-sm hover:bg-[#C8A45D] hover:text-black transition-colors">
                       {item.label}
                     </button>
                   ))}
                   <button onClick={() => handleNavigation("/photography")}
-                    className="w-full text-left px-8 py-2 text-[#6B2638] text-xs hover:bg-white/10 transition-colors">
+                    className="w-full text-left px-8 py-2 text-[#C8A45D] text-xs hover:bg-white/10 transition-colors">
                     View All →
                   </button>
                 </div>
@@ -252,15 +252,15 @@ export default function Navbar() {
                 <ChevronDown size={14} className={`transition-transform duration-200 ${mobileCine ? "rotate-180" : ""}`} />
               </button>
               {mobileCine && (
-                <div className="bg-black/30 border-t border-[#6B2638]/10">
+                <div className="bg-black/30 border-t border-[#C8A45D]/10">
                   {cinematographyItems.map((item) => (
                     <button key={item.path} onClick={() => handleNavigation(item.path)}
-                      className="w-full text-left px-8 py-2 text-white/70 text-sm hover:bg-[#6B2638] hover:text-white transition-colors">
+                      className="w-full text-left px-8 py-2 text-white/70 text-sm hover:bg-[#C8A45D] hover:text-black transition-colors">
                       {item.label}
                     </button>
                   ))}
                   <button onClick={() => handleNavigation("/cinematography")}
-                    className="w-full text-left px-8 py-2 text-[#6B2638] text-xs hover:bg-white/10 transition-colors">
+                    className="w-full text-left px-8 py-2 text-[#C8A45D] text-xs hover:bg-white/10 transition-colors">
                     View All →
                   </button>
                 </div>

@@ -17,7 +17,7 @@ export default function HomeCinematography() {
           data-aos="fade-up"
         >
           <div>
-            <span className="text-xs tracking-[4px] uppercase text-[#6B2638]/80 font-medium">
+            <span className="text-xs tracking-[4px] uppercase text-[#C8A45D]/80 font-medium">
               Motion &amp; Emotion
             </span>
             <h2 className="text-3d-gold text-2xl sm:text-4xl md:text-5xl font-semibold text-white mt-1 leading-tight">
@@ -31,7 +31,7 @@ export default function HomeCinematography() {
 
           <button
             onClick={() => navigate("/cinematography")}
-            className="self-start sm:self-auto inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 backdrop-blur-xl border border-white/20 text-white text-sm font-medium rounded-full hover:bg-[#6B2638] hover:text-white hover:border-[#6B2638] transition-all duration-300 flex-shrink-0"
+            className="self-start sm:self-auto inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 backdrop-blur-xl border border-white/20 text-white text-sm font-medium rounded-full hover:bg-[#C8A45D] hover:text-black hover:border-[#C8A45D] transition-all duration-300 flex-shrink-0"
           >
             View All Cinematography →
           </button>
@@ -46,7 +46,7 @@ export default function HomeCinematography() {
               onClick={() => navigate(cat.path)}
               data-aos="fade-up"
               data-aos-delay={index * 100}
-              className="group aspect-[3/4] overflow-hidden rounded-2xl cursor-pointer border border-white/10 hover:-translate-y-2 hover:shadow-[0_25px_55px_-10px_rgba(107,38,56,0.25)]"
+              className="group aspect-[3/4] overflow-hidden rounded-2xl cursor-pointer border border-white/10 hover:-translate-y-2 hover:shadow-[0_25px_55px_-10px_rgba(200,164,93,0.25)]"
             >
               <video
                 src={cinematographyReel}
@@ -62,7 +62,7 @@ export default function HomeCinematography() {
 
               <div
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ boxShadow: "inset 0 0 0 2px rgba(107,38,56,0.85)" }}
+                style={{ boxShadow: "inset 0 0 0 2px rgba(200,164,93,0.85)" }}
               />
 
               {/* Play indicator */}
@@ -78,7 +78,7 @@ export default function HomeCinematography() {
                 <p className="text-white/60 text-[11px] mt-1 leading-relaxed line-clamp-2 hidden sm:block">
                   {cat.desc}
                 </p>
-                <span className="inline-flex items-center gap-1 text-[#6B2638] text-[11px] sm:text-xs font-medium mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="inline-flex items-center gap-1 text-[#C8A45D] text-[11px] sm:text-xs font-medium mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   Watch →
                 </span>
               </div>

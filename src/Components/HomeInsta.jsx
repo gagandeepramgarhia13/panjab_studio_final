@@ -10,7 +10,7 @@ export default function HomeInsta() {
                     Follow Us on Instagram
                 </h2>
                 <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer">
-                    <p className="text-gray-400 mt-2 hover:text-[#6B2638] transition">
+                    <p className="text-gray-400 mt-2 hover:text-[#C8A45D] transition">
                         @panjabstudiosuk
                     </p>
                 </a>

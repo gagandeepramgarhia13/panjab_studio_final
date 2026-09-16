@@ -31,7 +31,7 @@ const Hero = () => {
         <div className="bg-white/10 backdrop-blur-md border border-white/10 px-2 py-3 rounded-md flex flex-col items-center gap-3">
           {followLinks.map((link) => (
             <a key={link.id} href={link.url} target="_blank" rel="noopener noreferrer"
-              className="text-white text-sm hover:text-[#6B2638] transition">
+              className="text-white text-sm hover:text-[#C8A45D] transition">
               <i className={link.icon}></i>
             </a>
           ))}
@@ -93,8 +93,8 @@ const Hero = () => {
         >
           {!contactOpen && (
             <>
-              <span className="absolute inset-0 rounded-full bg-[#6B2638]/60 animate-ping"></span>
-              <span className="absolute inset-0 rounded-full bg-[#6B2638]/40 animate-ping [animation-delay:0.5s]"></span>
+              <span className="absolute inset-0 rounded-full bg-[#C8A45D]/60 animate-ping"></span>
+              <span className="absolute inset-0 rounded-full bg-[#C8A45D]/40 animate-ping [animation-delay:0.5s]"></span>
             </>
           )}
           <i className={`relative z-10 text-lg sm:text-2xl ${contactOpen ? "ri-close-line" : "ri-phone-line animate-[wiggle_2s_ease-in-out_infinite]"}`}></i>

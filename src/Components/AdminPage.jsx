@@ -14,7 +14,7 @@ function Toast({ toasts }) {
     <div className="fixed bottom-6 right-6 z-[9999] flex flex-col gap-2 pointer-events-none">
       {toasts.map((t) => (
         <div key={t.id} className={`flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium shadow-2xl backdrop-blur-xl border
-          ${t.type === "success" ? "bg-[#6B2638]/90 text-white border-[#6B2638]/50" : "bg-red-500/90 text-white border-red-400/50"}`}>
+          ${t.type === "success" ? "bg-[#C8A45D]/90 text-black border-[#C8A45D]/50" : "bg-red-500/90 text-white border-red-400/50"}`}>
           {t.type === "success" ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
           {t.message}
         </div>
@@ -38,15 +38,15 @@ function DropZone({ accept, label, icon: Icon, onFiles, uploading }) {
       className={`relative flex flex-col items-center justify-center gap-3 border-2 border-dashed
         rounded-2xl p-10 transition-all duration-300 backdrop-blur-xl
         ${uploading ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}
-        ${dragging ? "border-[#6B2638] bg-[#6B2638]/10 scale-[1.01]"
-          : "border-white/20 bg-white/5 hover:border-[#6B2638]/60 hover:bg-white/10"}`}
+        ${dragging ? "border-[#C8A45D] bg-[#C8A45D]/10 scale-[1.01]"
+          : "border-white/20 bg-white/5 hover:border-[#C8A45D]/60 hover:bg-white/10"}`}
     >
       <input ref={inputRef} type="file" accept={accept} multiple className="hidden"
         onChange={(e) => handle(e.target.files)} />
-      <div className="w-16 h-16 rounded-full bg-[#6B2638]/15 backdrop-blur-xl border border-[#6B2638]/30 flex items-center justify-center">
+      <div className="w-16 h-16 rounded-full bg-[#C8A45D]/15 backdrop-blur-xl border border-[#C8A45D]/30 flex items-center justify-center">
         {uploading
-          ? <div className="w-7 h-7 border-2 border-[#6B2638] border-t-transparent rounded-full animate-spin" />
-          : <Icon size={28} className="text-[#6B2638]" />}
+          ? <div className="w-7 h-7 border-2 border-[#C8A45D] border-t-transparent rounded-full animate-spin" />
+          : <Icon size={28} className="text-[#C8A45D]" />}
       </div>
       <div className="text-center">
         <p className="text-white font-semibold text-sm">
@@ -56,7 +56,7 @@ function DropZone({ accept, label, icon: Icon, onFiles, uploading }) {
           {uploading ? "Please wait" : "or click to browse from your device"}
         </p>
       </div>
-      <span className="text-xs text-[#6B2638]/80 bg-[#6B2638]/10 border border-[#6B2638]/20 px-3 py-1 rounded-full">
+      <span className="text-xs text-[#C8A45D]/80 bg-[#C8A45D]/10 border border-[#C8A45D]/20 px-3 py-1 rounded-full">
         {uploading ? "Uploading…" : accept.split(",").join(" · ")}
       </span>
     </div>
@@ -66,17 +66,17 @@ function DropZone({ accept, label, icon: Icon, onFiles, uploading }) {
 // ── Media Card ───────────────────────────────────────────────────────────────
 function MediaCard({ item, onDelete, onPreview }) {
   return (
-    <div className="group relative rounded-2xl overflow-hidden bg-white/10 backdrop-blur-xl border border-white/20 hover:border-[#6B2638]/50 transition-all duration-300 shadow-lg">
+    <div className="group relative rounded-2xl overflow-hidden bg-white/10 backdrop-blur-xl border border-white/20 hover:border-[#C8A45D]/50 transition-all duration-300 shadow-lg">
       <div className="aspect-square relative">
         {item.type === "photo"
           ? <img src={item.url} alt={item.name} className="w-full h-full object-cover" />
           : <div className="w-full h-full bg-black/40 flex flex-col items-center justify-center gap-2">
-            <Film size={32} className="text-[#6B2638]" />
+            <Film size={32} className="text-[#C8A45D]" />
             <span className="text-white/50 text-xs px-2 text-center truncate w-full">{item.name}</span>
           </div>}
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3">
           <button onClick={() => onPreview(item)}
-            className="w-9 h-9 rounded-full bg-[#6B2638] flex items-center justify-center hover:bg-[#85354A] transition-colors">
+            className="w-9 h-9 rounded-full bg-[#C8A45D] flex items-center justify-center hover:bg-[#E0C27A] transition-colors">
             <Eye size={16} className="text-black" />
           </button>
           <button onClick={() => onDelete(item)}
@@ -115,12 +115,12 @@ function PreviewModal({ item, onClose }) {
 function MessageCard({ msg, onMarkRead, onDelete }) {
   return (
     <div className={`relative rounded-2xl border backdrop-blur-xl p-5 transition-all duration-300 shadow-lg
-      ${msg.is_read ? "bg-white/10 border-white/20" : "bg-[#6B2638]/15 border-[#6B2638]/40"}`}>
+      ${msg.is_read ? "bg-white/10 border-white/20" : "bg-[#C8A45D]/15 border-[#C8A45D]/40"}`}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2">
-          {!msg.is_read && <span className="w-2 h-2 rounded-full bg-[#6B2638]" />}
+          {!msg.is_read && <span className="w-2 h-2 rounded-full bg-[#C8A45D]" />}
           <p className="text-white font-semibold text-sm flex items-center gap-2">
-            <User size={14} className="text-[#6B2638]" /> {msg.name}
+            <User size={14} className="text-[#C8A45D]" /> {msg.name}
           </p>
         </div>
         <p className="text-white/40 text-xs whitespace-nowrap">
@@ -135,7 +135,7 @@ function MessageCard({ msg, onMarkRead, onDelete }) {
       <div className="flex items-center gap-2 mt-4">
         {!msg.is_read && (
           <button onClick={() => onMarkRead(msg.id)}
-            className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-[#6B2638] text-white hover:bg-[#85354A] transition-colors">
+            className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-[#C8A45D] text-black hover:bg-[#E0C27A] transition-colors">
             <MailOpen size={13} /> Mark as read
           </button>
         )}
@@ -156,25 +156,25 @@ function MessageCard({ msg, onMarkRead, onDelete }) {
 // too, so this UI is a convenience, not the real security boundary.
 function TestimonialCard({ item, onApprove, onReject, onRestore, onTogglePublish, onDelete }) {
   const statusStyles = {
-    pending: "bg-[#6B2638]/15 border-[#6B2638]/40 text-[#6B2638]",
+    pending: "bg-[#C8A45D]/15 border-[#C8A45D]/40 text-[#C8A45D]",
     approved: "bg-green-500/15 border-green-500/40 text-green-400",
     rejected: "bg-red-500/15 border-red-500/40 text-red-400",
   };
 
   return (
     <div className={`relative rounded-2xl border backdrop-blur-xl p-5 transition-all duration-300 shadow-lg
-      ${item.status === "pending" ? "bg-[#6B2638]/10 border-[#6B2638]/30" : "bg-white/10 border-white/20"}`}>
+      ${item.status === "pending" ? "bg-[#C8A45D]/10 border-[#C8A45D]/30" : "bg-white/10 border-white/20"}`}>
 
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-2 flex-wrap">
           <p className="text-white font-semibold text-sm flex items-center gap-2">
-            <User size={14} className="text-[#6B2638]" /> {item.name}
+            <User size={14} className="text-[#C8A45D]" /> {item.name}
           </p>
           <span className={`text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full border ${statusStyles[item.status] || statusStyles.pending}`}>
             {item.status}
           </span>
           {item.published && (
-            <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full border bg-[#6B2638] text-white border-[#6B2638]">
+            <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full border bg-[#C8A45D] text-black border-[#C8A45D]">
               live on site
             </span>
           )}
@@ -186,7 +186,7 @@ function TestimonialCard({ item, onApprove, onReject, onRestore, onTogglePublish
 
       <div className="flex items-center gap-2 mt-2">
         {[...Array(5)].map((_, i) => (
-          <Star key={i} size={13} className={i < item.rating ? "fill-[#6B2638] text-[#6B2638]" : "text-white/20"} />
+          <Star key={i} size={13} className={i < item.rating ? "fill-[#C8A45D] text-[#C8A45D]" : "text-white/20"} />
         ))}
         {item.email && (
           <span className="flex items-center gap-1 text-white/40 text-xs ml-2">
@@ -209,7 +209,7 @@ function TestimonialCard({ item, onApprove, onReject, onRestore, onTogglePublish
             className={`flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg transition-colors border
               ${item.published
                 ? "bg-white/10 text-white/70 hover:bg-white/20 border-white/10"
-                : "bg-[#6B2638]/20 text-[#6B2638] hover:bg-[#6B2638]/30 border-[#6B2638]/30"}`}>
+                : "bg-[#C8A45D]/20 text-[#C8A45D] hover:bg-[#C8A45D]/30 border-[#C8A45D]/30"}`}>
             <Star size={13} /> {item.published ? "Unpublish" : "Publish"}
           </button>
         )}
@@ -238,7 +238,7 @@ function TestimonialCard({ item, onApprove, onReject, onRestore, onTogglePublish
 function StatCard({ label, value, icon: Icon }) {
   return (
     <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 flex items-center gap-4 shadow-lg">
-      <div className="w-12 h-12 rounded-xl bg-[#6B2638] flex items-center justify-center shadow-md">
+      <div className="w-12 h-12 rounded-xl bg-[#C8A45D] flex items-center justify-center shadow-md">
         <Icon size={22} className="text-black" />
       </div>
       <div>
@@ -256,11 +256,11 @@ function NavItem({ icon: Icon, label, active, onClick, badge, children, expandab
       <button
         onClick={expandable ? onToggle : onClick}
         className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
-          ${active ? "bg-[#6B2638] text-white shadow-md" : "text-white/60 hover:text-white hover:bg-white/10"}`}>
+          ${active ? "bg-[#C8A45D] text-black shadow-md" : "text-white/60 hover:text-white hover:bg-white/10"}`}>
         <Icon size={18} />
         <span>{label}</span>
         {badge > 0 && !active && (
-          <span className="ml-auto bg-[#6B2638] text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">
+          <span className="ml-auto bg-[#C8A45D] text-black text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">
             {badge}
           </span>
         )}
@@ -283,7 +283,7 @@ function SubNavItem({ label, active, onClick }) {
     <button
       onClick={onClick}
       className={`w-full text-left px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200
-        ${active ? "bg-[#6B2638]/20 text-[#6B2638]" : "text-white/40 hover:text-white hover:bg-white/5"}`}>
+        ${active ? "bg-[#C8A45D]/20 text-[#C8A45D]" : "text-white/40 hover:text-white hover:bg-white/5"}`}>
       {label}
     </button>
   );
@@ -381,7 +381,7 @@ function CategorySection({ category, toast, uploading, setUploading }) {
       <div>
         <h2 className="text-white text-2xl font-bold">{category.label}</h2>
         <p className="text-white/50 text-sm mt-1">
-          {items.length} file{items.length !== 1 ? "s" : ""} · saved to <span className="text-[#6B2638]">{BUCKETS[category.bucket]}</span> bucket
+          {items.length} file{items.length !== 1 ? "s" : ""} · saved to <span className="text-[#C8A45D]">{BUCKETS[category.bucket]}</span> bucket
         </p>
       </div>
 
@@ -395,7 +395,7 @@ function CategorySection({ category, toast, uploading, setUploading }) {
 
       {loading ? (
         <div className="flex justify-center py-10">
-          <div className="w-8 h-8 border-2 border-[#6B2638] border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-2 border-[#C8A45D] border-t-transparent rounded-full animate-spin" />
         </div>
       ) : items.length === 0 ? (
         <div className="text-center py-16 text-white/30">
@@ -578,7 +578,7 @@ export default function AdminPage() {
   return (
     <div className="relative min-h-screen flex font-sans bg-[var(--background)]">
 
-      <div className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#6B2638] to-transparent z-[9999]" />
+      <div className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#C8A45D] to-transparent z-[9999]" />
 
       {/* Sidebar */}
       <aside className={`fixed md:static top-0 left-0 h-full w-64 bg-white/10 backdrop-blur-2xl border-r border-white/10
@@ -596,7 +596,7 @@ export default function AdminPage() {
             </div>
             <div>
               <p className="text-white font-bold text-sm leading-tight">Panjab Studio</p>
-              <p className="text-[#6B2638] text-xs">Admin Panel</p>
+              <p className="text-[#C8A45D] text-xs">Admin Panel</p>
             </div>
           </div>
         </div>
@@ -680,12 +680,12 @@ export default function AdminPage() {
           </div>
           <div className="flex items-center gap-3">
             {uploading && (
-              <div className="flex items-center gap-2 text-[#6B2638] text-xs">
-                <div className="w-3 h-3 border-2 border-[#6B2638] border-t-transparent rounded-full animate-spin" />
+              <div className="flex items-center gap-2 text-[#C8A45D] text-xs">
+                <div className="w-3 h-3 border-2 border-[#C8A45D] border-t-transparent rounded-full animate-spin" />
                 Uploading to cloud…
               </div>
             )}
-            <div className="flex items-center gap-2 text-[#6B2638]/70 text-xs">
+            <div className="flex items-center gap-2 text-[#C8A45D]/70 text-xs">
               <span>Punjab Studio</span>
             </div>
             {/* <div className="flex items-center">
@@ -702,7 +702,7 @@ export default function AdminPage() {
         <main className="flex-1 p-6 overflow-auto">
           {loading ? (
             <div className="flex flex-col items-center justify-center h-64 gap-4">
-              <div className="w-10 h-10 border-2 border-[#6B2638] border-t-transparent rounded-full animate-spin" />
+              <div className="w-10 h-10 border-2 border-[#C8A45D] border-t-transparent rounded-full animate-spin" />
               <p className="text-white/50 text-sm">Loading media from cloud…</p>
             </div>
           ) : (
@@ -723,15 +723,15 @@ export default function AdminPage() {
                   <div>
                     <h3 className="text-white/70 text-xs uppercase tracking-widest mb-4">Quick Upload</h3>
                     <div className="grid md:grid-cols-2 gap-4">
-                      <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 hover:border-[#6B2638]/50 hover:bg-white/15 transition-all cursor-pointer shadow-lg"
+                      <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 hover:border-[#C8A45D]/50 hover:bg-white/15 transition-all cursor-pointer shadow-lg"
                         onClick={() => { setPhotoExpanded(true); handleSection("photos"); }}>
-                        <Camera size={24} className="text-[#6B2638] mb-3" />
+                        <Camera size={24} className="text-[#C8A45D] mb-3" />
                         <p className="text-white font-semibold text-sm">Upload Photos</p>
                         <p className="text-white/50 text-xs mt-1">General gallery · Photography page</p>
                       </div>
-                      <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 hover:border-[#6B2638]/50 hover:bg-white/15 transition-all cursor-pointer shadow-lg"
+                      <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-5 hover:border-[#C8A45D]/50 hover:bg-white/15 transition-all cursor-pointer shadow-lg"
                         onClick={() => { setVideoExpanded(true); handleSection("videos"); }}>
-                        <Film size={24} className="text-[#6B2638] mb-3" />
+                        <Film size={24} className="text-[#C8A45D] mb-3" />
                         <p className="text-white font-semibold text-sm">Upload Videos</p>
                         <p className="text-white/50 text-xs mt-1">General gallery · Cinematography page</p>
                       </div>

@@ -18,6 +18,12 @@ export default {
   },
   theme: {
     extend: {
+      fontFamily: {
+        // Sophisticated editorial serif for headings, clean modern sans
+        // for body copy — the "luxury wedding studio" typography pairing.
+        display: ["\"Cormorant Garamond\"", "Georgia", "serif"],
+        sans: ["Manrope", "system-ui", "sans-serif"],
+      },
       colors: {
         beige: "#F6F0E1",
         dark_beige: "#E8D9C0",
@@ -25,14 +31,10 @@ export default {
         dark_brown: "#5A4B38",
         primary_green: "#1F3D2B",
         sage_green: "#6B8F71",
-        // 🔥 New brand direction — Burgundy + Dusty Rose (replaces the old
-        // gold system). `gold` is kept as an alias so it still resolves
-        // correctly if referenced anywhere legacy.
-        gold: "#6B2638",
-        burgundy: "#6B2638",
-        "burgundy-hover": "#85354A",
-        "dusty-rose": "#B9828C",
-        "soft-rose": "#D8BFC2",
+        // 🔥 Dark Cinematic Luxury — Champagne Gold accent system.
+        gold: "#C8A45D",
+        "gold-bright": "#E0C27A",
+        "gold-soft": "#A8894D",
         ivory: "#F8F5F0",
         text_color: "#e2be6a",
       },

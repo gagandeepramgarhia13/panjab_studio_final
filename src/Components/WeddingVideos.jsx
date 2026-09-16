@@ -62,13 +62,13 @@ export default function WeddingVideos() {
         <SectionGlow variant="light" />
         {loading ? (
           <div className="relative z-10 flex flex-col items-center justify-center py-24 gap-4">
-            <div className="w-10 h-10 border-2 border-[#6B2638] border-t-transparent rounded-full animate-spin" />
+            <div className="w-10 h-10 border-2 border-[#C8A45D] border-t-transparent rounded-full animate-spin" />
             <p className="text-white/40 text-sm">Loading videos…</p>
           </div>
         ) : videos.length === 0 ? (
           <div className="relative z-10 text-center py-24 text-white/30">
             <p className="text-lg">No videos uploaded yet.</p>
-            <p className="text-sm mt-2">Upload to the <span className="text-[#6B2638]">wedding-videos</span> bucket in Admin.</p>
+            <p className="text-sm mt-2">Upload to the <span className="text-[#C8A45D]">wedding-videos</span> bucket in Admin.</p>
           </div>
         ) : (
           <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -78,7 +78,7 @@ export default function WeddingVideos() {
                 <video ref={(el) => (videoRefs.current[index] = el)} src={vid.src}
                   className="w-full h-[300px] object-cover transition duration-500"
                   muted={activeIndex !== index} loop preload="metadata" controls={activeIndex === index} />
-                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ boxShadow: "inset 0 0 0 2px rgba(107,38,56,0.7)" }} />
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ boxShadow: "inset 0 0 0 2px rgba(200,164,93,0.7)" }} />
                 {activeIndex !== index && (
                   <>
                     <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition"></div>

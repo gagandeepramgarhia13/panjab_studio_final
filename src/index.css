@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 /* ============================================================================
-   THEME TOKENS — Burgundy + Dusty Rose + Ivory + Charcoal
+   THEME TOKENS — Dark Cinematic Luxury (Black + Champagne Gold) / White
+   Editorial Luxury (Warm White + Champagne Gold). Only two themes now.
    Centralized design tokens so components reference `var(--x)` instead of
    hardcoded colors. `data-theme` is stamped on <html> by the inline script
    in index.html (before first paint, to avoid a flash) and kept in sync by
@@ -12,40 +13,44 @@
    ============================================================================ */
 :root,
 :root[data-theme="dark"] {
-  --background: #09090b;
-  --background-secondary: #111014;
-  --surface: #161216;
-  --surface-glass: rgba(22, 18, 22, 0.55);
-  --text-primary: #f6f0ea;
-  --text-secondary: #afa3a6;
-  --accent: #6b2638;
-  --accent-hover: #85354a;
-  --accent-soft: #b9828c;
-  --accent-softer: #d8bfc2;
-  --border: rgba(246, 240, 234, 0.1);
-  --border-strong: rgba(246, 240, 234, 0.18);
+  --background: #070707;
+  --background-secondary: #0d0d0d;
+  --surface: #141414;
+  --surface-elevated: #1a1a1a;
+  --surface-glass: rgba(20, 20, 20, 0.55);
+  --text-primary: #f5f2ea;
+  --text-secondary: #b5b0a7;
+  --text-muted: #858078;
+  --accent: #c8a45d;
+  --accent-hover: #e0c27a;
+  --accent-soft: #a8894d;
+  --accent-softer: #d8c79f;
+  --border: rgba(245, 242, 234, 0.1);
+  --border-strong: rgba(245, 242, 234, 0.18);
   --shadow: rgba(0, 0, 0, 0.55);
-  --glow: rgba(133, 53, 74, 0.35);
-  --glow-soft: rgba(185, 130, 140, 0.2);
+  --glow: rgba(200, 164, 93, 0.3);
+  --glow-soft: rgba(200, 164, 93, 0.14);
   color-scheme: dark;
 }
 
 :root[data-theme="light"] {
-  --background: #f7f2ee;
-  --background-secondary: #efe7e3;
+  --background: #f7f5f0;
+  --background-secondary: #efebe3;
   --surface: #ffffff;
+  --surface-elevated: #ffffff;
   --surface-glass: rgba(255, 255, 255, 0.6);
-  --text-primary: #211b1d;
-  --text-secondary: #75696b;
-  --accent: #6b2638;
-  --accent-hover: #85354a;
-  --accent-soft: #b9828c;
-  --accent-softer: #d8bfc2;
-  --border: rgba(33, 27, 29, 0.1);
-  --border-strong: rgba(33, 27, 29, 0.16);
-  --shadow: rgba(120, 90, 95, 0.18);
-  --glow: rgba(185, 130, 140, 0.28);
-  --glow-soft: rgba(185, 130, 140, 0.16);
+  --text-primary: #171717;
+  --text-secondary: #625f58;
+  --text-muted: #858078;
+  --accent: #b08a45;
+  --accent-hover: #c6a15a;
+  --accent-soft: #d8c79f;
+  --accent-softer: #ead9b6;
+  --border: rgba(23, 23, 23, 0.1);
+  --border-strong: rgba(23, 23, 23, 0.16);
+  --shadow: rgba(120, 100, 70, 0.15);
+  --glow: rgba(176, 138, 69, 0.22);
+  --glow-soft: rgba(176, 138, 69, 0.12);
   color-scheme: light;
 }
 
@@ -110,7 +115,7 @@ body * {
 }
 
 /* 🔥 3D accent text effect for main headings — a soft layered depth + glow
-   (dusty-rose/burgundy now, was gold), used sitewide so hero/section titles
+   (champagne-gold), used sitewide so hero/section titles
    share the same premium feel. Works on both themes via CSS variables. Also
    carries the subtle "3D hover" requirement: a gentle perspective tilt on
    hover/mouse-over, kept small and elegant (never shaky or aggressive), and
@@ -144,13 +149,38 @@ body * {
   perspective: 1200px;
 }
 
+/* ============================================================================
+   TYPOGRAPHY — Cormorant Garamond (editorial serif) for headings, Manrope
+   (clean modern sans) for body copy. Applied globally so every heading gets
+   the premium display treatment without touching each component, while
+   utility classes (font-sans / font-display) remain available for
+   overrides. Letter-spacing/line-height tuned for a luxury, high-contrast
+   hierarchy rather than tight default browser spacing.
+   ============================================================================ */
+body {
+  font-family: "Manrope", system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+}
+
+h1 { letter-spacing: 0.005em; line-height: 1.08; }
+
+p {
+  line-height: 1.7;
+}
+
 body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   /* 🔥 Theme-aware base — deep cinematic charcoal in dark mode, warm ivory
-     editorial in light mode, both with a very subtle burgundy/rose ambient
+     editorial in light mode, both with a very subtle champagne-gold ambient
      glow at the top. Reacts instantly to data-theme via the CSS variables
      above, so any section without its own explicit background follows the
      active theme automatically. */

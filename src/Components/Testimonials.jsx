@@ -57,7 +57,7 @@ function TestimonialForm() {
           </p>
           <button
             onClick={() => setStatus("idle")}
-            className="mt-5 text-sm text-[#6B2638] hover:underline"
+            className="mt-5 text-sm text-[#C8A45D] hover:underline"
           >
             Submit another
           </button>
@@ -72,7 +72,7 @@ function TestimonialForm() {
               value={form.name}
               onChange={handleChange}
               placeholder="Your Name"
-              className="w-full px-4 py-3 rounded-xl border border-white/15 bg-white/5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#6B2638] transition-colors"
+              className="w-full px-4 py-3 rounded-xl border border-white/15 bg-white/5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#C8A45D] transition-colors"
             />
             <input
               type="email"
@@ -80,7 +80,7 @@ function TestimonialForm() {
               value={form.email}
               onChange={handleChange}
               placeholder="Your Email (optional)"
-              className="w-full px-4 py-3 rounded-xl border border-white/15 bg-white/5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#6B2638] transition-colors"
+              className="w-full px-4 py-3 rounded-xl border border-white/15 bg-white/5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#C8A45D] transition-colors"
             />
           </div>
 
@@ -97,7 +97,7 @@ function TestimonialForm() {
               >
                 <Star
                   size={26}
-                  className={(hoverRating || rating) >= n ? "fill-[#6B2638] text-[#6B2638]" : "text-gray-600"}
+                  className={(hoverRating || rating) >= n ? "fill-[#C8A45D] text-[#C8A45D]" : "text-gray-600"}
                 />
               </button>
             ))}
@@ -110,13 +110,13 @@ function TestimonialForm() {
             value={form.message}
             onChange={handleChange}
             placeholder="Tell us about your experience…"
-            className="w-full px-4 py-3 rounded-xl border border-white/15 bg-white/5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#6B2638] transition-colors"
+            className="w-full px-4 py-3 rounded-xl border border-white/15 bg-white/5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#C8A45D] transition-colors"
           ></textarea>
 
           <button
             type="submit"
             disabled={status === "sending"}
-            className="w-full py-3 bg-[#6B2638] text-white rounded-xl font-semibold text-sm hover:bg-white transition-all duration-300 disabled:opacity-60 hover:-translate-y-0.5"
+            className="w-full py-3 bg-[#C8A45D] text-black rounded-xl font-semibold text-sm hover:bg-white transition-all duration-300 disabled:opacity-60 hover:-translate-y-0.5"
           >
             {status === "sending" ? "Submitting…" : "Submit Testimonial →"}
           </button>
@@ -228,7 +228,7 @@ export default function Testimonials() {
               key={index}
               data-aos="fade-up"
               data-aos-delay={index * 80}
-              className="rounded-3xl p-6 md:p-8 bg-white/[0.04] backdrop-blur-md ring-1 ring-white/10 text-gray-200 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.5)] hover:shadow-[0_25px_55px_-15px_rgba(107,38,56,0.25)] transition-all duration-500 hover:-translate-y-1"
+              className="rounded-3xl p-6 md:p-8 bg-white/[0.04] backdrop-blur-md ring-1 ring-white/10 text-gray-200 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.5)] hover:shadow-[0_25px_55px_-15px_rgba(200,164,93,0.25)] transition-all duration-500 hover:-translate-y-1"
             >
 
               {/* ⭐ Stars */}
@@ -261,11 +261,11 @@ export default function Testimonials() {
                   key={item.id}
                   data-aos="fade-up"
                   data-aos-delay={index * 80}
-                  className="rounded-3xl p-6 md:p-8 bg-white/[0.04] backdrop-blur-md ring-1 ring-white/10 text-gray-200 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.5)] hover:shadow-[0_25px_55px_-15px_rgba(107,38,56,0.25)] transition-all duration-500 hover:-translate-y-1"
+                  className="rounded-3xl p-6 md:p-8 bg-white/[0.04] backdrop-blur-md ring-1 ring-white/10 text-gray-200 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.5)] hover:shadow-[0_25px_55px_-15px_rgba(200,164,93,0.25)] transition-all duration-500 hover:-translate-y-1"
                 >
                   <div className="mb-3 flex items-center gap-1">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={15} className={i < item.rating ? "fill-[#6B2638] text-[#6B2638]" : "text-gray-600"} />
+                      <Star key={i} size={15} className={i < item.rating ? "fill-[#C8A45D] text-[#C8A45D]" : "text-gray-600"} />
                     ))}
                   </div>
                   <p className="text-sm md:text-base leading-relaxed italic">
