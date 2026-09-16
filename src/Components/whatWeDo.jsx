@@ -15,22 +15,24 @@ export default function WhatWeDo() {
       <div className="relative z-10">
 
         {/* Grid Section — 4 cards directly after the Hero: intentionally
-            border-free in every state (normal + hover). Depth/interest comes
-            entirely from the glass background, lift, gold glow and TiltCard's
-            3D tilt — never from an outline. */}
-        <div className="hidden sm:grid max-w-6xl mx-auto grid-cols-2 lg:grid-cols-4 gap-6 tilt-perspective">
+            border-free in every state (normal + hover), and kept simple —
+            no visible box/shadow at rest, only a soft glass glow on hover.
+            Depth/interest comes entirely from that hover glow, lift and
+            TiltCard's 3D tilt — never from an outline. */}
+        <div className="hidden sm:grid max-w-6xl mx-auto grid-cols-2 lg:grid-cols-4 gap-6 mt-16 sm:mt-20 tilt-perspective">
           {whatWeDo.map((item, index) => (
             <TiltCard
               key={index}
               max={6}
               data-aos="fade-up"
-              data-aos-delay={index * 100}
-              className="group aspect-square flex flex-col items-center justify-center text-center p-6 rounded-2xl bg-white/[0.03] backdrop-blur-md hover:bg-white/[0.07] shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:shadow-[0_25px_55px_-15px_rgba(200,169,106,0.35)] hover:-translate-y-2"
+              data-aos-duration="700"
+              data-aos-delay={index * 120}
+              className="group aspect-square flex flex-col items-center justify-center text-center p-6 rounded-2xl bg-transparent hover:bg-white/[0.05] hover:backdrop-blur-md hover:shadow-[0_25px_55px_-15px_rgba(200,169,106,0.3)] hover:-translate-y-2"
             >
               <img
                 src={item.logo}
                 alt={item.title}
-                className="w-14 h-14 object-contain mb-4 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3"
+                className="w-14 h-14 object-contain mb-4 brightness-0 invert transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3"
               />
               <h3 className="text-lg font-semibold mb-2 text-white">
                 {item.title}
