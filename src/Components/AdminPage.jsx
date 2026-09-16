@@ -149,7 +149,12 @@ function MessageCard({ msg, onMarkRead, onDelete }) {
 }
 
 // ── Testimonial Card ─────────────────────────────────────────────────────────
-function TestimonialCard({ item, onApprove, onReject, onRestore, onDelete }) {
+// Approve and Publish are two separate, deliberate steps (same pattern as the
+// Kohinoor Transport admin panel): Approve confirms it's a real customer,
+// Publish is what actually puts it live on the website. A testimonial can
+// only ever be published while it is approved — the database enforces this
+// too, so this UI is a convenience, not the real security boundary.
+function TestimonialCard({ item, onApprove, onReject, onRestore, onTogglePublish, onDelete }) {
   const statusStyles = {
     pending: "bg-[#C8A96A]/15 border-[#C8A96A]/40 text-[#C8A96A]",
     approved: "bg-green-500/15 border-green-500/40 text-green-400",
@@ -161,13 +166,18 @@ function TestimonialCard({ item, onApprove, onReject, onRestore, onDelete }) {
       ${item.status === "pending" ? "bg-[#C8A96A]/10 border-[#C8A96A]/30" : "bg-white/10 border-white/20"}`}>
 
       <div className="flex items-start justify-between gap-3 flex-wrap">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <p className="text-white font-semibold text-sm flex items-center gap-2">
             <User size={14} className="text-[#C8A96A]" /> {item.name}
           </p>
           <span className={`text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full border ${statusStyles[item.status] || statusStyles.pending}`}>
             {item.status}
           </span>
+          {item.published && (
+            <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full border bg-[#C8A96A] text-black border-[#C8A96A]">
+              live on site
+            </span>
+          )}
         </div>
         <p className="text-white/40 text-xs whitespace-nowrap">
           {new Date(item.created_at).toLocaleString()}
@@ -188,28 +198,31 @@ function TestimonialCard({ item, onApprove, onReject, onRestore, onDelete }) {
       <p className="text-white/90 text-sm mt-3 leading-relaxed whitespace-pre-wrap">“{item.message}”</p>
 
       <div className="flex flex-wrap items-center gap-2 mt-4">
-        {item.status === "pending" && (
-          <>
-            <button onClick={() => onApprove(item.id)}
-              className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-green-500/20 text-green-300 hover:bg-green-500/30 transition-colors border border-green-400/20">
-              <ThumbsUp size={13} /> Approve
-            </button>
-            <button onClick={() => onReject(item.id)}
-              className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-red-500/15 text-red-300 hover:bg-red-500/25 transition-colors border border-red-400/20">
-              <ThumbsDown size={13} /> Reject
-            </button>
-          </>
-        )}
-        {item.status === "approved" && (
-          <button onClick={() => onRestore(item.id)}
-            className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 transition-colors border border-white/10">
-            <RotateCcw size={13} /> Unpublish
+        {item.status !== "approved" && (
+          <button onClick={() => onApprove(item.id)}
+            className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-green-500/20 text-green-300 hover:bg-green-500/30 transition-colors border border-green-400/20">
+            <ThumbsUp size={13} /> Approve
           </button>
         )}
-        {item.status === "rejected" && (
+        {item.status === "approved" && (
+          <button onClick={() => onTogglePublish(item.id, item.published)}
+            className={`flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg transition-colors border
+              ${item.published
+                ? "bg-white/10 text-white/70 hover:bg-white/20 border-white/10"
+                : "bg-[#C8A96A]/20 text-[#C8A96A] hover:bg-[#C8A96A]/30 border-[#C8A96A]/30"}`}>
+            <Star size={13} /> {item.published ? "Unpublish" : "Publish"}
+          </button>
+        )}
+        {item.status !== "rejected" && (
+          <button onClick={() => onReject(item.id)}
+            className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-red-500/15 text-red-300 hover:bg-red-500/25 transition-colors border border-red-400/20">
+            <ThumbsDown size={13} /> Reject
+          </button>
+        )}
+        {item.status !== "pending" && (
           <button onClick={() => onRestore(item.id)}
             className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 transition-colors border border-white/10">
-            <RotateCcw size={13} /> Move back to pending
+            <RotateCcw size={13} /> Reset to pending
           </button>
         )}
         <button onClick={() => onDelete(item.id)}
@@ -512,20 +525,39 @@ export default function AdminPage() {
     toast("Message deleted");
   }, [toast]);
 
-  const updateTestimonialStatus = useCallback(async (id, status) => {
-    const { error } = await supabase.from("testimonials").update({ status }).eq("id", id);
-    if (error) { toast("Failed to update testimonial", "error"); return; }
-    setTestimonials((t) => t.map((x) => (x.id === id ? { ...x, status } : x)));
-    toast(
-      status === "approved" ? "Testimonial published ✅"
-        : status === "rejected" ? "Testimonial rejected"
-        : "Moved back to pending"
-    );
+  // Approve confirms it's a real customer; it does NOT put it on the site.
+  const approveTestimonial = useCallback(async (id) => {
+    const { error } = await supabase.from("testimonials").update({ status: "approved" }).eq("id", id);
+    if (error) { toast("Failed to approve testimonial", "error"); return; }
+    setTestimonials((t) => t.map((x) => (x.id === id ? { ...x, status: "approved" } : x)));
+    toast("Testimonial approved — publish it when you're ready");
   }, [toast]);
 
-  const approveTestimonial = useCallback((id) => updateTestimonialStatus(id, "approved"), [updateTestimonialStatus]);
-  const rejectTestimonial = useCallback((id) => updateTestimonialStatus(id, "rejected"), [updateTestimonialStatus]);
-  const restoreTestimonial = useCallback((id) => updateTestimonialStatus(id, "pending"), [updateTestimonialStatus]);
+  // Reject also takes it off the site immediately (published is forced to false
+  // by the database trigger, mirrored here so the UI updates instantly).
+  const rejectTestimonial = useCallback(async (id) => {
+    const { error } = await supabase.from("testimonials").update({ status: "rejected", published: false }).eq("id", id);
+    if (error) { toast("Failed to reject testimonial", "error"); return; }
+    setTestimonials((t) => t.map((x) => (x.id === id ? { ...x, status: "rejected", published: false } : x)));
+    toast("Testimonial rejected");
+  }, [toast]);
+
+  const restoreTestimonial = useCallback(async (id) => {
+    const { error } = await supabase.from("testimonials").update({ status: "pending", published: false }).eq("id", id);
+    if (error) { toast("Failed to update testimonial", "error"); return; }
+    setTestimonials((t) => t.map((x) => (x.id === id ? { ...x, status: "pending", published: false } : x)));
+    toast("Moved back to pending");
+  }, [toast]);
+
+  // Publish / unpublish — only ever meaningful on an approved testimonial;
+  // the database refuses to publish anything that isn't.
+  const toggleTestimonialPublish = useCallback(async (id, currentlyPublished) => {
+    const published = !currentlyPublished;
+    const { error } = await supabase.from("testimonials").update({ published }).eq("id", id);
+    if (error) { toast("Failed to update testimonial", "error"); return; }
+    setTestimonials((t) => t.map((x) => (x.id === id ? { ...x, published } : x)));
+    toast(published ? "Testimonial published ✅ — now live on the website" : "Testimonial unpublished");
+  }, [toast]);
 
   const deleteTestimonial = useCallback(async (id) => {
     const { error } = await supabase.from("testimonials").delete().eq("id", id);
@@ -767,7 +799,8 @@ export default function AdminPage() {
                     <p className="text-white/50 text-sm mt-1">
                       {testimonials.length} submission{testimonials.length !== 1 ? "s" : ""} ·{" "}
                       {testimonials.filter(t => t.status === "pending").length} waiting for review ·{" "}
-                      approved ones appear on the public Testimonials page automatically.
+                      {testimonials.filter(t => t.published).length} live on the site ·{" "}
+                      approve first, then publish to put a testimonial on the website.
                     </p>
                   </div>
                   {testimonials.length === 0
@@ -780,6 +813,7 @@ export default function AdminPage() {
                           onApprove={approveTestimonial}
                           onReject={rejectTestimonial}
                           onRestore={restoreTestimonial}
+                          onTogglePublish={toggleTestimonialPublish}
                           onDelete={deleteTestimonial}
                         />
                       ))}

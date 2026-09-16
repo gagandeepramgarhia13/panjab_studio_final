@@ -165,6 +165,7 @@ export default function Testimonials() {
         .from("testimonials")
         .select("*")
         .eq("status", "approved")
+        .eq("published", true)
         .order("created_at", { ascending: false });
       if (!error && data) setApproved(data);
       setLoadingApproved(false);
