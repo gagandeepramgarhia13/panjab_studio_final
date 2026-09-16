@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { supabase } from "../supabase";
 import { followLinks } from "../utility/data";
 import Button from "./Button";
+import SectionGlow from "./SectionGlow";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
@@ -65,6 +66,7 @@ export default function Contact() {
     <section className="relative w-full min-h-screen bg-[url('https://i.pinimg.com/1200x/99/88/cc/9988cc10978a5801d0b91242bd9b2a9a.jpg')] bg-cover bg-center bg-fixed">
 
       <div className="absolute inset-0 bg-black/70"></div>
+      <SectionGlow variant="dark" />
 
       <div className="relative z-10 w-full px-3 sm:px-6 md:px-10 pt-[90px] sm:pt-[120px] md:pt-[140px] pb-16 sm:pb-20 flex flex-col items-center text-white">
 
@@ -84,9 +86,9 @@ export default function Contact() {
         <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6 md:gap-10">
 
           {/* LEFT */}
-          <div className="space-y-4 sm:space-y-5 md:space-y-6 
-            bg-white/10 backdrop-blur-xl border border-white/20 
-            rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10">
+          <div className="space-y-4 sm:space-y-5 md:space-y-6
+            bg-white/10 backdrop-blur-xl border border-white/20
+            rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10 shadow-[0_25px_60px_-20px_rgba(0,0,0,0.5)] transition-transform duration-500 hover:-translate-y-1 hover:border-[#C8A96A]/30">
 
             <h3 className="text-lg sm:text-xl md:text-3xl font-semibold">
               Let’s Talk
@@ -123,8 +125,8 @@ export default function Contact() {
           </div>
 
           {/* RIGHT FORM */}
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 
-            rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10">
+          <div className="bg-white/10 backdrop-blur-xl border border-white/20
+            rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-10 shadow-[0_25px_60px_-20px_rgba(0,0,0,0.5)] transition-transform duration-500 hover:-translate-y-1 hover:border-[#C8A96A]/30">
 
             <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 md:space-y-5">
 
@@ -207,10 +209,10 @@ export default function Contact() {
         </div>
 
         {/* MAP */}
-        <div className="max-w-7xl w-full mt-8 sm:mt-10 md:mt-16 
-          bg-white/10 backdrop-blur-xl border border-white/20 
-          rounded-xl sm:rounded-2xl md:rounded-3xl 
-          p-4 sm:p-6 md:p-10 text-center">
+        <div className="max-w-7xl w-full mt-8 sm:mt-10 md:mt-16
+          bg-white/10 backdrop-blur-xl border border-white/20
+          rounded-xl sm:rounded-2xl md:rounded-3xl
+          p-4 sm:p-6 md:p-10 text-center shadow-[0_25px_60px_-20px_rgba(0,0,0,0.5)] transition-transform duration-500 hover:-translate-y-1 hover:border-[#C8A96A]/30">
 
           <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3">
             Visit Us

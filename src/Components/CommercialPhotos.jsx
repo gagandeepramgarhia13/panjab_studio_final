@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Maximize2, X, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase, BUCKETS } from "../supabase";
+import SectionGlow from "./SectionGlow";
 
 export default function CommercialPhotos() {
   const [images, setImages] = useState([]);
@@ -57,26 +58,28 @@ export default function CommercialPhotos() {
       </div>
 
       {/* Gallery */}
-      <div className="px-4 md:px-10 pb-16">
+      <div className="relative overflow-hidden px-4 md:px-10 pb-16">
+        <SectionGlow variant="light" />
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-24 gap-4">
+          <div className="relative z-10 flex flex-col items-center justify-center py-24 gap-4">
             <div className="w-10 h-10 border-2 border-[#C8A96A] border-t-transparent rounded-full animate-spin" />
             <p className="text-white/40 text-sm">Loading photos…</p>
           </div>
         ) : images.length === 0 ? (
-          <div className="text-center py-24 text-white/30">
+          <div className="relative z-10 text-center py-24 text-white/30">
             <p className="text-lg">No photos uploaded yet.</p>
             <p className="text-sm mt-2">
               Upload to the <span className="text-[#C8A96A]">commercial-photos</span> bucket in Admin.
             </p>
           </div>
         ) : (
-          <div className="[column-count:2] md:[column-count:3] lg:[column-count:4] [column-gap:1rem]">
+          <div className="relative z-10 [column-count:2] md:[column-count:3] lg:[column-count:4] [column-gap:1rem]">
             {images.map((img, index) => (
-              <div key={img.src} className="relative mb-4 overflow-hidden rounded-xl group break-inside-avoid">
+              <div key={img.src} className="relative mb-4 overflow-hidden rounded-xl group break-inside-avoid transition-transform duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.35)]">
                 <img src={img.src} alt={`commercial-${index}`}
                   className="w-full h-auto block transition duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
+                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ boxShadow: "inset 0 0 0 2px rgba(200,169,106,0.7)" }} />
                 <button onClick={() => setSelected(img.src)}
                   className="absolute bottom-3 right-3 z-20 flex items-center gap-2 bg-white/90 text-black text-sm font-semibold px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition hover:bg-white">
                   <Maximize2 size={15} /> View

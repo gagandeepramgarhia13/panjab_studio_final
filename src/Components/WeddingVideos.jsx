@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase, BUCKETS } from "../supabase";
+import SectionGlow from "./SectionGlow";
 
 export default function WeddingVideos() {
   const [videos, setVideos] = useState([]);
@@ -57,25 +58,27 @@ export default function WeddingVideos() {
         </div>
       </div>
 
-      <div className="px-4 md:px-10 py-16">
+      <div className="relative overflow-hidden px-4 md:px-10 py-16">
+        <SectionGlow variant="light" />
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-24 gap-4">
+          <div className="relative z-10 flex flex-col items-center justify-center py-24 gap-4">
             <div className="w-10 h-10 border-2 border-[#C8A96A] border-t-transparent rounded-full animate-spin" />
             <p className="text-white/40 text-sm">Loading videos…</p>
           </div>
         ) : videos.length === 0 ? (
-          <div className="text-center py-24 text-white/30">
+          <div className="relative z-10 text-center py-24 text-white/30">
             <p className="text-lg">No videos uploaded yet.</p>
             <p className="text-sm mt-2">Upload to the <span className="text-[#C8A96A]">wedding-videos</span> bucket in Admin.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {videos.map((vid, index) => (
               <div key={index} onClick={() => handleVideoClick(index)}
-                className="relative overflow-hidden rounded-2xl group cursor-pointer">
+                className="relative overflow-hidden rounded-2xl group cursor-pointer transition-transform duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.35)]">
                 <video ref={(el) => (videoRefs.current[index] = el)} src={vid.src}
                   className="w-full h-[300px] object-cover transition duration-500"
                   muted={activeIndex !== index} loop preload="metadata" controls={activeIndex === index} />
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ boxShadow: "inset 0 0 0 2px rgba(200,169,106,0.7)" }} />
                 {activeIndex !== index && (
                   <>
                     <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition"></div>

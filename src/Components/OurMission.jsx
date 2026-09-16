@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import SectionGlow from "./SectionGlow";
 
 export default function OurMission() {
   const navigate = useNavigate();
@@ -30,10 +31,11 @@ export default function OurMission() {
       <div className="absolute inset-0 bg-black/70"></div>
 
       {/* 🔹 Content Wrapper */}
-      <div className="relative z-10 w-full flex flex-col items-center px-4 md:px-10 pt-[100px] sm:pt-[130px] md:pt-[150px] pb-20 text-white">
+      <div className="relative w-full flex flex-col items-center px-4 md:px-10 pt-[100px] sm:pt-[130px] md:pt-[150px] pb-20 text-white overflow-hidden">
+        <SectionGlow variant="dark" />
 
         {/* Header */}
-        <div className="text-center max-w-3xl mb-12 md:mb-16">
+        <div className="relative z-10 text-center max-w-3xl mb-12 md:mb-16">
           <h1 className="text-3xl md:text-5xl font-semibold">
             Our Mission
           </h1>
@@ -45,11 +47,11 @@ export default function OurMission() {
         </div>
 
         {/* Pillars Grid */}
-        <div className="max-w-6xl w-full grid sm:grid-cols-2 gap-6 mb-16">
+        <div className="relative z-10 max-w-6xl w-full grid sm:grid-cols-2 gap-6 mb-16">
           {pillars.map((pillar, index) => (
             <div
               key={index}
-              className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-8 shadow-xl hover:border-white/40 transition"
+              className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-8 shadow-xl hover:border-[#C8A96A]/40 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_25px_50px_-15px_rgba(200,169,106,0.25)]"
             >
               <h3 className="text-xl md:text-2xl font-semibold mb-3">
                 {pillar.title}
@@ -62,7 +64,7 @@ export default function OurMission() {
         </div>
 
         {/* Closing statement */}
-        <div className="max-w-3xl w-full text-center bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 md:p-12 shadow-xl">
+        <div className="relative z-10 max-w-3xl w-full text-center bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 md:p-12 shadow-xl transition-transform duration-500 hover:-translate-y-1">
           <p className="text-lg md:text-2xl font-light italic text-gray-100 leading-relaxed">
             "We don't just document your day — we preserve the feeling of it."
           </p>

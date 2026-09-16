@@ -1,15 +1,31 @@
-// Purely decorative ambient background — soft gold glow orbs + a faint
-// diagonal texture, matching the site's gold/black (Panjab Studios logo)
-// theme. Drop it as the FIRST child of a `relative overflow-hidden`
-// section to give an otherwise flat/empty background some depth, without
-// touching any real content. Wrap the section's actual content in a
-// `relative z-10` wrapper so it stays above this layer.
+// Purely decorative ambient background — slow-moving gold glow orbs, a
+// gently rotating halo ring, and a couple of drifting light particles.
+// Matches the site's gold/black (Panjab Studios logo) theme and gives an
+// otherwise flat/empty background some living, "3D" depth — like a very
+// slow, subtle GIF rather than a static texture.
+//
+// Usage: drop it as the FIRST child of a `relative overflow-hidden`
+// section. Wrap the section's real content in a `relative z-10` wrapper
+// so it stays above this layer. It never touches content — decoration only.
 export default function SectionGlow({ variant = "light", className = "" }) {
   const isDark = variant === "dark";
 
   return (
     <div className={`pointer-events-none absolute inset-0 overflow-hidden z-0 ${className}`}>
-      {/* Primary gold glow */}
+      {/* Slowly rotating halo ring — the "3D, moving" centerpiece */}
+      <div
+        className="absolute left-1/2 top-1/2 w-[42rem] h-[42rem] -translate-x-1/2 -translate-y-1/2"
+        style={{
+          background: isDark
+            ? "conic-gradient(from 0deg, rgba(200,169,106,0.16), transparent 25%, transparent 75%, rgba(200,169,106,0.16))"
+            : "conic-gradient(from 0deg, rgba(200,169,106,0.12), transparent 25%, transparent 75%, rgba(200,169,106,0.12))",
+          borderRadius: "50%",
+          filter: "blur(60px)",
+          animation: "spinSlow 40s linear infinite",
+        }}
+      />
+
+      {/* Primary gold glow orb, drifting */}
       <div
         className="absolute -top-24 -left-16 w-72 h-72 sm:w-96 sm:h-96 rounded-full blur-3xl"
         style={{
@@ -20,7 +36,7 @@ export default function SectionGlow({ variant = "light", className = "" }) {
         }}
       />
 
-      {/* Secondary glow, opposite corner */}
+      {/* Secondary glow orb, opposite corner, drifting the other way */}
       <div
         className="absolute -bottom-28 -right-20 w-80 h-80 sm:w-[28rem] sm:h-[28rem] rounded-full blur-3xl"
         style={{
@@ -32,14 +48,23 @@ export default function SectionGlow({ variant = "light", className = "" }) {
         }}
       />
 
-      {/* Faint diagonal line texture for subtle 3D depth */}
+      {/* Small drifting light particles for a subtle "alive" feel */}
       <div
-        className="absolute inset-0"
+        className="absolute top-[20%] right-[18%] w-2 h-2 rounded-full"
         style={{
-          opacity: isDark ? 0.05 : 0.035,
-          backgroundImage:
-            "repeating-linear-gradient(135deg, currentColor 0, currentColor 1px, transparent 1px, transparent 14px)",
-          color: isDark ? "#C8A96A" : "#5A4B38",
+          background: "#C8A96A",
+          opacity: isDark ? 0.6 : 0.4,
+          boxShadow: "0 0 12px 4px rgba(200,169,106,0.5)",
+          animation: "particleDrift 9s ease-in-out infinite",
+        }}
+      />
+      <div
+        className="absolute bottom-[25%] left-[12%] w-1.5 h-1.5 rounded-full"
+        style={{
+          background: "#C8A96A",
+          opacity: isDark ? 0.5 : 0.35,
+          boxShadow: "0 0 10px 3px rgba(200,169,106,0.45)",
+          animation: "particleDrift 12s ease-in-out infinite 2s",
         }}
       />
 

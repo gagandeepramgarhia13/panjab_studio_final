@@ -33,6 +33,18 @@
   50% { transform: translate(-20px, 14px) scale(1.05); }
 }
 
+/* 🔥 Slow rotating halo ring used by SectionGlow — the "moving 3D" backdrop */
+@keyframes spinSlow {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* 🔥 Tiny drifting light particles used by SectionGlow */
+@keyframes particleDrift {
+  0%, 100% { transform: translate(0, 0); opacity: 0.3; }
+  50% { transform: translate(14px, -18px); opacity: 0.8; }
+}
+
 body {
   /* background-image: url("https://i.pinimg.com/736x/da/f7/05/daf7055241a078960474ad4cefdd0db5.jpg"); */
   /* background-color: #white; */

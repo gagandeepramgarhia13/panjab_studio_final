@@ -92,12 +92,12 @@ export default function FAQ() {
                 </div>
 
                 {/* Glass Card */}
-                <div className="max-w-4xl w-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl sm:rounded-2xl md:rounded-3xl p-3 sm:p-6 md:p-10">
+                <div className="max-w-4xl w-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl sm:rounded-2xl md:rounded-3xl p-3 sm:p-6 md:p-10 shadow-[0_25px_60px_-20px_rgba(0,0,0,0.5)] transition-transform duration-500 hover:-translate-y-1">
                     <div className="divide-y divide-white/15">
                         {faqs.map((faq, index) => {
                             const isOpen = openIndex === index;
                             return (
-                                <div key={index} className="py-4 sm:py-5">
+                                <div key={index} className="py-4 sm:py-5 px-2 sm:px-3 -mx-2 sm:-mx-3 rounded-xl transition-colors duration-300 hover:bg-white/5">
                                     <button
                                         onClick={() => toggleFAQ(index)}
                                         className="w-full flex items-center justify-between gap-4 text-left"

@@ -4,7 +4,7 @@ import {
   LayoutDashboard, ImageIcon, Video, Trash2, LogOut,
   Menu, X, Eye, CheckCircle, AlertCircle, FolderOpen,
   Film, Camera, ChevronRight, CloudUpload, Mail, MailOpen, Phone, User,
-  ChevronDown,
+  ChevronDown, Star, ThumbsUp, ThumbsDown, RotateCcw,
 } from "lucide-react";
 import { supabase, BUCKETS } from "../supabase";
 
@@ -141,6 +141,79 @@ function MessageCard({ msg, onMarkRead, onDelete }) {
         )}
         <button onClick={() => onDelete(msg.id)}
           className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-red-500/15 text-red-300 hover:bg-red-500/25 transition-colors border border-red-400/20">
+          <Trash2 size={13} /> Delete
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ── Testimonial Card ─────────────────────────────────────────────────────────
+function TestimonialCard({ item, onApprove, onReject, onRestore, onDelete }) {
+  const statusStyles = {
+    pending: "bg-[#C8A96A]/15 border-[#C8A96A]/40 text-[#C8A96A]",
+    approved: "bg-green-500/15 border-green-500/40 text-green-400",
+    rejected: "bg-red-500/15 border-red-500/40 text-red-400",
+  };
+
+  return (
+    <div className={`relative rounded-2xl border backdrop-blur-xl p-5 transition-all duration-300 shadow-lg
+      ${item.status === "pending" ? "bg-[#C8A96A]/10 border-[#C8A96A]/30" : "bg-white/10 border-white/20"}`}>
+
+      <div className="flex items-start justify-between gap-3 flex-wrap">
+        <div className="flex items-center gap-2">
+          <p className="text-white font-semibold text-sm flex items-center gap-2">
+            <User size={14} className="text-[#C8A96A]" /> {item.name}
+          </p>
+          <span className={`text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full border ${statusStyles[item.status] || statusStyles.pending}`}>
+            {item.status}
+          </span>
+        </div>
+        <p className="text-white/40 text-xs whitespace-nowrap">
+          {new Date(item.created_at).toLocaleString()}
+        </p>
+      </div>
+
+      <div className="flex items-center gap-2 mt-2">
+        {[...Array(5)].map((_, i) => (
+          <Star key={i} size={13} className={i < item.rating ? "fill-[#C8A96A] text-[#C8A96A]" : "text-white/20"} />
+        ))}
+        {item.email && (
+          <span className="flex items-center gap-1 text-white/40 text-xs ml-2">
+            <Mail size={11} /> {item.email}
+          </span>
+        )}
+      </div>
+
+      <p className="text-white/90 text-sm mt-3 leading-relaxed whitespace-pre-wrap">“{item.message}”</p>
+
+      <div className="flex flex-wrap items-center gap-2 mt-4">
+        {item.status === "pending" && (
+          <>
+            <button onClick={() => onApprove(item.id)}
+              className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-green-500/20 text-green-300 hover:bg-green-500/30 transition-colors border border-green-400/20">
+              <ThumbsUp size={13} /> Approve
+            </button>
+            <button onClick={() => onReject(item.id)}
+              className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-red-500/15 text-red-300 hover:bg-red-500/25 transition-colors border border-red-400/20">
+              <ThumbsDown size={13} /> Reject
+            </button>
+          </>
+        )}
+        {item.status === "approved" && (
+          <button onClick={() => onRestore(item.id)}
+            className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 transition-colors border border-white/10">
+            <RotateCcw size={13} /> Unpublish
+          </button>
+        )}
+        {item.status === "rejected" && (
+          <button onClick={() => onRestore(item.id)}
+            className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-white/10 text-white/70 hover:bg-white/20 transition-colors border border-white/10">
+            <RotateCcw size={13} /> Move back to pending
+          </button>
+        )}
+        <button onClick={() => onDelete(item.id)}
+          className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-red-500/15 text-red-300 hover:bg-red-500/25 transition-colors border border-red-400/20 ml-auto">
           <Trash2 size={13} /> Delete
         </button>
       </div>
@@ -343,6 +416,7 @@ export default function AdminPage() {
   const [photos, setPhotos] = useState([]);
   const [videos, setVideos] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
   const [toasts, setToasts] = useState([]);
   const [preview, setPreview] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -383,6 +457,11 @@ export default function AdminPage() {
           .from("contact_submissions").select("*").order("created_at", { ascending: false });
         if (msgErr) throw msgErr;
         setMessages(msgData || []);
+
+        const { data: testimonialData, error: testimonialErr } = await supabase
+          .from("testimonials").select("*").order("created_at", { ascending: false });
+        if (testimonialErr) throw testimonialErr;
+        setTestimonials(testimonialData || []);
       } catch (err) {
         toast("Could not load data.", "error");
       } finally {
@@ -431,6 +510,28 @@ export default function AdminPage() {
     if (error) { toast("Failed to delete message", "error"); return; }
     setMessages((m) => m.filter((x) => x.id !== id));
     toast("Message deleted");
+  }, [toast]);
+
+  const updateTestimonialStatus = useCallback(async (id, status) => {
+    const { error } = await supabase.from("testimonials").update({ status }).eq("id", id);
+    if (error) { toast("Failed to update testimonial", "error"); return; }
+    setTestimonials((t) => t.map((x) => (x.id === id ? { ...x, status } : x)));
+    toast(
+      status === "approved" ? "Testimonial published ✅"
+        : status === "rejected" ? "Testimonial rejected"
+        : "Moved back to pending"
+    );
+  }, [toast]);
+
+  const approveTestimonial = useCallback((id) => updateTestimonialStatus(id, "approved"), [updateTestimonialStatus]);
+  const rejectTestimonial = useCallback((id) => updateTestimonialStatus(id, "rejected"), [updateTestimonialStatus]);
+  const restoreTestimonial = useCallback((id) => updateTestimonialStatus(id, "pending"), [updateTestimonialStatus]);
+
+  const deleteTestimonial = useCallback(async (id) => {
+    const { error } = await supabase.from("testimonials").delete().eq("id", id);
+    if (error) { toast("Failed to delete testimonial", "error"); return; }
+    setTestimonials((t) => t.filter((x) => x.id !== id));
+    toast("Testimonial deleted");
   }, [toast]);
 
   const handleSection = (id) => {
@@ -508,6 +609,12 @@ export default function AdminPage() {
             badge={messages.filter(m => !m.is_read).length}
             onClick={() => handleSection("messages")} />
 
+          {/* Testimonials */}
+          <NavItem icon={Star} label="Testimonials"
+            active={section === "testimonials"}
+            badge={testimonials.filter(t => t.status === "pending").length}
+            onClick={() => handleSection("testimonials")} />
+
         </nav>
 
         <div className="px-4 py-4 border-t border-white/10">
@@ -575,10 +682,11 @@ export default function AdminPage() {
                     <h2 className="text-white text-2xl font-bold">Welcome back</h2>
                     <p className="text-white/50 text-sm mt-1">All uploads are saved to Supabase cloud.</p>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <StatCard label="Total Photos" value={photos.length} icon={ImageIcon} />
                     <StatCard label="Total Videos" value={videos.length} icon={Video} />
                     <StatCard label="New Messages" value={messages.filter(m => !m.is_read).length} icon={Mail} />
+                    <StatCard label="Pending Testimonials" value={testimonials.filter(t => t.status === "pending").length} icon={Star} />
                   </div>
                   <div>
                     <h3 className="text-white/70 text-xs uppercase tracking-widest mb-4">Quick Upload</h3>
@@ -646,6 +754,34 @@ export default function AdminPage() {
                     : <div className="space-y-3">
                       {messages.map((msg) => (
                         <MessageCard key={msg.id} msg={msg} onMarkRead={markMessageRead} onDelete={deleteMessage} />
+                      ))}
+                    </div>}
+                </div>
+              )}
+
+              {/* Testimonials */}
+              {section === "testimonials" && (
+                <div className="space-y-6 max-w-3xl">
+                  <div>
+                    <h2 className="text-white text-2xl font-bold">Testimonials</h2>
+                    <p className="text-white/50 text-sm mt-1">
+                      {testimonials.length} submission{testimonials.length !== 1 ? "s" : ""} ·{" "}
+                      {testimonials.filter(t => t.status === "pending").length} waiting for review ·{" "}
+                      approved ones appear on the public Testimonials page automatically.
+                    </p>
+                  </div>
+                  {testimonials.length === 0
+                    ? <div className="text-center py-16 text-white/30"><Star size={40} className="mx-auto mb-3" /><p className="text-sm">No testimonials submitted yet.</p></div>
+                    : <div className="space-y-3">
+                      {testimonials.map((item) => (
+                        <TestimonialCard
+                          key={item.id}
+                          item={item}
+                          onApprove={approveTestimonial}
+                          onReject={rejectTestimonial}
+                          onRestore={restoreTestimonial}
+                          onDelete={deleteTestimonial}
+                        />
                       ))}
                     </div>}
                 </div>

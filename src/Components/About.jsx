@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "./Button";
+import SectionGlow from "./SectionGlow";
 
 export default function About() {
   return (
@@ -9,11 +10,12 @@ export default function About() {
       <div className="absolute inset-0 bg-black/60"></div>
 
       {/* 🔹 Content Wrapper */}
-      <div className="relative z-10 w-full flex flex-col items-center px-4 md:px-10 py-20 text-white">
+      <div className="relative w-full flex flex-col items-center px-4 md:px-10 py-20 text-white overflow-hidden">
+        <SectionGlow variant="dark" />
 
         {/* 🔥 ABOUT */}
-        <div className="max-w-7xl w-full grid md:grid-cols-2 gap-10 items-center mt-16 
-          bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-10 shadow-xl">
+        <div className="relative z-10 max-w-7xl w-full grid md:grid-cols-2 gap-10 items-center mt-16
+          bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-10 shadow-xl transition-transform duration-500 hover:-translate-y-1 hover:border-[#C8A96A]/30">
 
           {/* LEFT CONTENT */}
           <div className="space-y-6">
@@ -40,25 +42,25 @@ export default function About() {
           </div>
 
           {/* RIGHT IMAGE */}
-          <div className="relative">
+          <div className="relative group overflow-hidden rounded-3xl">
             <img
               src="https://i.pinimg.com/1200x/79/52/58/795258031ab9e309c0f449a0bb5e154d.jpg"
               alt="about"
-              className="w-full h-[400px] md:h-[500px] object-cover rounded-3xl"
+              className="w-full h-[400px] md:h-[500px] object-cover rounded-3xl transition-transform duration-700 group-hover:scale-105"
             />
           </div>
         </div>
 
         {/* 🔥 MISSION */}
-        <div className="max-w-7xl w-full grid md:grid-cols-2 gap-10 mt-16 items-center 
-          bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-10 shadow-xl">
+        <div className="relative z-10 max-w-7xl w-full grid md:grid-cols-2 gap-10 mt-16 items-center
+          bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-10 shadow-xl transition-transform duration-500 hover:-translate-y-1 hover:border-[#C8A96A]/30">
 
           {/* LEFT IMAGE */}
-          <div>
+          <div className="relative group overflow-hidden rounded-3xl">
             <img
               src="https://i.pinimg.com/vwebp/1200x/14/d6/39/14d639f490597e4f176d6762f3ab9864.webp"
               alt="mission"
-              className="w-full h-[400px] md:h-[500px] object-cover rounded-3xl"
+              className="w-full h-[400px] md:h-[500px] object-cover rounded-3xl transition-transform duration-700 group-hover:scale-105"
             />
           </div>
 
@@ -87,8 +89,8 @@ export default function About() {
         </div>
 
         {/* 🔥 LET'S CONNECT */}
-        <div className="max-w-7xl w-full grid md:grid-cols-2 gap-10 mt-16 items-center 
-          bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-10 shadow-xl">
+        <div className="relative z-10 max-w-7xl w-full grid md:grid-cols-2 gap-10 mt-16 items-center
+          bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 md:p-10 shadow-xl transition-transform duration-500 hover:-translate-y-1 hover:border-[#C8A96A]/30">
 
           {/* LEFT CONTENT */}
           <div className="space-y-6">
@@ -114,11 +116,11 @@ export default function About() {
           </div>
 
           {/* RIGHT IMAGE */}
-          <div>
+          <div className="relative group overflow-hidden rounded-3xl">
             <img
               src="https://i.pinimg.com/1200x/79/52/58/795258031ab9e309c0f449a0bb5e154d.jpg"
               alt="connect"
-              className="w-full h-[400px] md:h-[500px] object-cover rounded-3xl"
+              className="w-full h-[400px] md:h-[500px] object-cover rounded-3xl transition-transform duration-700 group-hover:scale-105"
             />
           </div>
         </div>

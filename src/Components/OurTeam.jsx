@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { supabase, BUCKETS } from "../supabase";
+import SectionGlow from "./SectionGlow";
 
 export default function OurTeam({ fullPage = false }) {
   const [members, setMembers] = useState([]);
@@ -117,8 +118,9 @@ export default function OurTeam({ fullPage = false }) {
     if (members.length === 0) return null;
 
     return (
-      <section className="w-full bg-[#0a0a0a] py-16 sm:py-20 md:py-24 px-4 sm:px-6">
-        <div className="text-center mb-12 sm:mb-16">
+      <section className="relative w-full bg-[#0a0a0a] py-16 sm:py-20 md:py-24 px-4 sm:px-6 overflow-hidden">
+        <SectionGlow variant="dark" />
+        <div className="relative z-10 text-center mb-12 sm:mb-16">
           <span className="text-[#C8A96A] text-xs tracking-[5px] uppercase font-medium">
             The People Behind The Lens
           </span>
@@ -135,7 +137,7 @@ export default function OurTeam({ fullPage = false }) {
           </div>
         </div>
 
-        {grid}
+        <div className="relative z-10">{grid}</div>
         {lightbox}
 
         <style>{`
@@ -182,19 +184,20 @@ export default function OurTeam({ fullPage = false }) {
       </div>
 
       {/* Team Grid */}
-      <div className="flex-1 px-4 sm:px-6 pb-16 sm:pb-24">
+      <div className="relative flex-1 px-4 sm:px-6 pb-16 sm:pb-24 overflow-hidden">
+        <SectionGlow variant="dark" />
         {loading ? (
-          <div className="flex justify-center py-20">
+          <div className="relative z-10 flex justify-center py-20">
             <div className="w-10 h-10 border-2 border-[#C8A96A] border-t-transparent rounded-full animate-spin" />
           </div>
         ) : members.length === 0 ? (
-          <div className="text-center py-24 text-white/30">
+          <div className="relative z-10 text-center py-24 text-white/30">
             <p className="text-lg">No team members added yet.</p>
             <p className="text-sm mt-2">
               Visit <span className="text-[#C8A96A]">/admin</span> → Photography → 👥 Team Members to upload.
             </p>
           </div>
-        ) : grid}
+        ) : <div className="relative z-10">{grid}</div>}
       </div>
 
       {lightbox}
