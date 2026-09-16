@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase, BUCKETS } from "../supabase";
+import SectionGlow from "./SectionGlow";
 
 const buttons = [
     { name: "Photography", path: "/photography" },
@@ -36,7 +37,9 @@ export default function HomeGallery() {
     }, []);
 
     return (
-        <section className="w-full bg-[#181819] bg-no-repeat bg-cover py-16 px-4">
+        <section className="relative w-full overflow-hidden bg-[#181819] bg-no-repeat bg-cover py-16 px-4">
+            <SectionGlow variant="dark" />
+            <div className="relative z-10">
 
             {/* Heading */}
             <div className="text-center text-white mb-5" data-aos="fade-right">
@@ -61,11 +64,11 @@ export default function HomeGallery() {
                 <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 md:h-[500px]">
 
                     {/* LEFT BIG IMAGE */}
-                    <div className="md:col-span-2 md:row-span-2 h-[200px] md:h-full overflow-hidden rounded-xl">
+                    <div className="group md:col-span-2 md:row-span-2 h-[200px] md:h-full overflow-hidden rounded-xl shadow-[0_10px_35px_rgba(0,0,0,0.4)] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_25px_55px_-10px_rgba(200,169,106,0.3)]">
                         <img
                             src={images[0]}
                             alt=""
-                            className="w-full h-full object-cover hover:scale-110 transition duration-500"
+                            className="w-full h-full object-cover transition duration-500 group-hover:scale-110"
                         />
                     </div>
 
@@ -73,12 +76,12 @@ export default function HomeGallery() {
                     {images.slice(1).map((img, index) => (
                         <div
                             key={index}
-                            className="h-[200px] md:h-full overflow-hidden rounded-xl"
+                            className="group h-[200px] md:h-full overflow-hidden rounded-xl shadow-[0_10px_35px_rgba(0,0,0,0.4)] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_25px_55px_-10px_rgba(200,169,106,0.3)]"
                         >
                             <img
                                 src={img}
                                 alt=""
-                                className="w-full h-full object-cover hover:scale-110 transition duration-500"
+                                className="w-full h-full object-cover transition duration-500 group-hover:scale-110"
                             />
                         </div>
                     ))}
@@ -100,6 +103,7 @@ export default function HomeGallery() {
                 </div>
             </div>
 
+            </div>
         </section>
     );
 }

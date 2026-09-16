@@ -1,5 +1,6 @@
 import { whatWeDo } from "../utility/data";
 import { Link } from "react-router-dom";
+import SectionGlow from "./SectionGlow";
 
 export default function WhatWeDo() {
 
@@ -8,6 +9,7 @@ export default function WhatWeDo() {
 
       {/* Background */}
       <div className="absolute inset-0 bg-[#e5e5e5]"></div>
+      <SectionGlow variant="light" />
 
       <div className="relative z-10">
 
@@ -16,12 +18,12 @@ export default function WhatWeDo() {
           {whatWeDo.map((item, index) => (
             <div
               key={index}
-              className="aspect-square flex flex-col items-center justify-center text-center p-6 rounded-xl"
+              className="group aspect-square flex flex-col items-center justify-center text-center p-6 rounded-xl bg-white/0 hover:bg-white/70 hover:shadow-[0_20px_45px_-15px_rgba(90,75,56,0.35)] hover:-translate-y-2 transition-all duration-500"
             >
               <img
                 src={item.logo}
                 alt={item.title}
-                className="w-14 h-14 object-contain mb-4"
+                className="w-14 h-14 object-contain mb-4 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3"
               />
               <h3 className="text-lg font-semibold mb-2 text-black">
                 {item.title}
@@ -57,12 +59,14 @@ export default function WhatWeDo() {
           </div>
 
           {/* Right Image */}
-          <div className="relative">
+          <div className="relative group">
+            <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-[#C8A96A]/40 via-transparent to-transparent blur-2xl opacity-70 -z-10" />
             <img
               src="https://i.pinimg.com/1200x/79/52/58/795258031ab9e309c0f449a0bb5e154d.jpg"
               alt="about"
-              className="w-full h-[400px] md:h-[500px] object-cover rounded-3xl shadow-lg"
+              className="w-full h-[400px] md:h-[500px] object-cover rounded-3xl shadow-[0_30px_60px_-20px_rgba(0,0,0,0.35)] transition-transform duration-700 group-hover:scale-[1.02] group-hover:-rotate-1"
             />
+            <div className="absolute inset-0 rounded-3xl ring-1 ring-[#C8A96A]/20 pointer-events-none" />
           </div>
 
         </div>

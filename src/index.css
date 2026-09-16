@@ -10,6 +10,29 @@
   50% { transform: rotate(0deg); }
 }
 
+/* 🔥 Premium dropdown entrance (Navbar desktop dropdowns, centered via left-1/2) */
+@keyframes dropdownIn {
+  from { opacity: 0; transform: translate(-50%, -8px) scale(0.96); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+/* 🔥 Same entrance feel, for elements NOT centered with left-1/2 (mobile menu panel) */
+@keyframes menuIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 🔥 Ambient gold glow orbs used by SectionGlow on empty/plain backgrounds */
+@keyframes floatSlow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(16px, -20px) scale(1.06); }
+}
+
+@keyframes floatSlower {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-20px, 14px) scale(1.05); }
+}
+
 body {
   /* background-image: url("https://i.pinimg.com/736x/da/f7/05/daf7055241a078960474ad4cefdd0db5.jpg"); */
   /* background-color: #white; */

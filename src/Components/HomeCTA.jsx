@@ -29,7 +29,7 @@ export default function HomeCTA() {
         <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-8">
           <Link
             to="/contact"
-            className="px-6 sm:px-7 py-3 bg-[#C8A96A] text-black font-medium rounded-full hover:bg-white transition-all duration-300 text-sm sm:text-base"
+            className="px-6 sm:px-7 py-3 bg-[#C8A96A] text-black font-medium rounded-full hover:bg-white transition-all duration-300 text-sm sm:text-base hover:-translate-y-0.5 hover:shadow-[0_15px_35px_-8px_rgba(200,169,106,0.6)]"
           >
             Get In Touch →
           </Link>
@@ -37,7 +37,7 @@ export default function HomeCTA() {
             href={`https://wa.me/${phoneNumber.replace(/[^\d]/g, "")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 sm:px-7 py-3 bg-white/10 backdrop-blur-xl border border-white/20 text-white font-medium rounded-full hover:bg-white hover:text-black transition-all duration-300 text-sm sm:text-base"
+            className="px-6 sm:px-7 py-3 bg-white/10 backdrop-blur-xl border border-white/20 text-white font-medium rounded-full hover:bg-white hover:text-black transition-all duration-300 text-sm sm:text-base hover:-translate-y-0.5"
           >
             WhatsApp Us
           </a>

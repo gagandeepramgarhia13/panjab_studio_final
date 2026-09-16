@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase, BUCKETS } from "../supabase";
+import SectionGlow from "./SectionGlow";
 
 export default function HomeOurTeam() {
   const [members, setMembers] = useState([]);
@@ -33,8 +34,9 @@ export default function HomeOurTeam() {
   if (loading || members.length === 0) return null;
 
   return (
-    <section className="w-full bg-[#e8e8e8] py-14 sm:py-16 md:py-20 px-4 sm:px-6">
-      <div className="max-w-5xl mx-auto">
+    <section className="relative w-full overflow-hidden bg-[#e8e8e8] py-14 sm:py-16 md:py-20 px-4 sm:px-6">
+      <SectionGlow variant="light" />
+      <div className="relative z-10 max-w-5xl mx-auto">
 
         {/* Top row — heading + button */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
@@ -61,7 +63,7 @@ export default function HomeOurTeam() {
             <div
               key={index}
               onClick={() => navigate("/team")}
-              className="group relative aspect-square overflow-hidden rounded-2xl cursor-pointer"
+              className="group relative aspect-square overflow-hidden rounded-2xl cursor-pointer transition-transform duration-500 ease-out hover:-translate-y-2"
               style={{
                 opacity: 0,
                 animation: `fadeSlideUp 0.5s ease forwards ${index * 80}ms`,
@@ -89,9 +91,11 @@ export default function HomeOurTeam() {
       </div>
 
       <style>{`
+        /* Only animates opacity (not transform) so it never fights with the
+           hover:-translate-y-2 lift above once the entrance animation ends. */
         @keyframes fadeSlideUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
       `}</style>
     </section>

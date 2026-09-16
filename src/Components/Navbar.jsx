@@ -43,8 +43,12 @@ export default function Navbar() {
     setMobileCine(false);
   };
 
-  const dropdownClass = "absolute top-[calc(100%+8px)] left-0 w-52 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl overflow-hidden shadow-2xl";
-  const dropdownItemClass = "w-full text-left px-4 py-2.5 text-white/80 text-sm hover:bg-[#C8A96A] hover:text-black transition-colors";
+  // Solid, high-contrast dropdown panel — was bg-white/10 (near-transparent),
+  // which made it unreadable over bright hero images. Now a near-opaque
+  // dark gradient with a gold edge + lifted shadow for a premium 3D feel.
+  const dropdownClass = "absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 w-56 origin-top rounded-2xl border border-[#C8A96A]/25 bg-gradient-to-b from-[#1c1c1d] to-[#0a0a0b] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_0_1px_rgba(200,169,106,0.06)] [animation:dropdownIn_0.22s_cubic-bezier(0.16,1,0.3,1)] overflow-hidden";
+  const dropdownItemClass = "group/item relative isolate block w-full text-left px-4 py-2.5 text-sm text-white/85 transition-colors duration-300 hover:text-black overflow-hidden";
+  const dropdownItemSweep = "pointer-events-none absolute inset-0 -z-10 origin-left scale-x-0 bg-gradient-to-r from-[#C8A96A] to-[#EBD6A0] transition-transform duration-300 ease-out group-hover/item:scale-x-100";
 
   return (
     <div className="fixed w-full z-[9999] top-0">
@@ -103,18 +107,20 @@ export default function Navbar() {
                 Photography
                 <ChevronDown size={14} className={`transition-transform duration-200 ${photoDropdown ? "rotate-180" : ""}`} />
               </button>
-              {photoDropdown && <div className="absolute top-full left-0 w-full h-3" />}
+              {photoDropdown && <div className="absolute top-full left-0 w-full h-4" />}
               {photoDropdown && (
                 <div className={dropdownClass}>
+                  <div className="h-[3px] bg-gradient-to-r from-transparent via-[#C8A96A] to-transparent" />
                   <div className="py-1">
                     {photographyItems.map((item) => (
                       <button key={item.path} onClick={() => handleNavigation(item.path)} className={dropdownItemClass}>
+                        <span className={dropdownItemSweep} />
                         {item.label}
                       </button>
                     ))}
-                    <div className="border-t border-white/20">
+                    <div className="border-t border-[#C8A96A]/15">
                       <button onClick={() => handleNavigation("/photography")}
-                        className="w-full text-left px-4 py-2.5 text-[#C8A96A] text-xs hover:bg-white/10 transition-colors">
+                        className="w-full text-left px-4 py-2.5 text-[#C8A96A] text-xs hover:bg-white/5 transition-colors">
                         View All →
                       </button>
                     </div>
@@ -132,18 +138,20 @@ export default function Navbar() {
                 Cinematography
                 <ChevronDown size={14} className={`transition-transform duration-200 ${cineDropdown ? "rotate-180" : ""}`} />
               </button>
-              {cineDropdown && <div className="absolute top-full left-0 w-full h-3" />}
+              {cineDropdown && <div className="absolute top-full left-0 w-full h-4" />}
               {cineDropdown && (
                 <div className={dropdownClass}>
+                  <div className="h-[3px] bg-gradient-to-r from-transparent via-[#C8A96A] to-transparent" />
                   <div className="py-1">
                     {cinematographyItems.map((item) => (
                       <button key={item.path} onClick={() => handleNavigation(item.path)} className={dropdownItemClass}>
+                        <span className={dropdownItemSweep} />
                         {item.label}
                       </button>
                     ))}
-                    <div className="border-t border-white/20">
+                    <div className="border-t border-[#C8A96A]/15">
                       <button onClick={() => handleNavigation("/cinematography")}
-                        className="w-full text-left px-4 py-2.5 text-[#C8A96A] text-xs hover:bg-white/10 transition-colors">
+                        className="w-full text-left px-4 py-2.5 text-[#C8A96A] text-xs hover:bg-white/5 transition-colors">
                         View All →
                       </button>
                     </div>
@@ -178,7 +186,8 @@ export default function Navbar() {
 
       {/* Mobile Dropdown */}
       {isOpen && (
-        <div className="mx-4 mt-1 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl shadow-2xl lg:hidden overflow-hidden">
+        <div className="mx-4 mt-1 bg-gradient-to-b from-[#1c1c1d]/98 to-[#0a0a0b]/98 backdrop-blur-xl border border-[#C8A96A]/20 rounded-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.8)] lg:hidden overflow-hidden [animation:menuIn_0.22s_cubic-bezier(0.16,1,0.3,1)]">
+          <div className="h-[3px] bg-gradient-to-r from-transparent via-[#C8A96A] to-transparent" />
           <ul className="flex flex-col divide-y divide-white/10">
 
             <li onClick={() => handleNavigation("/")}
@@ -194,7 +203,7 @@ export default function Navbar() {
                 <ChevronDown size={14} className={`transition-transform duration-200 ${mobilePhoto ? "rotate-180" : ""}`} />
               </button>
               {mobilePhoto && (
-                <div className="bg-white/5 border-t border-white/10">
+                <div className="bg-black/30 border-t border-[#C8A96A]/10">
                   {photographyItems.map((item) => (
                     <button key={item.path} onClick={() => handleNavigation(item.path)}
                       className="w-full text-left px-8 py-2 text-white/70 text-sm hover:bg-[#C8A96A] hover:text-black transition-colors">
@@ -217,7 +226,7 @@ export default function Navbar() {
                 <ChevronDown size={14} className={`transition-transform duration-200 ${mobileCine ? "rotate-180" : ""}`} />
               </button>
               {mobileCine && (
-                <div className="bg-white/5 border-t border-white/10">
+                <div className="bg-black/30 border-t border-[#C8A96A]/10">
                   {cinematographyItems.map((item) => (
                     <button key={item.path} onClick={() => handleNavigation(item.path)}
                       className="w-full text-left px-8 py-2 text-white/70 text-sm hover:bg-[#C8A96A] hover:text-black transition-colors">

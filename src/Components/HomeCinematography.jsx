@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { cinematographyCategories, cinematographyReel } from "../utility/data";
+import SectionGlow from "./SectionGlow";
 
 export default function HomeCinematography() {
   const navigate = useNavigate();
 
   return (
-    <section className="w-full bg-[#181819] py-14 sm:py-20 md:py-24 px-4 sm:px-6">
-      <div className="max-w-6xl mx-auto">
+    <section className="relative w-full overflow-hidden bg-[#181819] py-14 sm:py-20 md:py-24 px-4 sm:px-6">
+      <SectionGlow variant="dark" />
+      <div className="relative z-10 max-w-6xl mx-auto">
 
         {/* Heading */}
         <div
@@ -42,7 +44,7 @@ export default function HomeCinematography() {
               onClick={() => navigate(cat.path)}
               data-aos="fade-up"
               data-aos-delay={index * 100}
-              className="group relative aspect-[3/4] overflow-hidden rounded-2xl cursor-pointer border border-white/10"
+              className="group relative aspect-[3/4] overflow-hidden rounded-2xl cursor-pointer border border-white/10 transition-transform duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_25px_55px_-10px_rgba(200,169,106,0.25)]"
             >
               <video
                 src={cinematographyReel}

@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { photographyCategories } from "../utility/data";
+import SectionGlow from "./SectionGlow";
 
 export default function HomePhotography() {
   const navigate = useNavigate();
 
   return (
-    <section className="w-full bg-[#e5e5e5] py-14 sm:py-20 md:py-24 px-4 sm:px-6">
-      <div className="max-w-6xl mx-auto">
+    <section className="relative w-full overflow-hidden bg-[#e5e5e5] py-14 sm:py-20 md:py-24 px-4 sm:px-6">
+      <SectionGlow variant="light" />
+      <div className="relative z-10 max-w-6xl mx-auto">
 
         {/* Heading */}
         <div
@@ -42,7 +44,7 @@ export default function HomePhotography() {
               onClick={() => navigate(cat.path)}
               data-aos="fade-up"
               data-aos-delay={index * 100}
-              className="group relative aspect-[3/4] overflow-hidden rounded-2xl cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
+              className="group relative aspect-[3/4] overflow-hidden rounded-2xl cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-transform duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)]"
             >
               <img
                 src={cat.image}
