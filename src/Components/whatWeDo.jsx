@@ -9,25 +9,30 @@ export default function WhatWeDo() {
     <section className="relative w-full overflow-hidden">
 
       {/* Background */}
-      <div className="absolute inset-0 bg-[#e5e5e5]"></div>
-      <SectionGlow variant="light" />
+      <div className="absolute inset-0 bg-[#0d0d0e]"></div>
+      <SectionGlow variant="dark" />
 
       <div className="relative z-10">
 
-        {/* Grid Section */}
+        {/* Grid Section — 4 cards directly after the Hero: intentionally
+            border-free in every state (normal + hover). Depth/interest comes
+            entirely from the glass background, lift, gold glow and TiltCard's
+            3D tilt — never from an outline. */}
         <div className="hidden sm:grid max-w-6xl mx-auto grid-cols-2 lg:grid-cols-4 gap-6 tilt-perspective">
           {whatWeDo.map((item, index) => (
             <TiltCard
               key={index}
               max={6}
-              className="group aspect-square flex flex-col items-center justify-center text-center p-6 rounded-xl bg-white/0 hover:bg-white/70 hover:shadow-[0_20px_45px_-15px_rgba(90,75,56,0.35)] hover:-translate-y-2"
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
+              className="group aspect-square flex flex-col items-center justify-center text-center p-6 rounded-2xl bg-white/[0.03] backdrop-blur-md hover:bg-white/[0.07] shadow-[0_8px_30px_rgba(0,0,0,0.25)] hover:shadow-[0_25px_55px_-15px_rgba(200,169,106,0.35)] hover:-translate-y-2"
             >
               <img
                 src={item.logo}
                 alt={item.title}
                 className="w-14 h-14 object-contain mb-4 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3"
               />
-              <h3 className="text-lg font-semibold mb-2 text-black">
+              <h3 className="text-lg font-semibold mb-2 text-white">
                 {item.title}
               </h3>
             </TiltCard>
@@ -39,22 +44,22 @@ export default function WhatWeDo() {
 
           {/* Left Content */}
           <div className="space-y-6">
-            <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-black">
+            <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-white">
               About Panjab Studio
             </h2>
-            <p className="text-gray-700 leading-relaxed">
-              At <span className="font-semibold text-black">Panjab Studio</span>,
+            <p className="text-gray-300 leading-relaxed">
+              At <span className="font-semibold text-[#C8A96A]">Panjab Studio</span>,
               we don't just capture moments—we tell stories.
             </p>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-gray-300 leading-relaxed">
               From vibrant weddings to destination shoots, we blend cinematic visuals with real emotions.
             </p>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-gray-300 leading-relaxed">
               Our goal is to create timeless memories you'll cherish forever.
             </p>
             <Link
               to="/contact"
-              className="inline-block mt-4 px-6 py-3 bg-black text-white rounded-full hover:bg-gray-800 transition"
+              className="inline-block mt-4 px-6 py-3 bg-[#C8A96A] text-black rounded-full hover:bg-white transition hover:-translate-y-0.5 hover:shadow-[0_15px_35px_-8px_rgba(200,169,106,0.5)]"
             >
               Contact Us →
             </Link>

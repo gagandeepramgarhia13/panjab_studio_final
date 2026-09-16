@@ -63,8 +63,8 @@ export default function Photography() {
       </div>
 
       {/* Category Buttons */}
-      <div className="px-4 md:px-10 mb-12">
-        <h3 className="text-black/60 text-xs uppercase tracking-widest text-center mb-6">
+      <div className="relative z-10 px-4 md:px-10 mb-12">
+        <h3 className="text-[#C8A96A]/80 text-xs uppercase tracking-widest text-center mb-6">
           Browse by Category
         </h3>
         <div className="flex flex-wrap justify-center gap-3">
@@ -72,7 +72,7 @@ export default function Photography() {
             <Button
               key={cat.path}
               to={cat.path}
-              variant="white"
+              variant="ghost"
               size="responsive"
             >
               <span>{cat.icon}</span>
@@ -84,7 +84,7 @@ export default function Photography() {
 
       {/* Gallery */}
       <div className="relative overflow-hidden px-4 md:px-10 pb-16">
-        <SectionGlow variant="light" />
+        <SectionGlow variant="dark" />
         {loading ? (
           <div className="relative z-10 flex flex-col items-center justify-center py-24 gap-4">
             <div className="w-10 h-10 border-2 border-[#C8A96A] border-t-transparent rounded-full animate-spin" />

@@ -7,8 +7,8 @@ export default function HomePhotography() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#e5e5e5] py-14 sm:py-20 md:py-24 px-4 sm:px-6">
-      <SectionGlow variant="light" />
+    <section className="relative w-full overflow-hidden bg-[#121213] py-14 sm:py-20 md:py-24 px-4 sm:px-6">
+      <SectionGlow variant="dark" />
       <div className="relative z-10 max-w-6xl mx-auto">
 
         {/* Heading */}
@@ -17,13 +17,13 @@ export default function HomePhotography() {
           data-aos="fade-up"
         >
           <div>
-            <span className="text-xs tracking-[4px] uppercase text-black/40 font-medium">
+            <span className="text-xs tracking-[4px] uppercase text-[#C8A96A]/70 font-medium">
               Frame By Frame
             </span>
-            <h2 className="text-3d-gold text-2xl sm:text-4xl md:text-5xl font-semibold text-black mt-1 leading-tight">
+            <h2 className="text-3d-gold text-2xl sm:text-4xl md:text-5xl font-semibold text-white mt-1 leading-tight">
               Photography
             </h2>
-            <p className="text-gray-600 mt-3 max-w-xl text-sm sm:text-base leading-relaxed">
+            <p className="text-gray-400 mt-3 max-w-xl text-sm sm:text-base leading-relaxed">
               From vibrant weddings to polished commercial work, every category
               below is a doorway into a different kind of story.
             </p>
@@ -31,7 +31,7 @@ export default function HomePhotography() {
 
           <button
             onClick={() => navigate("/photography")}
-            className="self-start sm:self-auto inline-flex items-center gap-2 px-5 py-2.5 bg-black text-white text-sm font-medium rounded-full hover:bg-[#C8A96A] hover:text-black transition-all duration-300 flex-shrink-0"
+            className="self-start sm:self-auto inline-flex items-center gap-2 px-5 py-2.5 bg-[#C8A96A] text-black text-sm font-medium rounded-full hover:bg-white transition-all duration-300 flex-shrink-0 hover:-translate-y-0.5 hover:shadow-[0_15px_35px_-8px_rgba(200,169,106,0.5)]"
           >
             View All Photography →
           </button>

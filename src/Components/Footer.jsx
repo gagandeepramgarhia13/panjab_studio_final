@@ -15,7 +15,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="w-full bg-[#e5e5e5] text-black py-16 px-4 relative">
+    <footer className="w-full bg-[#0a0a0b] text-gray-300 py-16 px-4 relative border-t border-white/5">
 
       <div className="max-w-6xl mx-auto text-center">
 
@@ -36,7 +36,7 @@ export default function Footer() {
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 flex items-center justify-center border border-black hover:bg-black hover:text-white transition cursor-pointer"
+              className="w-10 h-10 flex items-center justify-center rounded-full border border-white/20 text-white hover:bg-[#C8A96A] hover:text-black hover:border-[#C8A96A] transition-all duration-300 cursor-pointer"
             >
               <i className={`${icon} text-base`}></i>
             </a>
@@ -45,30 +45,30 @@ export default function Footer() {
 
         {/* 🔹 Links */}
         <div className="flex flex-wrap justify-center gap-6 text-xs md:text-sm tracking-[3px] uppercase mb-10">
-          <Link to="/faq" className="hover:underline">
+          <Link to="/faq" className="text-gray-300 hover:text-[#C8A96A] transition-colors">
             Frequently Asked Questions
           </Link>
-          <Link to="/terms" className="hover:underline">
+          <Link to="/terms" className="text-gray-300 hover:text-[#C8A96A] transition-colors">
             Terms & Conditions
           </Link>
-          <Link to="/privacy" className="hover:underline">
+          <Link to="/privacy" className="text-gray-300 hover:text-[#C8A96A] transition-colors">
             Privacy Policy
           </Link>
         </div>
 
         {/* 🔹 Bottom */}
-        <p className="text-sm text-black/70">
+        <p className="text-sm text-gray-400">
           © {new Date().getFullYear()} Panjab Studio. All Rights Reserved.
         </p>
-        <p className="text-xs text-black/50 mt-1">
-          Designed & Developed by <b>Gagandeep Ramgarhia</b>
+        <p className="text-xs text-gray-500 mt-1">
+          Designed & Developed by <b className="text-gray-400">Gagandeep Ramgarhia</b>
         </p>
       </div>
 
       {/* 🔹 Scroll To Top Button — only shows after scrolling down */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className={`fixed bottom-6 left-6 bg-black text-white w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-800 transition-all duration-300 z-[1000000]
+        className={`fixed bottom-6 left-6 bg-[#C8A96A] text-black w-10 h-10 flex items-center justify-center rounded-full hover:bg-white transition-all duration-300 z-[1000000] shadow-[0_10px_25px_-8px_rgba(200,169,106,0.6)]
           ${showScrollTop ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none"}`}
       >
         ↑

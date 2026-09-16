@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { followLinks } from "../utility/data";
 
 const photographyItems = [
@@ -25,8 +25,25 @@ export default function Navbar() {
   const [mobilePhoto, setMobilePhoto] = useState(false);
   const [mobileCine, setMobileCine] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const photoRef = useRef();
   const cineRef = useRef();
+
+  // Clear, visible "current page" state — a small gold underline dot plus
+  // gold text, applied to whichever nav item matches (or starts with, for
+  // the Photography/Cinematography section) the current route.
+  const isActive = (path) =>
+    path === "/" ? location.pathname === "/" : location.pathname.startsWith(path);
+
+  const navItemClass = (path) =>
+    `relative cursor-pointer transition-colors duration-300 [text-shadow:1px_1px_3px_rgba(0,0,0,0.7)] hover:text-[#C8A96A] ${
+      isActive(path) ? "text-[#C8A96A] after:content-[''] after:absolute after:-bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-1 after:h-1 after:rounded-full after:bg-[#C8A96A]" : "text-white"
+    }`;
+
+  const mobileNavItemClass = (path) =>
+    `cursor-pointer px-4 py-2.5 font-medium text-sm hover:bg-white/10 hover:text-[#C8A96A] transition-colors ${
+      isActive(path) ? "text-[#C8A96A] bg-white/5 border-l-2 border-[#C8A96A]" : "text-white"
+    }`;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -68,7 +85,7 @@ export default function Navbar() {
           <div className="flex items-center justify-center gap-3">
             {followLinks.map((link) => (
               <a key={link.id} href={link.url} target="_blank" rel="noopener noreferrer"
-                className="text-white text-base hover:text-yellow-400 transition">
+                className="text-white text-base hover:text-[#C8A96A] transition">
                 <i className={link.icon}></i>
               </a>
             ))}
@@ -94,7 +111,7 @@ export default function Navbar() {
           <ul className="flex gap-7 text-white text-sm font-medium items-center">
 
             <li onClick={() => handleNavigation("/")}
-              className="cursor-pointer hover:text-yellow-400 transition [text-shadow:1px_1px_3px_rgba(0,0,0,0.7)]">
+              className={navItemClass("/")}>
               Home
             </li>
 
@@ -103,7 +120,7 @@ export default function Navbar() {
               onMouseEnter={() => { setPhotoDropdown(true); setCineDropdown(false); }}
               onMouseLeave={() => setPhotoDropdown(false)}>
               <button onClick={() => handleNavigation("/photography")}
-                className="flex items-center gap-1 hover:text-yellow-400 transition [text-shadow:1px_1px_3px_rgba(0,0,0,0.7)]">
+                className={`flex items-center gap-1 ${navItemClass("/photography")}`}>
                 Photography
                 <ChevronDown size={14} className={`transition-transform duration-200 ${photoDropdown ? "rotate-180" : ""}`} />
               </button>
@@ -134,7 +151,7 @@ export default function Navbar() {
               onMouseEnter={() => { setCineDropdown(true); setPhotoDropdown(false); }}
               onMouseLeave={() => setCineDropdown(false)}>
               <button onClick={() => handleNavigation("/cinematography")}
-                className="flex items-center gap-1 hover:text-yellow-400 transition [text-shadow:1px_1px_3px_rgba(0,0,0,0.7)]">
+                className={`flex items-center gap-1 ${navItemClass("/cinematography")}`}>
                 Cinematography
                 <ChevronDown size={14} className={`transition-transform duration-200 ${cineDropdown ? "rotate-180" : ""}`} />
               </button>
@@ -161,22 +178,22 @@ export default function Navbar() {
             </li>
 
             <li onClick={() => handleNavigation("/testimonials")}
-              className="cursor-pointer hover:text-yellow-400 transition [text-shadow:1px_1px_3px_rgba(0,0,0,0.7)]">
+              className={navItemClass("/testimonials")}>
               Testimonials
             </li>
 
             <li onClick={() => handleNavigation("/about")}
-              className="cursor-pointer hover:text-yellow-400 transition [text-shadow:1px_1px_3px_rgba(0,0,0,0.7)]">
+              className={navItemClass("/about")}>
               About Us
             </li>
 
             <li onClick={() => handleNavigation("/team")}
-              className="cursor-pointer hover:text-yellow-400 transition [text-shadow:1px_1px_3px_rgba(0,0,0,0.7)]">
+              className={navItemClass("/team")}>
               Our Team
             </li>
 
             <li onClick={() => handleNavigation("/contact")}
-              className="cursor-pointer hover:text-yellow-400 transition [text-shadow:1px_1px_3px_rgba(0,0,0,0.7)]">
+              className={navItemClass("/contact")}>
               Contact Us
             </li>
 
@@ -191,14 +208,14 @@ export default function Navbar() {
           <ul className="flex flex-col divide-y divide-white/10">
 
             <li onClick={() => handleNavigation("/")}
-              className="cursor-pointer px-4 py-2.5 text-white font-medium text-sm hover:bg-white/10 hover:text-yellow-400 transition-colors">
+              className={mobileNavItemClass("/")}>
               Home
             </li>
 
             {/* Mobile Photography */}
             <li>
               <button onClick={() => setMobilePhoto(!mobilePhoto)}
-                className="w-full flex items-center justify-between px-4 py-2.5 text-white font-medium text-sm hover:bg-white/10 hover:text-yellow-400 transition-colors">
+                className={`w-full flex items-center justify-between ${mobileNavItemClass("/photography")}`}>
                 Photography
                 <ChevronDown size={14} className={`transition-transform duration-200 ${mobilePhoto ? "rotate-180" : ""}`} />
               </button>
@@ -221,7 +238,7 @@ export default function Navbar() {
             {/* Mobile Cinematography */}
             <li>
               <button onClick={() => setMobileCine(!mobileCine)}
-                className="w-full flex items-center justify-between px-4 py-2.5 text-white font-medium text-sm hover:bg-white/10 hover:text-yellow-400 transition-colors">
+                className={`w-full flex items-center justify-between ${mobileNavItemClass("/cinematography")}`}>
                 Cinematography
                 <ChevronDown size={14} className={`transition-transform duration-200 ${mobileCine ? "rotate-180" : ""}`} />
               </button>
@@ -242,22 +259,22 @@ export default function Navbar() {
             </li>
 
             <li onClick={() => handleNavigation("/testimonials")}
-              className="cursor-pointer px-4 py-2.5 text-white font-medium text-sm hover:bg-white/10 hover:text-yellow-400 transition-colors">
+              className={mobileNavItemClass("/testimonials")}>
               Testimonials
             </li>
 
             <li onClick={() => handleNavigation("/about")}
-              className="cursor-pointer px-4 py-2.5 text-white font-medium text-sm hover:bg-white/10 hover:text-yellow-400 transition-colors">
+              className={mobileNavItemClass("/about")}>
               About Us
             </li>
 
             <li onClick={() => handleNavigation("/team")}
-              className="cursor-pointer px-4 py-2.5 text-white font-medium text-sm hover:bg-white/10 hover:text-yellow-400 transition-colors">
+              className={mobileNavItemClass("/team")}>
               Our Team
             </li>
 
             <li onClick={() => handleNavigation("/contact")}
-              className="cursor-pointer px-4 py-2.5 text-white font-medium text-sm hover:bg-white/10 hover:text-yellow-400 transition-colors">
+              className={mobileNavItemClass("/contact")}>
               Contact Us
             </li>
 

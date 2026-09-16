@@ -7,15 +7,15 @@ export default function HomeExplore() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#F8F5F0] py-14 sm:py-20 md:py-24 px-4 sm:px-6">
-      <SectionGlow variant="light" />
+    <section className="relative w-full overflow-hidden bg-[#141415] py-14 sm:py-20 md:py-24 px-4 sm:px-6">
+      <SectionGlow variant="dark" />
       <div className="relative z-10 max-w-6xl mx-auto">
 
         <div className="text-center mb-8 sm:mb-14" data-aos="fade-up">
-          <span className="text-xs tracking-[4px] uppercase text-black/40 font-medium">
+          <span className="text-xs tracking-[4px] uppercase text-[#C8A96A]/70 font-medium">
             More To Discover
           </span>
-          <h2 className="text-3d-gold text-2xl sm:text-4xl md:text-5xl font-semibold text-black mt-1 leading-tight">
+          <h2 className="text-3d-gold text-2xl sm:text-4xl md:text-5xl font-semibold text-white mt-1 leading-tight">
             Get To Know Panjab Studio
           </h2>
         </div>

@@ -39,10 +39,10 @@ function TestimonialForm() {
   };
 
   return (
-    <div className="relative overflow-hidden rounded-3xl bg-white shadow-[0_25px_60px_-20px_rgba(90,75,56,0.3)] p-6 md:p-10">
+    <div className="relative overflow-hidden rounded-3xl bg-white/[0.04] backdrop-blur-md ring-1 ring-white/10 shadow-[0_25px_60px_-20px_rgba(0,0,0,0.5)] p-6 md:p-10">
       <div className="text-center mb-6">
-        <h3 className="text-2xl md:text-3xl font-semibold text-black">Share Your Experience</h3>
-        <p className="text-gray-500 text-sm mt-2 max-w-md mx-auto">
+        <h3 className="text-2xl md:text-3xl font-semibold text-white">Share Your Experience</h3>
+        <p className="text-gray-400 text-sm mt-2 max-w-md mx-auto">
           Worked with Panjab Studio? We'd love to hear about it. Your
           testimonial will appear here once our team reviews and approves it.
         </p>
@@ -50,8 +50,8 @@ function TestimonialForm() {
 
       {status === "success" ? (
         <div className="text-center py-8">
-          <p className="text-lg font-semibold text-black">Thank you! 🙌</p>
-          <p className="text-gray-500 text-sm mt-2">
+          <p className="text-lg font-semibold text-white">Thank you! 🙌</p>
+          <p className="text-gray-400 text-sm mt-2">
             Your testimonial has been submitted and is awaiting approval —
             it'll show up on this page soon.
           </p>
@@ -72,7 +72,7 @@ function TestimonialForm() {
               value={form.name}
               onChange={handleChange}
               placeholder="Your Name"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-black placeholder-gray-400 focus:outline-none focus:border-[#C8A96A] transition-colors"
+              className="w-full px-4 py-3 rounded-xl border border-white/15 bg-white/5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#C8A96A] transition-colors"
             />
             <input
               type="email"
@@ -80,7 +80,7 @@ function TestimonialForm() {
               value={form.email}
               onChange={handleChange}
               placeholder="Your Email (optional)"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-black placeholder-gray-400 focus:outline-none focus:border-[#C8A96A] transition-colors"
+              className="w-full px-4 py-3 rounded-xl border border-white/15 bg-white/5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#C8A96A] transition-colors"
             />
           </div>
 
@@ -97,7 +97,7 @@ function TestimonialForm() {
               >
                 <Star
                   size={26}
-                  className={(hoverRating || rating) >= n ? "fill-[#C8A96A] text-[#C8A96A]" : "text-gray-300"}
+                  className={(hoverRating || rating) >= n ? "fill-[#C8A96A] text-[#C8A96A]" : "text-gray-600"}
                 />
               </button>
             ))}
@@ -110,19 +110,19 @@ function TestimonialForm() {
             value={form.message}
             onChange={handleChange}
             placeholder="Tell us about your experience…"
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-black placeholder-gray-400 focus:outline-none focus:border-[#C8A96A] transition-colors"
+            className="w-full px-4 py-3 rounded-xl border border-white/15 bg-white/5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#C8A96A] transition-colors"
           ></textarea>
 
           <button
             type="submit"
             disabled={status === "sending"}
-            className="w-full py-3 bg-black text-white rounded-xl font-semibold text-sm hover:bg-[#C8A96A] hover:text-black transition-all duration-300 disabled:opacity-60 hover:-translate-y-0.5"
+            className="w-full py-3 bg-[#C8A96A] text-black rounded-xl font-semibold text-sm hover:bg-white transition-all duration-300 disabled:opacity-60 hover:-translate-y-0.5"
           >
             {status === "sending" ? "Submitting…" : "Submit Testimonial →"}
           </button>
 
           {status === "error" && (
-            <p className="text-red-500 text-xs text-center">
+            <p className="text-red-400 text-xs text-center">
               Something went wrong. Please try again.
             </p>
           )}
@@ -214,11 +214,11 @@ export default function Testimonials() {
 
       {/* Center Container */}
       <div className="relative w-full overflow-hidden">
-        <SectionGlow variant="light" />
+        <SectionGlow variant="dark" />
         <div className="relative z-10 w-full max-w-3xl mx-auto flex flex-col gap-6 pb-10">
 
           {/* Heading */}
-          <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-center text-black mb-6">
+          <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-center text-white mb-6">
             What Our Clients Say
           </h2>
 
@@ -226,7 +226,9 @@ export default function Testimonials() {
           {testimonials.map((item, index) => (
             <div
               key={index}
-              className="rounded-3xl p-6 md:p-8 bg-white text-gray-800 shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
+              data-aos="fade-up"
+              data-aos-delay={index * 80}
+              className="rounded-3xl p-6 md:p-8 bg-white/[0.04] backdrop-blur-md ring-1 ring-white/10 text-gray-200 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.5)] hover:shadow-[0_25px_55px_-15px_rgba(200,169,106,0.25)] transition-all duration-500 hover:-translate-y-1"
             >
 
               {/* ⭐ Stars */}
@@ -239,7 +241,7 @@ export default function Testimonials() {
 
               {/* Author */}
               <div className="mt-4 flex items-center justify-between">
-                <h4 className="font-semibold text-sm md:text-base">
+                <h4 className="font-semibold text-sm md:text-base text-white">
                   — {item.author}
                 </h4>
 
@@ -251,24 +253,26 @@ export default function Testimonials() {
           {/* Approved, community-submitted testimonials */}
           {!loadingApproved && approved.length > 0 && (
             <>
-              <h3 className="text-xl md:text-2xl font-semibold text-center text-black mt-6 mb-2">
+              <h3 className="text-xl md:text-2xl font-semibold text-center text-white mt-6 mb-2">
                 More From Our Clients
               </h3>
-              {approved.map((item) => (
+              {approved.map((item, index) => (
                 <div
                   key={item.id}
-                  className="rounded-3xl p-6 md:p-8 bg-white text-gray-800 shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
+                  data-aos="fade-up"
+                  data-aos-delay={index * 80}
+                  className="rounded-3xl p-6 md:p-8 bg-white/[0.04] backdrop-blur-md ring-1 ring-white/10 text-gray-200 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.5)] hover:shadow-[0_25px_55px_-15px_rgba(200,169,106,0.25)] transition-all duration-500 hover:-translate-y-1"
                 >
                   <div className="mb-3 flex items-center gap-1">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={15} className={i < item.rating ? "fill-[#C8A96A] text-[#C8A96A]" : "text-gray-200"} />
+                      <Star key={i} size={15} className={i < item.rating ? "fill-[#C8A96A] text-[#C8A96A]" : "text-gray-600"} />
                     ))}
                   </div>
                   <p className="text-sm md:text-base leading-relaxed italic">
                     “{item.message}”
                   </p>
                   <div className="mt-4 flex items-center justify-between">
-                    <h4 className="font-semibold text-sm md:text-base">
+                    <h4 className="font-semibold text-sm md:text-base text-white">
                       — {item.name}
                     </h4>
                   </div>
