@@ -12,7 +12,7 @@ export default function Button({ children, onClick, href, to, variant = "primary
   const variants = {
     outline: "border border-white text-white hover:bg-white hover:text-black",
     primary: "bg-[#C8A45D] text-black hover:bg-[#E0C27A]",
-    white: "bg-white text-[var(--text-primary)] hover:bg-[#C8A45D] hover:text-black border border-white hover:border-[#C8A45D]",
+    white: "bg-white text-black hover:bg-[#C8A45D] hover:text-black border border-white hover:border-[#C8A45D]",
     ghost: "bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-[#C8A45D] hover:text-black hover:border-[#C8A45D]",
   };
 

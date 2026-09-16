@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { followLinks } from "../utility/data";
-import ThemeToggle from "./ThemeToggle";
 
 const photographyItems = [
   { label: "💍 Weddings", path: "/photography/weddings" },
@@ -198,10 +197,6 @@ export default function Navbar() {
               Contact Us
             </li>
 
-            <li className="ml-1">
-              <ThemeToggle />
-            </li>
-
           </ul>
         </div>
       </div>
@@ -210,10 +205,6 @@ export default function Navbar() {
       {isOpen && (
         <div className="mx-4 mt-1 bg-gradient-to-b from-[#141414]/98 to-[#070707]/98 backdrop-blur-xl border border-[#C8A45D]/20 rounded-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.8)] lg:hidden overflow-hidden [animation:menuIn_0.22s_cubic-bezier(0.16,1,0.3,1)]">
           <div className="h-[3px] bg-gradient-to-r from-transparent via-[#C8A45D] to-transparent" />
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/10">
-            <span className="text-white/60 text-xs uppercase tracking-widest">Theme</span>
-            <ThemeToggle />
-          </div>
           <ul className="flex flex-col divide-y divide-white/10">
 
             <li onClick={() => handleNavigation("/")}

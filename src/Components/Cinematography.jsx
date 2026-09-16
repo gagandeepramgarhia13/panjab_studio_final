@@ -53,6 +53,9 @@ export default function Cinematography() {
           <source src="/videos/cinematography.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/70"></div>
+        {/* Soft fade into the page background so the hero blends seamlessly
+            into the section below instead of cutting off with a hard line. */}
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[var(--background)] pointer-events-none"></div>
         <div className="relative z-10 max-w-4xl mx-auto text-center text-gray-200 space-y-6">
           <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-white">Cinematography</h2>
           <img src="/panjab_logo/5.png" alt="logo" className="h-32 mx-auto object-contain" />

@@ -156,7 +156,7 @@ export default function OurTeam({ fullPage = false }) {
 
       {/* Hero */}
       <div className="relative w-full h-[50vh] sm:h-[60vh] flex justify-center items-center px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-[#0a0a0a]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-[var(--background)]" />
         <div
           className="absolute inset-0"
           style={{ background: "radial-gradient(ellipse at center, rgba(200,164,93,0.12) 0%, transparent 70%)" }}

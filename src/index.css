@@ -3,13 +3,9 @@
 @tailwind utilities;
 
 /* ============================================================================
-   THEME TOKENS — Dark Cinematic Luxury (Black + Champagne Gold) / White
-   Editorial Luxury (Warm White + Champagne Gold). Only two themes now.
-   Centralized design tokens so components reference `var(--x)` instead of
-   hardcoded colors. `data-theme` is stamped on <html> by the inline script
-   in index.html (before first paint, to avoid a flash) and kept in sync by
-   ThemeToggle.jsx. `:root` (no attribute yet) falls back to the dark palette
-   so anything that renders before the init script runs still looks right.
+   THEME TOKENS — Dark Cinematic Luxury (Black + Champagne Gold). Dark mode
+   only now — the White/Light theme has been removed. Centralized design
+   tokens so components reference `var(--x)` instead of hardcoded colors.
    ============================================================================ */
 :root,
 :root[data-theme="dark"] {
@@ -31,27 +27,6 @@
   --glow: rgba(200, 164, 93, 0.3);
   --glow-soft: rgba(200, 164, 93, 0.14);
   color-scheme: dark;
-}
-
-:root[data-theme="light"] {
-  --background: #f7f5f0;
-  --background-secondary: #efebe3;
-  --surface: #ffffff;
-  --surface-elevated: #ffffff;
-  --surface-glass: rgba(255, 255, 255, 0.6);
-  --text-primary: #171717;
-  --text-secondary: #625f58;
-  --text-muted: #858078;
-  --accent: #b08a45;
-  --accent-hover: #c6a15a;
-  --accent-soft: #d8c79f;
-  --accent-softer: #ead9b6;
-  --border: rgba(23, 23, 23, 0.1);
-  --border-strong: rgba(23, 23, 23, 0.16);
-  --shadow: rgba(120, 100, 70, 0.15);
-  --glow: rgba(176, 138, 69, 0.22);
-  --glow-soft: rgba(176, 138, 69, 0.12);
-  color-scheme: light;
 }
 
 /* Smooth, premium cross-fade whenever the theme changes — scoped to the

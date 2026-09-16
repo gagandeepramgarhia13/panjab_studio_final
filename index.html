@@ -2,21 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- 🔹 Theme init — runs before anything paints so the page never
-         flashes the wrong theme. Reads the saved Dark/White choice from
-         localStorage (defaulting to Dark) and stamps data-theme on <html>
-         right away. ThemeToggle.jsx keeps this in sync after mount. -->
+    <!-- 🔹 Dark mode only — stamped synchronously before anything paints.
+         The White/Light theme has been removed entirely. -->
     <script>
-      (function () {
-        try {
-          var STORAGE_KEY = "panjab-theme";
-          var stored = localStorage.getItem(STORAGE_KEY);
-          var resolved = stored === "light" ? "light" : "dark";
-          document.documentElement.setAttribute("data-theme", resolved);
-        } catch (e) {
-          document.documentElement.setAttribute("data-theme", "dark");
-        }
-      })();
+      document.documentElement.setAttribute("data-theme", "dark");
     </script>
     <!-- 🔹 Fonts — editorial serif for headings, clean sans for body. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

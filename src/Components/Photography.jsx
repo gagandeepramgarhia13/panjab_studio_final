@@ -41,6 +41,9 @@ export default function Photography() {
           alt=""
         />
         <div className="absolute inset-0 bg-black/70"></div>
+        {/* Soft fade into the page background so the hero blends seamlessly
+            into the section below instead of cutting off with a hard line. */}
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[var(--background)] pointer-events-none"></div>
         <div className="relative z-10 max-w-4xl mx-auto text-center text-gray-200 space-y-6">
           <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-white">Our Photography</h2>
           <div className="mb-6">
