@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Linkedin } from "lucide-react";
+import { FaLinkedin } from "react-icons/fa";
 import { followLinks } from "../utility/data";
 
 export default function Footer() {
@@ -72,7 +72,7 @@ export default function Footer() {
             aria-label="Gagandeep Ramgarhia on LinkedIn"
             className="inline-flex items-center justify-center w-6 h-6 rounded-full border border-white/20 text-gray-400 hover:text-black hover:bg-[#C8A96A] hover:border-[#C8A96A] transition-all duration-300"
           >
-            <Linkedin size={12} />
+            <FaLinkedin size={12} />
           </a>
         </p>
       </div>
