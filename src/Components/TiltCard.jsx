@@ -13,7 +13,18 @@ export default function TiltCard({ children, className = "", max = 6, glare = tr
   const wrapRef = useRef(null);
   const glareRef = useRef(null);
 
+  // Touch/no-hover devices (phones, tablets) never get the pointer-following
+  // tilt — there's no real cursor to tilt toward, and a stray touchmove could
+  // otherwise leave a card stuck mid-tilt. Checked lazily inside the handler
+  // (not with state) so it costs nothing on mount and stays correct even if
+  // the device's input mode changes (e.g. a convertible laptop).
+  const supportsHover = () =>
+    typeof window !== "undefined" &&
+    window.matchMedia &&
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
   const handleMove = (e) => {
+    if (!supportsHover()) return;
     const el = wrapRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();

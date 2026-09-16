@@ -3,6 +3,14 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  // 🔥 Makes every `hover:` utility sitewide (card lifts/tilts, gold glows,
+  // button/nav hover states, etc.) apply ONLY on devices that truly support
+  // hovering with a mouse. On touchscreens, `hover:` styles never trigger
+  // (and never get "stuck" after a tap) — this is what turns off the card
+  // hover system on mobile without having to touch every component.
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   theme: {
     extend: {
       colors: {

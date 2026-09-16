@@ -78,7 +78,7 @@ export default function Navbar() {
 
           <div className="flex items-center">
             <img src="/panjab_logo/1.png" alt="logo"
-              className="h-10 w-auto cursor-pointer object-contain"
+              className={`w-auto cursor-pointer object-contain transition-all duration-500 ease-in-out ${scrolled ? "h-8" : "h-12"}`}
               onClick={() => handleNavigation("/")} />
           </div>
 
