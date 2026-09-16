@@ -2,13 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Maximize2, X } from "lucide-react";
 import { supabase, BUCKETS } from "../supabase";
 import Button from "./Button";
-
-const categories = [
-  { label: "Weddings", path: "/photography/weddings", icon: "💍" },
-  { label: "Live Events", path: "/photography/live-events", icon: "🎤" },
-  { label: "Portrait Shoot", path: "/photography/portrait-shoot", icon: "📸" },
-  { label: "Commercial Photographs", path: "/photography/commercial-photos", icon: "🏢" },
-];
+import { photographyCategories as categories } from "../utility/data";
 
 export default function Photography() {
   const [images, setImages] = useState([]);

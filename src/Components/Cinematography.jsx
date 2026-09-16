@@ -1,13 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase, BUCKETS } from "../supabase";
-
-const categories = [
-  { label: "Weddings", path: "/cinematography/wedding-videos", icon: "💍" },
-  { label: "Live Events", path: "/cinematography/live-events-videos", icon: "🎤" },
-  { label: "Music Videos", path: "/cinematography/music-videos", icon: "🎵" },
-  { label: "Commercial Videos", path: "/cinematography/commercial-videos", icon: "🎬" },
-];
+import { cinematographyCategories as categories } from "../utility/data";
 
 export default function Cinematography() {
   const [videos, setVideos] = useState([]);

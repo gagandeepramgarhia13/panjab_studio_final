@@ -1,11 +1,18 @@
+import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 import Navbar from './Components/Navbar'
 import HeroPage from './Components/HeroPage'
 import WhatWeDo from './Components/whatWeDo'
+import HomePhotography from './Components/HomePhotography'
+import HomeCinematography from './Components/HomeCinematography'
 import HomeGallery from './Components/HomeGallery'
+import HomeExplore from './Components/HomeExplore'
 import HomeTestimonials from './Components/HomeTestimonials'
 import HomeInsta from './Components/HomeInsta'
+import HomeCTA from './Components/HomeCTA'
 import Footer from './Components/Footer'
 import About from './Components/About'
 import Photography from "./Components/Photography";
@@ -39,6 +46,15 @@ function App() {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith("/admin");
 
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true,
+      offset: 60,
+      easing: "ease-out-cubic",
+    });
+  }, []);
+
   return (
     <>
       <ScrollToTop />
@@ -51,10 +67,14 @@ function App() {
           <>
             <HeroPage />
             <WhatWeDo />
+            <HomePhotography />
+            <HomeCinematography />
             <HomeOurTeam />
             <HomeGallery />
+            <HomeExplore />
             <HomeTestimonials />
             <HomeInsta />
+            <HomeCTA />
 
           </>
         } />

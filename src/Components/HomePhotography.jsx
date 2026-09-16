@@ -1,0 +1,81 @@
+import { useNavigate } from "react-router-dom";
+import { photographyCategories } from "../utility/data";
+
+export default function HomePhotography() {
+  const navigate = useNavigate();
+
+  return (
+    <section className="w-full bg-[#e5e5e5] py-14 sm:py-20 md:py-24 px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto">
+
+        {/* Heading */}
+        <div
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-14"
+          data-aos="fade-up"
+        >
+          <div>
+            <span className="text-xs tracking-[4px] uppercase text-black/40 font-medium">
+              Frame By Frame
+            </span>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-semibold text-black mt-1 leading-tight">
+              Photography
+            </h2>
+            <p className="text-gray-600 mt-3 max-w-xl text-sm sm:text-base leading-relaxed">
+              From vibrant weddings to polished commercial work, every category
+              below is a doorway into a different kind of story.
+            </p>
+          </div>
+
+          <button
+            onClick={() => navigate("/photography")}
+            className="self-start sm:self-auto inline-flex items-center gap-2 px-5 py-2.5 bg-black text-white text-sm font-medium rounded-full hover:bg-[#C8A96A] hover:text-black transition-all duration-300 flex-shrink-0"
+          >
+            View All Photography →
+          </button>
+        </div>
+
+        {/* Category Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-5 md:gap-6">
+          {photographyCategories.map((cat, index) => (
+            <div
+              key={cat.path}
+              onClick={() => navigate(cat.path)}
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
+              className="group relative aspect-[3/4] overflow-hidden rounded-2xl cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
+            >
+              <img
+                src={cat.image}
+                alt={cat.label}
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              />
+
+              {/* Gradient overlay for text legibility */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+
+              {/* Gold border on hover */}
+              <div
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{ boxShadow: "inset 0 0 0 2px rgba(200,169,106,0.85)" }}
+              />
+
+              <div className="absolute inset-x-0 bottom-0 p-3 sm:p-5 text-left">
+                <span className="text-lg sm:text-2xl">{cat.icon}</span>
+                <h3 className="text-white font-semibold text-xs sm:text-base md:text-lg mt-1 leading-tight">
+                  {cat.label}
+                </h3>
+                <p className="text-white/70 text-[11px] mt-1 leading-relaxed line-clamp-2 hidden sm:block">
+                  {cat.desc}
+                </p>
+                <span className="inline-flex items-center gap-1 text-[#C8A96A] text-[11px] sm:text-xs font-medium mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  Explore →
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

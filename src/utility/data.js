@@ -70,3 +70,91 @@ export const followLinks = [
     { id: 3, icon: "ri-youtube-line", url: "https://www.youtube.com/@panjabstudiosuk" },
     { id: 4, icon: "ri-facebook-line", url: "https://www.facebook.com/panjabstudiosuk" },
 ];
+// ─────────────────────────────────────────────────────────
+// Photography & Cinematography categories
+// Single source of truth — used by the Photography/Cinematography
+// pages AND by the Home Page preview sections, so the category
+// list never has to be duplicated or kept in sync by hand.
+// ─────────────────────────────────────────────────────────
+export const photographyCategories = [
+    {
+        label: "Weddings",
+        path: "/photography/weddings",
+        icon: "💍",
+        image: "https://i.pinimg.com/1200x/79/52/58/795258031ab9e309c0f449a0bb5e154d.jpg",
+        desc: "Punjabi, Hindu & white wedding celebrations, told with elegance.",
+    },
+    {
+        label: "Live Events",
+        path: "/photography/live-events",
+        icon: "🎤",
+        image: "https://i.pinimg.com/1200x/6e/3e/4e/6e3e4e9e8a1b2c3d4e5f6a7b8c9d0e1f.jpg",
+        desc: "The energy of concerts, galas and celebrations, frozen in a frame.",
+    },
+    {
+        label: "Portrait Shoot",
+        path: "/photography/portrait-shoot",
+        icon: "📸",
+        image: "https://i.pinimg.com/1200x/a7/36/9a/a7369a5b3302a3bc249f9ff75bc14f2d.jpg",
+        desc: "Personal, editorial portraits that reveal real character.",
+    },
+    {
+        label: "Commercial Photographs",
+        path: "/photography/commercial-photos",
+        icon: "🏢",
+        image: "https://i.pinimg.com/736x/e3/c1/f6/e3c1f6f7cd60abe2245c71e0ba5669de.jpg",
+        desc: "Polished brand, product & portfolio imagery for businesses.",
+    },
+];
+
+export const cinematographyCategories = [
+    {
+        label: "Weddings",
+        path: "/cinematography/wedding-videos",
+        icon: "💍",
+        desc: "Cinematic wedding films that relive your day, scene by scene.",
+    },
+    {
+        label: "Live Events",
+        path: "/cinematography/live-events-videos",
+        icon: "🎤",
+        desc: "Full production coverage of concerts, galas & live moments.",
+    },
+    {
+        label: "Music Videos",
+        path: "/cinematography/music-videos",
+        icon: "🎵",
+        desc: "High-end music video production with cinematic storytelling.",
+    },
+    {
+        label: "Commercial Videos",
+        path: "/cinematography/commercial-videos",
+        icon: "🎬",
+        desc: "Brand & product films built to captivate and convert.",
+    },
+];
+
+// Shared showreel used as the hero background across cinematography category pages
+export const cinematographyReel = "/videos/cinematography.mp4";
+
+// Pages featured in the Home Page "More To Discover" section
+export const explorePages = [
+    {
+        label: "About Us",
+        path: "/about",
+        image: "https://i.pinimg.com/1200x/96/7d/db/967ddb68db475eec28ccb46fb152c3f6.jpg",
+        desc: "Get to know the studio, our journey, and the people behind the lens.",
+    },
+    {
+        label: "Our Mission",
+        path: "/our-mission",
+        image: "https://i.pinimg.com/vwebp/1200x/14/d6/39/14d639f490597e4f176d6762f3ab9864.webp",
+        desc: "The values that guide every shoot — emotion first, craft always.",
+    },
+    {
+        label: "FAQs",
+        path: "/faq",
+        image: "https://i.pinimg.com/1200x/79/52/58/795258031ab9e309c0f449a0bb5e154d.jpg",
+        desc: "Booking process, delivery timelines & everything else you're wondering.",
+    },
+];
