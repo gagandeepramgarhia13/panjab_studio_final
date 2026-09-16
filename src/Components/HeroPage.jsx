@@ -41,7 +41,7 @@ const Hero = () => {
       {/* Center Content */}
       <main className="relative z-10 flex items-end pb-6 justify-center h-full text-center px-6">
         <div className="max-w-3xl flex flex-col items-center">
-          <h1 className="text-3xl md:text-5xl font-serif mb-6 leading-tight">
+          <h1 className="text-3d-gold text-3xl md:text-5xl font-serif mb-6 leading-tight">
             <span className="italic font-light">Crafting Timeless Visual Stories</span>
           </h1>
           <Button to="/about" variant="outline" size="responsive">

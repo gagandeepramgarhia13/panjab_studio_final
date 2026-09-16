@@ -49,7 +49,7 @@ export default function PortraitShoot() {
           >
             <ArrowLeft size={16} /> Back to Photography
           </button>
-          <h2 className="text-3xl md:text-5xl font-semibold text-white">Portrait Shoot</h2>
+          <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-white">Portrait Shoot</h2>
           <img src="/panjab_logo/5.png" alt="logo" className="h-24 mx-auto object-contain" />
           <p>
             A great portrait captures who you really are. We create a comfortable, creative

@@ -19,7 +19,7 @@ export default function About() {
 
           {/* LEFT CONTENT */}
           <div className="space-y-6">
-            <h2 className="text-3xl md:text-5xl font-semibold">
+            <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold">
               About Panjab Studio
             </h2>
 
@@ -66,7 +66,7 @@ export default function About() {
 
           {/* RIGHT CONTENT */}
           <div className="space-y-6">
-            <h2 className="text-3xl md:text-5xl font-semibold">
+            <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold">
               Our Mission
             </h2>
 
@@ -94,7 +94,7 @@ export default function About() {
 
           {/* LEFT CONTENT */}
           <div className="space-y-6">
-            <h2 className="text-3xl md:text-5xl font-semibold">
+            <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold">
               Let's Connect
             </h2>
 

@@ -42,7 +42,7 @@ export default function Photography() {
         />
         <div className="absolute inset-0 bg-black/70"></div>
         <div className="relative z-10 max-w-4xl mx-auto text-center text-gray-200 space-y-6">
-          <h2 className="text-3xl md:text-5xl font-semibold text-white">Our Photography</h2>
+          <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-white">Our Photography</h2>
           <div className="mb-6">
             <img src="/panjab_logo/5.png" alt="logo" className="h-32 mx-auto object-contain" />
           </div>

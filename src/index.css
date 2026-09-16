@@ -45,6 +45,31 @@
   50% { transform: translate(14px, -18px); opacity: 0.8; }
 }
 
+/* 🔥 Slow-drifting blurred aurora gradient mesh used by SectionGlow — the
+   soft animated-gradient backdrop, moves + breathes gently, never spins. */
+@keyframes auroraDrift {
+  0%   { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+  50%  { transform: translate(calc(-50% + 4%), calc(-50% - 3%)) rotate(8deg) scale(1.08); }
+  100% { transform: translate(calc(-50% - 3%), calc(-50% + 4%)) rotate(-6deg) scale(1.04); }
+}
+
+/* 🔥 3D gold text effect for main headings — a soft layered depth + glow,
+   used sitewide so hero/section titles all share the same premium feel as
+   the Our Team page. Works on both light and dark backgrounds. */
+.text-3d-gold {
+  text-shadow:
+    0 1px 0 rgba(200,169,106,0.35),
+    0 2px 0 rgba(200,169,106,0.25),
+    0 3px 6px rgba(0,0,0,0.25),
+    0 0 40px rgba(200,169,106,0.18);
+}
+
+/* 🔥 3D perspective wrapper for TiltCard.jsx — cheap on paint, keeps the
+   tilted card and its children rendered in the same 3D plane. */
+.tilt-perspective {
+  perspective: 1200px;
+}
+
 body {
   /* background-image: url("https://i.pinimg.com/736x/da/f7/05/daf7055241a078960474ad4cefdd0db5.jpg"); */
   /* background-color: #white; */

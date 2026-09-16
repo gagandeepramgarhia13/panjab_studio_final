@@ -165,7 +165,6 @@ export default function Testimonials() {
         .from("testimonials")
         .select("*")
         .eq("status", "approved")
-        .eq("published", true)
         .order("created_at", { ascending: false });
       if (!error && data) setApproved(data);
       setLoadingApproved(false);
@@ -189,7 +188,7 @@ export default function Testimonials() {
         <div className="relative z-10 max-w-4xl mx-auto text-center text-gray-200 space-y-6">
 
           {/* Heading */}
-          <h2 className="text-3xl md:text-5xl font-semibold text-white">
+          <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-white">
             Testimomials
           </h2>
 
@@ -219,7 +218,7 @@ export default function Testimonials() {
         <div className="relative z-10 w-full max-w-3xl mx-auto flex flex-col gap-6 pb-10">
 
           {/* Heading */}
-          <h2 className="text-3xl md:text-5xl font-semibold text-center text-black mb-6">
+          <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-center text-black mb-6">
             What Our Clients Say
           </h2>
 

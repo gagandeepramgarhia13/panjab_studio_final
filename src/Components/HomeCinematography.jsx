@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { cinematographyCategories, cinematographyReel } from "../utility/data";
 import SectionGlow from "./SectionGlow";
+import TiltCard from "./TiltCard";
 
 export default function HomeCinematography() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function HomeCinematography() {
             <span className="text-xs tracking-[4px] uppercase text-[#C8A96A]/80 font-medium">
               Motion &amp; Emotion
             </span>
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-semibold text-white mt-1 leading-tight">
+            <h2 className="text-3d-gold text-2xl sm:text-4xl md:text-5xl font-semibold text-white mt-1 leading-tight">
               Cinematography
             </h2>
             <p className="text-gray-400 mt-3 max-w-xl text-sm sm:text-base leading-relaxed">
@@ -37,14 +38,15 @@ export default function HomeCinematography() {
         </div>
 
         {/* Category Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-5 md:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-5 md:gap-6 tilt-perspective">
           {cinematographyCategories.map((cat, index) => (
-            <div
+            <TiltCard
               key={cat.path}
+              max={5}
               onClick={() => navigate(cat.path)}
               data-aos="fade-up"
               data-aos-delay={index * 100}
-              className="group relative aspect-[3/4] overflow-hidden rounded-2xl cursor-pointer border border-white/10 transition-transform duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_25px_55px_-10px_rgba(200,169,106,0.25)]"
+              className="group aspect-[3/4] overflow-hidden rounded-2xl cursor-pointer border border-white/10 hover:-translate-y-2 hover:shadow-[0_25px_55px_-10px_rgba(200,169,106,0.25)]"
             >
               <video
                 src={cinematographyReel}
@@ -80,7 +82,7 @@ export default function HomeCinematography() {
                   Watch →
                 </span>
               </div>
-            </div>
+            </TiltCard>
           ))}
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { whatWeDo } from "../utility/data";
 import { Link } from "react-router-dom";
 import SectionGlow from "./SectionGlow";
+import TiltCard from "./TiltCard";
 
 export default function WhatWeDo() {
 
@@ -14,11 +15,12 @@ export default function WhatWeDo() {
       <div className="relative z-10">
 
         {/* Grid Section */}
-        <div className="hidden sm:grid max-w-6xl mx-auto grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="hidden sm:grid max-w-6xl mx-auto grid-cols-2 lg:grid-cols-4 gap-6 tilt-perspective">
           {whatWeDo.map((item, index) => (
-            <div
+            <TiltCard
               key={index}
-              className="group aspect-square flex flex-col items-center justify-center text-center p-6 rounded-xl bg-white/0 hover:bg-white/70 hover:shadow-[0_20px_45px_-15px_rgba(90,75,56,0.35)] hover:-translate-y-2 transition-all duration-500"
+              max={6}
+              className="group aspect-square flex flex-col items-center justify-center text-center p-6 rounded-xl bg-white/0 hover:bg-white/70 hover:shadow-[0_20px_45px_-15px_rgba(90,75,56,0.35)] hover:-translate-y-2"
             >
               <img
                 src={item.logo}
@@ -28,7 +30,7 @@ export default function WhatWeDo() {
               <h3 className="text-lg font-semibold mb-2 text-black">
                 {item.title}
               </h3>
-            </div>
+            </TiltCard>
           ))}
         </div>
 
@@ -37,7 +39,7 @@ export default function WhatWeDo() {
 
           {/* Left Content */}
           <div className="space-y-6">
-            <h2 className="text-3xl md:text-5xl font-semibold text-black">
+            <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-black">
               About Panjab Studio
             </h2>
             <p className="text-gray-700 leading-relaxed">

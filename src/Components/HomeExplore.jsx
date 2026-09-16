@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { explorePages } from "../utility/data";
 import SectionGlow from "./SectionGlow";
+import TiltCard from "./TiltCard";
 
 export default function HomeExplore() {
   const navigate = useNavigate();
@@ -14,19 +15,20 @@ export default function HomeExplore() {
           <span className="text-xs tracking-[4px] uppercase text-black/40 font-medium">
             More To Discover
           </span>
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-semibold text-black mt-1 leading-tight">
+          <h2 className="text-3d-gold text-2xl sm:text-4xl md:text-5xl font-semibold text-black mt-1 leading-tight">
             Get To Know Panjab Studio
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 tilt-perspective">
           {explorePages.map((page, index) => (
-            <div
+            <TiltCard
               key={page.path}
+              max={5}
               onClick={() => navigate(page.path)}
               data-aos="fade-up"
               data-aos-delay={index * 100}
-              className="group relative h-56 sm:h-72 overflow-hidden rounded-2xl cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.1)] transition-transform duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.35)]"
+              className="group h-56 sm:h-72 overflow-hidden rounded-2xl cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.1)] hover:-translate-y-2 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.35)]"
             >
               <img
                 src={page.image}
@@ -50,7 +52,7 @@ export default function HomeExplore() {
                   Learn More →
                 </span>
               </div>
-            </div>
+            </TiltCard>
           ))}
         </div>
       </div>

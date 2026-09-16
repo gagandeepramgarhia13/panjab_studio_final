@@ -48,7 +48,7 @@ export default function CommercialVideos() {
                     >
                         <ArrowLeft size={16} /> Back to Photography
                     </button>
-                    <h2 className="text-3xl md:text-5xl font-semibold text-white">Commercial Videos</h2>
+                    <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-white">Commercial Videos</h2>
                     <img src="/panjab_logo/5.png" alt="logo" className="h-24 mx-auto object-contain" />
                     <p>
                         Elevate your brand with visually compelling commercial content —

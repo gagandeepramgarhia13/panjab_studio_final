@@ -83,7 +83,7 @@ export default function FAQ() {
 
                 {/* Header */}
                 <div className="text-center mb-8 sm:mb-12 md:mb-16">
-                    <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-semibold">
+                    <h1 className="text-3d-gold text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-semibold">
                         Frequently Asked Questions
                     </h1>
                     <p className="mt-2 sm:mt-3 md:mt-4 text-gray-300 max-w-xl mx-auto text-xs sm:text-sm md:text-base leading-relaxed px-2">

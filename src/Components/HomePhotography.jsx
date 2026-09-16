@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { photographyCategories } from "../utility/data";
 import SectionGlow from "./SectionGlow";
+import TiltCard from "./TiltCard";
 
 export default function HomePhotography() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function HomePhotography() {
             <span className="text-xs tracking-[4px] uppercase text-black/40 font-medium">
               Frame By Frame
             </span>
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-semibold text-black mt-1 leading-tight">
+            <h2 className="text-3d-gold text-2xl sm:text-4xl md:text-5xl font-semibold text-black mt-1 leading-tight">
               Photography
             </h2>
             <p className="text-gray-600 mt-3 max-w-xl text-sm sm:text-base leading-relaxed">
@@ -37,14 +38,15 @@ export default function HomePhotography() {
         </div>
 
         {/* Category Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-5 md:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-5 md:gap-6 tilt-perspective">
           {photographyCategories.map((cat, index) => (
-            <div
+            <TiltCard
               key={cat.path}
+              max={5}
               onClick={() => navigate(cat.path)}
               data-aos="fade-up"
               data-aos-delay={index * 100}
-              className="group relative aspect-[3/4] overflow-hidden rounded-2xl cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-transform duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)]"
+              className="group aspect-[3/4] overflow-hidden rounded-2xl cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:-translate-y-2 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)]"
             >
               <img
                 src={cat.image}
@@ -74,7 +76,7 @@ export default function HomePhotography() {
                   Explore →
                 </span>
               </div>
-            </div>
+            </TiltCard>
           ))}
         </div>
       </div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase, BUCKETS } from "../supabase";
 import SectionGlow from "./SectionGlow";
+import TiltCard from "./TiltCard";
 
 const buttons = [
     { name: "Photography", path: "/photography" },
@@ -43,7 +44,7 @@ export default function HomeGallery() {
 
             {/* Heading */}
             <div className="text-center text-white mb-5" data-aos="fade-right">
-                <h1 className="text-[50px] font-bold">
+                <h1 className="text-3d-gold text-[50px] font-bold">
                     Featured Media
                 </h1>
                 <p>
@@ -61,29 +62,30 @@ export default function HomeGallery() {
                     <p>No photos uploaded yet.</p>
                 </div>
             ) : (
-                <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 md:h-[500px]">
+                <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 md:h-[500px] tilt-perspective">
 
                     {/* LEFT BIG IMAGE */}
-                    <div className="group md:col-span-2 md:row-span-2 h-[200px] md:h-full overflow-hidden rounded-xl shadow-[0_10px_35px_rgba(0,0,0,0.4)] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_25px_55px_-10px_rgba(200,169,106,0.3)]">
+                    <TiltCard max={4} className="group md:col-span-2 md:row-span-2 h-[200px] md:h-full overflow-hidden rounded-xl shadow-[0_10px_35px_rgba(0,0,0,0.4)] hover:-translate-y-1 hover:shadow-[0_25px_55px_-10px_rgba(200,169,106,0.3)]">
                         <img
                             src={images[0]}
                             alt=""
                             className="w-full h-full object-cover transition duration-500 group-hover:scale-110"
                         />
-                    </div>
+                    </TiltCard>
 
                     {/* RIGHT IMAGES */}
                     {images.slice(1).map((img, index) => (
-                        <div
+                        <TiltCard
                             key={index}
-                            className="group h-[200px] md:h-full overflow-hidden rounded-xl shadow-[0_10px_35px_rgba(0,0,0,0.4)] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_25px_55px_-10px_rgba(200,169,106,0.3)]"
+                            max={4}
+                            className="group h-[200px] md:h-full overflow-hidden rounded-xl shadow-[0_10px_35px_rgba(0,0,0,0.4)] hover:-translate-y-1 hover:shadow-[0_25px_55px_-10px_rgba(200,169,106,0.3)]"
                         >
                             <img
                                 src={img}
                                 alt=""
                                 className="w-full h-full object-cover transition duration-500 group-hover:scale-110"
                             />
-                        </div>
+                        </TiltCard>
                     ))}
 
                 </div>

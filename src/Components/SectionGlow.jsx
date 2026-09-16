@@ -1,8 +1,9 @@
-// Purely decorative ambient background — slow-moving gold glow orbs, a
-// gently rotating halo ring, and a couple of drifting light particles.
-// Matches the site's gold/black (Panjab Studios logo) theme and gives an
-// otherwise flat/empty background some living, "3D" depth — like a very
-// slow, subtle GIF rather than a static texture.
+// Purely decorative ambient background — a slow-drifting, blurred aurora
+// gradient mesh underneath slow-moving gold glow orbs, a gently rotating
+// halo ring, and a couple of drifting light particles. Matches the site's
+// gold/black (Panjab Studios logo) theme and gives an otherwise flat/empty
+// background some living, "3D" depth — like a very slow, subtle GIF rather
+// than a static texture.
 //
 // Usage: drop it as the FIRST child of a `relative overflow-hidden`
 // section. Wrap the section's real content in a `relative z-10` wrapper
@@ -12,6 +13,20 @@ export default function SectionGlow({ variant = "light", className = "" }) {
 
   return (
     <div className={`pointer-events-none absolute inset-0 overflow-hidden z-0 ${className}`}>
+      {/* Blurred aurora gradient mesh — the soft, professional "moving
+          gradient" backdrop that sits behind everything else in this layer */}
+      <div
+        className="absolute left-1/2 top-1/2 w-[70rem] h-[70rem] -translate-x-1/2 -translate-y-1/2"
+        style={{
+          background: isDark
+            ? "conic-gradient(from 90deg at 50% 50%, rgba(200,169,106,0.20), rgba(90,75,56,0.10) 30%, transparent 55%, rgba(200,169,106,0.14) 80%, rgba(200,169,106,0.20))"
+            : "conic-gradient(from 90deg at 50% 50%, rgba(200,169,106,0.14), rgba(232,205,143,0.10) 30%, transparent 55%, rgba(90,75,56,0.08) 80%, rgba(200,169,106,0.14))",
+          filter: "blur(90px)",
+          opacity: isDark ? 0.9 : 0.7,
+          animation: "auroraDrift 26s ease-in-out infinite alternate",
+        }}
+      />
+
       {/* Slowly rotating halo ring — the "3D, moving" centerpiece */}
       <div
         className="absolute left-1/2 top-1/2 w-[42rem] h-[42rem] -translate-x-1/2 -translate-y-1/2"

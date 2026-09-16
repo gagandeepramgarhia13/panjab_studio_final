@@ -52,7 +52,7 @@ export default function LiveEventsVideos() {
             className="flex items-center gap-2 text-white/60 hover:text-white transition mx-auto text-sm">
             <ArrowLeft size={16} /> Back to Cinematography
           </button>
-          <h2 className="text-3xl md:text-5xl font-semibold text-white">Live Events</h2>
+          <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-white">Live Events</h2>
           <img src="/panjab_logo/5.png" alt="logo" className="h-24 mx-auto object-contain" />
           <p className="italic text-gray-300">The energy of a live event, captured in motion — every performance, every crowd reaction, preserved forever.</p>
         </div>

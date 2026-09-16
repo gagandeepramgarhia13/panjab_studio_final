@@ -72,7 +72,7 @@ export default function Contact() {
 
         {/* 🔥 HEADER */}
         <div className="text-center mb-8 sm:mb-12 md:mb-16">
-          <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-5xl font-semibold">
+          <h2 className="text-3d-gold text-xl xs:text-2xl sm:text-3xl md:text-5xl font-semibold">
             Contact Us
           </h2>
 

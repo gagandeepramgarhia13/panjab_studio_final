@@ -49,7 +49,7 @@ export default function LiveEvents() {
                     >
                         <ArrowLeft size={16} /> Back to Photography
                     </button>
-                    <h2 className="text-3xl md:text-5xl font-semibold text-white">Live Events</h2>
+                    <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-white">Live Events</h2>
                     <img src="/panjab_logo/5.png" alt="logo" className="h-24 mx-auto object-contain" />
                     <p>
                         From concerts to cultural celebrations, we capture the energy, emotion, and

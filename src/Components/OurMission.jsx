@@ -36,7 +36,7 @@ export default function OurMission() {
 
         {/* Header */}
         <div className="relative z-10 text-center max-w-3xl mb-12 md:mb-16">
-          <h1 className="text-3xl md:text-5xl font-semibold">
+          <h1 className="text-3d-gold text-3xl md:text-5xl font-semibold">
             Our Mission
           </h1>
           <p className="mt-4 text-gray-300 text-sm md:text-base leading-relaxed">
