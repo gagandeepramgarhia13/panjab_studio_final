@@ -112,6 +112,47 @@ export function useScrollProgress(range = 1) {
 }
 
 /**
+ * useTopExitProgress — for an element pinned at the very TOP of the page
+ * (the Hero). Unlike useScrollProgress (built for "reveal an element as it
+ * scrolls up into view from below"), this is 0 exactly at scrollY = 0 and
+ * increases to 1 once the user has scrolled down past the element's own
+ * height. useScrollProgress's formula evaluates to ≈0.5 for a top-pinned
+ * element even at rest (zero scroll), which was causing the Hero heading/
+ * CTA to render blurred and faded on page load before any scrolling
+ * happened — this hook fixes that by measuring distance scrolled against
+ * the element's own height instead of its position within the viewport.
+ */
+export function useTopExitProgress() {
+  const ref = useRef(null);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const compute = () => {
+      const height = el.offsetHeight || 1;
+      // rect.top is 0 at rest (top of page) and goes negative while
+      // scrolling down past the element — exactly what we want as the
+      // "how far past the hero have we scrolled" measure.
+      const rect = el.getBoundingClientRect();
+      const raw = Math.max(0, -rect.top) / height;
+      setProgress(Math.min(1, raw));
+    };
+
+    compute();
+    const unsub = subscribe(compute);
+    window.addEventListener("resize", compute);
+    return () => {
+      unsub();
+      window.removeEventListener("resize", compute);
+    };
+  }, []);
+
+  return [ref, progress];
+}
+
+/**
  * useParallax — moves an element vertically at a fraction/multiple of
  * scroll speed. speed < 1 = slower than scroll (background/midground),
  * speed > 1 = faster (foreground). Distance is clamped and reduced

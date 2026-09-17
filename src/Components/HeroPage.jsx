@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { followLinks } from "../utility/data";
 import Button from "./Button";
-import { useScrollProgress } from "../hooks/useScrollAnimation";
+import { useTopExitProgress } from "../hooks/useScrollAnimation";
 
 const Hero = () => {
   const [contactOpen, setContactOpen] = useState(false);
@@ -11,8 +11,11 @@ const Hero = () => {
   // (background layer) scales up + drifts slower, the heading pushes back
   // into depth and softens, and the CTA drifts at its own, slower speed —
   // "scroll = camera moving through the scene" rather than a static hero
-  // that simply scrolls off screen.
-  const [heroRef, exit] = useScrollProgress(1); // 0 at top → ~1 once scrolled past
+  // that simply scrolls off screen. useTopExitProgress is exactly 0 at
+  // scrollY = 0 (unlike the general-purpose useScrollProgress, which was
+  // ≈0.5 for a top-pinned element even at rest — the cause of the heading/
+  // CTA rendering blurred and faded on page load before any scrolling).
+  const [heroRef, exit] = useTopExitProgress(); // 0 at top → 1 once scrolled past the hero's own height
 
   const videoScale = 1 + exit * 0.18;
   const videoY = exit * 40;
@@ -74,7 +77,7 @@ const Hero = () => {
           <h1
             data-aos="fade-up"
             data-aos-duration="900"
-            className="depth-el text-3d-gold text-3xl md:text-5xl font-serif mb-6 leading-tight"
+            className="depth-el-scroll text-3d-gold text-3xl md:text-5xl font-serif mb-6 leading-tight"
             style={{
               transform: `translate3d(0, ${headingY}px, ${headingZ}px)`,
               filter: headingBlur > 0.2 ? `blur(${headingBlur}px)` : "none",
@@ -86,7 +89,7 @@ const Hero = () => {
           <div
             data-aos="fade-up"
             data-aos-delay="150"
-            className="depth-el"
+            className="depth-el-scroll"
             style={{ transform: `translate3d(0, ${ctaY}px, 0)`, opacity: headingOpacity }}
           >
             <Button to="/about" variant="outline" size="responsive">

@@ -149,8 +149,18 @@ body * {
   will-change: transform;
 }
 
+/* For elements whose transform/opacity/filter is driven CONTINUOUSLY by
+   scroll position every frame (e.g. the Hero exit effect) rather than a
+   one-shot reveal-on-enter — no CSS transition here, or the transition
+   fights the rAF-driven inline-style updates and produces a laggy,
+   rubber-banding feel instead of tracking scroll 1:1. */
+.depth-el-scroll {
+  will-change: transform, opacity, filter;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .depth-el,
+  .depth-el-scroll,
   .parallax-el {
     transition: none !important;
     transform: none !important;
