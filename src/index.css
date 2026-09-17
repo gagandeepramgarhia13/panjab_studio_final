@@ -125,6 +125,40 @@ body * {
 }
 
 /* ============================================================================
+   3D SCROLL SYSTEM — shared by every component using the hooks in
+   src/hooks/useScrollAnimation.js (useDepthReveal / useParallax / use3DTilt).
+   `.scroll-3d-scene` gives a section a real 3D space for its children to
+   move through; `.depth-el` is the base transition for anything animated by
+   useDepthReveal, so each component only sets the *target* transform/style
+   inline (computed from scroll progress) and the easing/timing lives here,
+   once. transform + opacity + filter only — GPU-friendly, never triggers
+   layout. Respects prefers-reduced-motion globally as a hard cutoff. */
+.scroll-3d-scene {
+  perspective: 1400px;
+  transform-style: preserve-3d;
+}
+
+.depth-el {
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.45s ease,
+    filter 0.45s ease;
+  will-change: transform, opacity;
+}
+
+.parallax-el {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .depth-el,
+  .parallax-el {
+    transition: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+/* ============================================================================
    TYPOGRAPHY — Cormorant Garamond (editorial serif) for headings, Manrope
    (clean modern sans) for body copy. Applied globally so every heading gets
    the premium display treatment without touching each component, while

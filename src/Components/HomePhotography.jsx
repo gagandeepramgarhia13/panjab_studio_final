@@ -1,9 +1,57 @@
 import { useNavigate } from "react-router-dom";
 import { photographyCategories } from "../utility/data";
 import TiltCard from "./TiltCard";
+import { useDepthReveal } from "../hooks/useScrollAnimation";
+
+// Each category tile comes forward from depth on its own stagger, then
+// TiltCard's mouse tilt takes over for hover — same "come forward, then
+// interact" pattern used across the site's card grids.
+function CategoryTile({ cat, index, onClick }) {
+  const [ref, style] = useDepthReveal({ depth: 0.5, delay: index * 80 });
+
+  return (
+    <div ref={ref} className="depth-el" style={style}>
+      <TiltCard
+        max={5}
+        onClick={onClick}
+        className="group aspect-[3/4] overflow-hidden rounded-2xl cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:-translate-y-2 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)]"
+      >
+        <img
+          src={cat.image}
+          alt={cat.label}
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+        />
+
+        {/* Gradient overlay for text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+
+        {/* Gold border on hover */}
+        <div
+          className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          style={{ boxShadow: "inset 0 0 0 2px rgba(200,164,93,0.85)" }}
+        />
+
+        <div className="absolute inset-x-0 bottom-0 p-3 sm:p-5 text-left">
+          <span className="text-lg sm:text-2xl">{cat.icon}</span>
+          <h3 className="text-white font-semibold text-xs sm:text-base md:text-lg mt-1 leading-tight">
+            {cat.label}
+          </h3>
+          <p className="text-white/70 text-[11px] mt-1 leading-relaxed line-clamp-2 hidden sm:block">
+            {cat.desc}
+          </p>
+          <span className="inline-flex items-center gap-1 text-[#C8A45D] text-[11px] sm:text-xs font-medium mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            Explore →
+          </span>
+        </div>
+      </TiltCard>
+    </div>
+  );
+}
 
 export default function HomePhotography() {
   const navigate = useNavigate();
+  const [headingRef, headingStyle] = useDepthReveal({ depth: 0.45 });
 
   return (
     <section className="relative w-full overflow-hidden py-14 sm:py-20 md:py-24 px-4 sm:px-6">
@@ -11,8 +59,9 @@ export default function HomePhotography() {
 
         {/* Heading */}
         <div
-          className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-14"
-          data-aos="fade-up"
+          ref={headingRef}
+          className="depth-el flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-14"
+          style={headingStyle}
         >
           <div>
             <span className="text-xs tracking-[4px] uppercase text-[#C8A45D]/70 font-medium">
@@ -36,45 +85,9 @@ export default function HomePhotography() {
         </div>
 
         {/* Category Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-5 md:gap-6 tilt-perspective">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-5 md:gap-6 tilt-perspective scroll-3d-scene">
           {photographyCategories.map((cat, index) => (
-            <TiltCard
-              key={cat.path}
-              max={5}
-              onClick={() => navigate(cat.path)}
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-              className="group aspect-[3/4] overflow-hidden rounded-2xl cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:-translate-y-2 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)]"
-            >
-              <img
-                src={cat.image}
-                alt={cat.label}
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-              />
-
-              {/* Gradient overlay for text legibility */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
-
-              {/* Gold border on hover */}
-              <div
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ boxShadow: "inset 0 0 0 2px rgba(200,164,93,0.85)" }}
-              />
-
-              <div className="absolute inset-x-0 bottom-0 p-3 sm:p-5 text-left">
-                <span className="text-lg sm:text-2xl">{cat.icon}</span>
-                <h3 className="text-white font-semibold text-xs sm:text-base md:text-lg mt-1 leading-tight">
-                  {cat.label}
-                </h3>
-                <p className="text-white/70 text-[11px] mt-1 leading-relaxed line-clamp-2 hidden sm:block">
-                  {cat.desc}
-                </p>
-                <span className="inline-flex items-center gap-1 text-[#C8A45D] text-[11px] sm:text-xs font-medium mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  Explore →
-                </span>
-              </div>
-            </TiltCard>
+            <CategoryTile key={cat.path} cat={cat} index={index} onClick={() => navigate(cat.path)} />
           ))}
         </div>
       </div>

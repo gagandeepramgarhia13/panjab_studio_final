@@ -4,11 +4,43 @@ import { supabase, BUCKETS } from "../supabase";
 import Button from "./Button";
 import { photographyCategories as categories } from "../utility/data";
 import SectionGlow from "./SectionGlow";
+import { useParallax, useDepthReveal } from "../hooks/useScrollAnimation";
+
+// Masonry gallery item — comes forward from depth with a small per-item
+// stagger based on its column position, so the grid doesn't reveal as one
+// flat block.
+function GalleryItem({ img, index, onOpen }) {
+  const [ref, style] = useDepthReveal({ depth: 0.4, delay: (index % 6) * 60 });
+
+  return (
+    <div
+      ref={ref}
+      className="depth-el relative mb-4 overflow-hidden rounded-xl group break-inside-avoid transition-transform duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.35)]"
+      style={style}
+    >
+      <img
+        src={img.src}
+        alt={`gallery-${index}`}
+        className="w-full h-auto block transition duration-500 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
+      <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ boxShadow: "inset 0 0 0 2px rgba(200,164,93,0.7)" }} />
+      <button
+        onClick={onOpen}
+        className="absolute bottom-3 right-3 z-20 flex items-center gap-2 bg-white/90 text-black text-sm font-semibold px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition hover:bg-white"
+      >
+        <Maximize2 size={15} />
+        View
+      </button>
+    </div>
+  );
+}
 
 export default function Photography() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(null);
+  const [heroImgRef, heroY] = useParallax(0.12, { max: 60 });
 
   useEffect(() => {
     async function fetchPhotos() {
@@ -34,11 +66,13 @@ export default function Photography() {
     <section className="relative w-full min-h-screen z-0">
 
       {/* Hero */}
-      <div className="relative w-full h-[90vh] flex justify-center items-center py-24 px-4 md:px-10 mb-16 overflow-hidden">
+      <div className="relative w-full h-[90vh] flex justify-center items-center py-24 px-4 md:px-10 mb-16 overflow-hidden scroll-3d-scene">
         <img
-          className="absolute inset-0 w-full h-full object-cover"
+          ref={heroImgRef}
+          className="parallax-el absolute inset-0 w-full h-full object-cover"
           src="https://i.pinimg.com/736x/e3/c1/f6/e3c1f6f7cd60abe2245c71e0ba5669de.jpg"
           alt=""
+          style={{ transform: `translate3d(0, ${heroY}px, 0) scale(1.1)` }}
         />
         <div className="absolute inset-0 bg-black/70"></div>
         {/* Soft fade into the page background so the hero blends seamlessly
@@ -101,27 +135,9 @@ export default function Photography() {
             </p>
           </div>
         ) : (
-          <div className="relative z-10 [column-count:2] md:[column-count:3] lg:[column-count:4] gap-4 [column-gap:1rem]">
+          <div className="scroll-3d-scene relative z-10 [column-count:2] md:[column-count:3] lg:[column-count:4] gap-4 [column-gap:1rem]">
             {images.map((img, index) => (
-              <div
-                key={img.src}
-                className="relative mb-4 overflow-hidden rounded-xl group break-inside-avoid transition-transform duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.35)]"
-              >
-                <img
-                  src={img.src}
-                  alt={`gallery-${index}`}
-                  className="w-full h-auto block transition duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
-                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ boxShadow: "inset 0 0 0 2px rgba(200,164,93,0.7)" }} />
-                <button
-                  onClick={() => setSelected(img.src)}
-                  className="absolute bottom-3 right-3 z-20 flex items-center gap-2 bg-white/90 text-black text-sm font-semibold px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition hover:bg-white"
-                >
-                  <Maximize2 size={15} />
-                  View
-                </button>
-              </div>
+              <GalleryItem key={img.src} img={img} index={index} onOpen={() => setSelected(img.src)} />
             ))}
           </div>
         )}
