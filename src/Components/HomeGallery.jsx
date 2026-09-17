@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase, BUCKETS } from "../supabase";
-import SectionGlow from "./SectionGlow";
 import TiltCard from "./TiltCard";
 
 const buttons = [
@@ -38,8 +37,7 @@ export default function HomeGallery() {
     }, []);
 
     return (
-        <section className="relative w-full overflow-hidden bg-[var(--background)] bg-no-repeat bg-cover py-16 px-4">
-            <SectionGlow variant="dark" />
+        <section className="relative w-full overflow-hidden bg-no-repeat bg-cover py-16 px-4">
             <div className="relative z-10">
 
             {/* Heading */}

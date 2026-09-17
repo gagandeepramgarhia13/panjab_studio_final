@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase, BUCKETS } from "../supabase";
-import SectionGlow from "./SectionGlow";
 import TiltCard from "./TiltCard";
 
 export default function HomeOurTeam() {
@@ -35,8 +34,7 @@ export default function HomeOurTeam() {
   if (loading || members.length === 0) return null;
 
   return (
-    <section className="relative w-full overflow-hidden bg-[var(--background)] py-14 sm:py-16 md:py-20 px-4 sm:px-6">
-      <SectionGlow variant="dark" />
+    <section className="relative w-full overflow-hidden py-14 sm:py-16 md:py-20 px-4 sm:px-6">
       <div className="relative z-10 max-w-5xl mx-auto">
 
         {/* Top row — heading + button */}

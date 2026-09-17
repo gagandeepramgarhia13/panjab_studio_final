@@ -1,14 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { cinematographyCategories, cinematographyReel } from "../utility/data";
-import SectionGlow from "./SectionGlow";
 import TiltCard from "./TiltCard";
 
 export default function HomeCinematography() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative w-full overflow-hidden bg-[var(--background)] py-14 sm:py-20 md:py-24 px-4 sm:px-6">
-      <SectionGlow variant="dark" />
+    <section className="relative w-full overflow-hidden py-14 sm:py-20 md:py-24 px-4 sm:px-6">
       <div className="relative z-10 max-w-6xl mx-auto">
 
         {/* Heading */}

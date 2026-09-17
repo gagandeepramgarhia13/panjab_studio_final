@@ -2,7 +2,7 @@ import { socialLinks } from "../utility/data";
 
 export default function HomeInsta() {
     return (
-        <section className="w-full py-16 px-4 bg-[var(--background)] flex items-center flex-col ">
+        <section className="w-full py-16 px-4 flex items-center flex-col ">
 
             {/* Heading */}
             <div className="text-center mb-10">

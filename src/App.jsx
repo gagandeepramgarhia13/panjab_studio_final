@@ -4,6 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import Navbar from './Components/Navbar'
+import HomeAmbientBackground from './Components/HomeAmbientBackground'
 import HeroPage from './Components/HeroPage'
 import WhatWeDo from './Components/whatWeDo'
 import HomePhotography from './Components/HomePhotography'
@@ -65,6 +66,10 @@ function App() {
         {/* ✅ Home Page */}
         <Route path="/" element={
           <>
+            {/* One continuous animated background for the whole home page —
+                see HomeAmbientBackground.jsx for why this replaced each
+                section painting its own flat/clipped background. */}
+            <HomeAmbientBackground />
             <HeroPage />
             <WhatWeDo />
             <HomePhotography />

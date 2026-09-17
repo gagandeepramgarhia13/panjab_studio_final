@@ -1,14 +1,11 @@
 import { FaQuoteRight, FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import SectionGlow from "./SectionGlow";
 
 
 export default function HomeTestimonials() {
 
   return (
-    <section className="w-full py-20 bg-[var(--background)] flex items-center justify-center text-center relative overflow-hidden">
-
-      <SectionGlow variant="dark" />
+    <section className="w-full py-20 flex items-center justify-center text-center relative overflow-hidden">
 
       {/* 🔹 Content */}
       <div className="max-w-3xl mx-auto px-6 relative z-10">

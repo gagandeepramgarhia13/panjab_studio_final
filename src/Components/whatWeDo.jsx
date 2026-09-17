@@ -1,16 +1,11 @@
 import { whatWeDo } from "../utility/data";
 import { Link } from "react-router-dom";
-import SectionGlow from "./SectionGlow";
 import TiltCard from "./TiltCard";
 
 export default function WhatWeDo() {
 
   return (
     <section className="relative w-full overflow-hidden">
-
-      {/* Background */}
-      <div className="absolute inset-0 bg-[var(--background)]"></div>
-      <SectionGlow variant="dark" />
 
       <div className="relative z-10">
 
