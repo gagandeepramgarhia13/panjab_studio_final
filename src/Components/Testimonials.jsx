@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Star } from "lucide-react";
+import { Star, MessageSquareQuote } from "lucide-react";
 import { supabase } from "../supabase";
 import SectionGlow from "./SectionGlow";
+import TestimonialCard from "./TestimonialCard";
 
 // Submission form — every testimonial lands here as "pending" and only
 // appears on the site once an admin approves it from /admin.
@@ -17,6 +18,9 @@ function TestimonialForm() {
     e.preventDefault();
     setStatus("sending");
 
+    // status/published are sent explicitly as "pending"/false so the insert
+    // matches the database's row-level-security check exactly — a visitor
+    // can never approve or publish their own review this way.
     const { error } = await supabase.from("testimonials").insert([
       {
         name: form.name,
@@ -24,6 +28,7 @@ function TestimonialForm() {
         rating,
         message: form.message,
         status: "pending",
+        published: false,
       },
     ]);
 
@@ -133,29 +138,9 @@ function TestimonialForm() {
 }
 
 export default function Testimonials() {
-  const testimonials = [
-    {
-      text: "From the very first call, they made us feel so comfortable. The team felt more like friends than photographers. They caught every little detail—we’re so happy with how everything turned out!",
-      author: "Aman & Gurpreet",
-    },
-    {
-      text: "We wanted a modern and clean look for our wedding film, and they delivered exactly that. The video and photos are just perfect. Our families love them too!",
-      author: "Sarah & James",
-    },
-    {
-      text: "Even though our wedding was abroad, the team handled everything so smoothly. The pictures and video look like something out of a movie. So glad we chose them! :)",
-      author: "Ria & Arjun",
-    },
-    {
-      text: "Our Nikkah was small and simple, but the video made it look so beautiful. They really captured the emotions and atmosphere of the day. We couldn’t stop smiling watching it.",
-      author: "Fatima & Yasin",
-    },
-    {
-      text: "We booked them for a product shoot after seeing their wedding videos. The results were sharp, professional, and delivered super fast. Highly recommended!",
-      author: "Maya S",
-    },
-  ];
-
+  // Every card on this page is a real review submitted through the form
+  // below, then approved AND published by an admin — nothing here is
+  // invented or hard-coded.
   const [approved, setApproved] = useState([]);
   const [loadingApproved, setLoadingApproved] = useState(true);
 
@@ -165,12 +150,17 @@ export default function Testimonials() {
         .from("testimonials")
         .select("*")
         .eq("status", "approved")
+        .eq("published", true)
         .order("created_at", { ascending: false });
       if (!error && data) setApproved(data);
       setLoadingApproved(false);
     }
     fetchApproved();
   }, []);
+
+  const averageRating = approved.length
+    ? (approved.reduce((sum, t) => sum + (t.rating || 0), 0) / approved.length)
+    : 0;
 
   return (
     <section className="w-full  min-h-screen flex flex-col items-center" >
@@ -215,74 +205,56 @@ export default function Testimonials() {
       {/* Center Container */}
       <div className="relative w-full overflow-hidden">
         <SectionGlow variant="dark" />
-        <div className="relative z-10 w-full max-w-3xl mx-auto flex flex-col gap-6 pb-10">
+        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col gap-6 pb-10 px-4 md:px-0">
 
           {/* Heading */}
-          <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-center text-white mb-6">
+          <h2 className="text-3d-gold text-3xl md:text-5xl font-semibold text-center text-white mb-2">
             What Our Clients Say
           </h2>
 
-          {/* Cards */}
-          {testimonials.map((item, index) => (
-            <div
-              key={index}
-              data-aos="fade-up"
-              data-aos-delay={index * 80}
-              className="rounded-3xl p-6 md:p-8 bg-white/[0.04] backdrop-blur-md ring-1 ring-white/10 text-gray-200 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.5)] hover:shadow-[0_25px_55px_-15px_rgba(200,164,93,0.25)] transition-all duration-500 hover:-translate-y-1"
-            >
-
-              {/* ⭐ Stars */}
-              <div className="mb-3 text-sm">⭐⭐⭐⭐⭐</div>
-
-              {/* Text */}
-              <p className="text-sm md:text-base leading-relaxed italic">
-                “{item.text}”
-              </p>
-
-              {/* Author */}
-              <div className="mt-4 flex items-center justify-between">
-                <h4 className="font-semibold text-sm md:text-base text-white">
-                  — {item.author}
-                </h4>
-
-              </div>
-
-            </div>
-          ))}
-
-          {/* Approved, community-submitted testimonials */}
+          {/* Rating summary */}
           {!loadingApproved && approved.length > 0 && (
-            <>
-              <h3 className="text-xl md:text-2xl font-semibold text-center text-white mt-6 mb-2">
-                More From Our Clients
-              </h3>
+            <div className="flex flex-col items-center gap-2 text-center mb-4">
+              <div className="flex items-center gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={22} className={i < Math.round(averageRating) ? "fill-[#C8A45D] text-[#C8A45D]" : "text-white/20"} />
+                ))}
+              </div>
+              <p className="text-2xl font-bold text-white">
+                {averageRating.toFixed(1)} <span className="text-base font-medium text-gray-400">out of 5</span>
+              </p>
+              <p className="text-sm text-gray-500">
+                Based on {approved.length} published customer {approved.length === 1 ? "review" : "reviews"}
+              </p>
+            </div>
+          )}
+
+          {/* Real, admin-approved & published reviews */}
+          {loadingApproved ? (
+            <div className="flex justify-center py-16">
+              <div className="w-10 h-10 border-2 border-[#C8A45D] border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : approved.length === 0 ? (
+            <div className="max-w-xl mx-auto text-center bg-white/[0.04] backdrop-blur-md rounded-3xl shadow-[0_25px_60px_-20px_rgba(0,0,0,0.5)] ring-1 ring-white/10 px-6 py-12 sm:px-10">
+              <MessageSquareQuote className="w-10 h-10 text-[#C8A45D]/40 mx-auto mb-4" />
+              <p className="text-gray-300 font-medium">No published reviews yet</p>
+              <p className="text-gray-500 text-sm mt-2">
+                We'd rather show nothing than something we made up. If we've worked with you,
+                use the form below — yours could be the first review on this page.
+              </p>
+            </div>
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {approved.map((item, index) => (
-                <div
-                  key={item.id}
-                  data-aos="fade-up"
-                  data-aos-delay={index * 80}
-                  className="rounded-3xl p-6 md:p-8 bg-white/[0.04] backdrop-blur-md ring-1 ring-white/10 text-gray-200 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.5)] hover:shadow-[0_25px_55px_-15px_rgba(200,164,93,0.25)] transition-all duration-500 hover:-translate-y-1"
-                >
-                  <div className="mb-3 flex items-center gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={15} className={i < item.rating ? "fill-[#C8A45D] text-[#C8A45D]" : "text-gray-600"} />
-                    ))}
-                  </div>
-                  <p className="text-sm md:text-base leading-relaxed italic">
-                    “{item.message}”
-                  </p>
-                  <div className="mt-4 flex items-center justify-between">
-                    <h4 className="font-semibold text-sm md:text-base text-white">
-                      — {item.name}
-                    </h4>
-                  </div>
+                <div key={item.id} data-aos="fade-up" data-aos-delay={Math.min(index, 6) * 60} className="h-full">
+                  <TestimonialCard testimonial={item} />
                 </div>
               ))}
-            </>
+            </div>
           )}
 
           {/* Submission form */}
-          <div className="mt-6">
+          <div className="mt-6 max-w-3xl mx-auto w-full">
             <TestimonialForm />
           </div>
 
