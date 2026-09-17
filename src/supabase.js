@@ -18,3 +18,10 @@ export const BUCKETS = {
   commercialVideos: "commercial-videos",
   team: "team",
 };
+
+// Database table (not storage — these are just YouTube links, no file to
+// store) holding every YouTube video added from the admin panel. `category`
+// matches the same ids used above and in AdminPage's VIDEO_CATEGORIES:
+// "videos" (Cinematography's own "browse all" gallery), "wedding-videos",
+// "live-events-videos", "music-videos", "commercial-videos".
+export const YOUTUBE_TABLE = "youtube_videos";

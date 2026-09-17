@@ -1,44 +1,27 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { supabase, BUCKETS } from "../supabase";
+import { supabase, YOUTUBE_TABLE } from "../supabase";
 import SectionGlow from "./SectionGlow";
+import YouTubeVideoCard from "./YouTubeVideoCard";
 
 export default function MusicVideos() {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const videoRefs = useRef([]);
-  const [activeIndex, setActiveIndex] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchVideos() {
-      const { data, error } = await supabase.storage
-        .from(BUCKETS.musicVideos)
-        .list("", { limit: 200, sortBy: { column: "created_at", order: "desc" } });
-      if (!error && data) {
-        const urls = data
-          .filter(f => f.name !== ".emptyFolderPlaceholder")
-          .map(f => {
-            const { data: urlData } = supabase.storage.from(BUCKETS.musicVideos).getPublicUrl(f.name);
-            return { src: urlData.publicUrl, name: f.name };
-          });
-        setVideos(urls);
-      }
+      const { data, error } = await supabase
+        .from(YOUTUBE_TABLE)
+        .select("*")
+        .eq("category", "music-videos")
+        .order("created_at", { ascending: false });
+      if (!error && data) setVideos(data);
       setLoading(false);
     }
     fetchVideos();
   }, []);
-
-  const handleVideoClick = (index) => {
-    const currentVideo = videoRefs.current[index];
-    if (activeIndex === index) {
-      currentVideo.pause(); currentVideo.currentTime = 0; setActiveIndex(null);
-    } else {
-      videoRefs.current.forEach((vid) => { if (vid) { vid.pause(); vid.currentTime = 0; } });
-      currentVideo.play(); setActiveIndex(index);
-    }
-  };
 
   return (
     <section className="w-full min-h-screen">
@@ -67,27 +50,13 @@ export default function MusicVideos() {
           </div>
         ) : videos.length === 0 ? (
           <div className="relative z-10 text-center py-24 text-white/30">
-            <p className="text-lg">No videos uploaded yet.</p>
-            <p className="text-sm mt-2">Upload to the <span className="text-[#C8A45D]">music-videos</span> bucket in Admin.</p>
+            <p className="text-lg">No videos added yet.</p>
+            <p className="text-sm mt-2">Add a YouTube link from the <span className="text-[#C8A45D]">Admin</span> panel.</p>
           </div>
         ) : (
           <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {videos.map((vid, index) => (
-              <div key={index} onClick={() => handleVideoClick(index)}
-                className="relative overflow-hidden rounded-2xl group cursor-pointer transition-transform duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.35)]">
-                <video ref={(el) => (videoRefs.current[index] = el)} src={vid.src}
-                  className="w-full h-[300px] object-cover transition duration-500"
-                  muted={activeIndex !== index} loop preload="metadata" controls={activeIndex === index} />
-                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ boxShadow: "inset 0 0 0 2px rgba(200,164,93,0.7)" }} />
-                {activeIndex !== index && (
-                  <>
-                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition"></div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="bg-white/80 text-black rounded-full px-4 py-2 text-sm font-semibold">▶ click to play</div>
-                    </div>
-                  </>
-                )}
-              </div>
+            {videos.map((vid) => (
+              <YouTubeVideoCard key={vid.id} videoId={vid.video_id} />
             ))}
           </div>
         )}

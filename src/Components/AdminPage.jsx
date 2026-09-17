@@ -6,7 +6,9 @@ import {
   Film, Camera, ChevronRight, CloudUpload, Mail, MailOpen, Phone, User,
   ChevronDown, Star, ThumbsUp, ThumbsDown, RotateCcw,
 } from "lucide-react";
-import { supabase, BUCKETS } from "../supabase";
+import { supabase, BUCKETS, YOUTUBE_TABLE } from "../supabase";
+import { getYouTubeId, getYouTubeThumbnail, getYouTubeWatchUrl } from "../utility/youtube";
+import { Link2, Youtube } from "lucide-react";
 
 // ── Toast ────────────────────────────────────────────────────────────────────
 function Toast({ toasts }) {
@@ -68,12 +70,17 @@ function MediaCard({ item, onDelete, onPreview }) {
   return (
     <div className="group relative rounded-2xl overflow-hidden bg-white/10 backdrop-blur-xl border border-white/20 hover:border-[#C8A45D]/50 transition-all duration-300 shadow-lg">
       <div className="aspect-square relative">
-        {item.type === "photo"
+        {item.type === "photo" || item.type === "youtube"
           ? <img src={item.url} alt={item.name} className="w-full h-full object-cover" />
           : <div className="w-full h-full bg-black/40 flex flex-col items-center justify-center gap-2">
             <Film size={32} className="text-[#C8A45D]" />
             <span className="text-white/50 text-xs px-2 text-center truncate w-full">{item.name}</span>
           </div>}
+        {item.type === "youtube" && (
+          <div className="absolute top-2 left-2 flex items-center gap-1 bg-black/70 text-white text-[10px] font-semibold px-2 py-1 rounded-full">
+            <Youtube size={11} className="text-red-500" /> YouTube
+          </div>
+        )}
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3">
           <button onClick={() => onPreview(item)}
             className="w-9 h-9 rounded-full bg-[#C8A45D] flex items-center justify-center hover:bg-[#E0C27A] transition-colors">
@@ -104,8 +111,27 @@ function PreviewModal({ item, onClose }) {
         </button>
         {item.type === "photo"
           ? <img src={item.url} alt={item.name} className="w-full max-h-[80vh] object-contain rounded-2xl" />
+          : item.type === "youtube"
+          ? (
+            <div className="w-full aspect-video rounded-2xl overflow-hidden">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${item.videoId}?autoplay=1&rel=0`}
+                title={item.name}
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                frameBorder="0"
+              />
+            </div>
+          )
           : <video src={item.url} controls autoPlay className="w-full max-h-[80vh] rounded-2xl" />}
         <p className="text-white/60 text-sm text-center mt-3">{item.name}</p>
+        {item.type === "youtube" && (
+          <a href={getYouTubeWatchUrl(item.videoId)} target="_blank" rel="noopener noreferrer"
+            className="flex items-center justify-center gap-1.5 text-[#C8A45D] text-xs mt-1 hover:underline">
+            Watch on YouTube ↗
+          </a>
+        )}
       </div>
     </div>
   );
@@ -313,14 +339,99 @@ const VIDEO_CATEGORIES = [
   { id: "commercial-videos", label: "🎬 Commercial", bucket: "commercialVideos", type: "video" },
 ];
 
+// ── YouTube Link Form ───────────────────────────────────────────────────────
+// Replaces the file DropZone for every video category: the admin pastes a
+// YouTube link (any common URL shape), we extract the video ID client-side,
+// verify it looks valid, and save just the link + id — no file upload at all.
+function YouTubeLinkForm({ onAdd, adding }) {
+  const [value, setValue] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const id = getYouTubeId(value);
+    if (!id) {
+      setError("That doesn't look like a valid YouTube link.");
+      return;
+    }
+    setError("");
+    const ok = await onAdd(value.trim(), id);
+    if (ok) setValue("");
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="rounded-2xl border-2 border-dashed border-white/20 bg-white/5 p-6 space-y-3">
+      <div className="flex items-center gap-3">
+        <div className="w-12 h-12 shrink-0 rounded-full bg-[#C8A45D]/15 border border-[#C8A45D]/30 flex items-center justify-center">
+          <Youtube size={22} className="text-[#C8A45D]" />
+        </div>
+        <div>
+          <p className="text-white font-semibold text-sm">Add a YouTube video</p>
+          <p className="text-white/50 text-xs mt-0.5">Paste the video's YouTube link — no file upload needed.</p>
+        </div>
+      </div>
+      <div className="flex flex-col sm:flex-row gap-2">
+        <div className="relative flex-1">
+          <Link2 size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+          <input
+            type="url"
+            required
+            value={value}
+            onChange={(e) => { setValue(e.target.value); setError(""); }}
+            placeholder="https://www.youtube.com/watch?v=..."
+            disabled={adding}
+            className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-9 pr-3 text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[#C8A45D]/60 transition-colors disabled:opacity-60"
+          />
+        </div>
+        <button
+          type="submit"
+          disabled={adding}
+          className="flex items-center justify-center gap-2 bg-[#C8A45D] text-black font-semibold text-sm px-5 py-2.5 rounded-xl hover:bg-[#E0C27A] transition-colors disabled:opacity-60 whitespace-nowrap"
+        >
+          {adding
+            ? <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+            : <CloudUpload size={16} />}
+          {adding ? "Adding…" : "Add Link"}
+        </button>
+      </div>
+      {error && (
+        <p className="flex items-center gap-1.5 text-red-400 text-xs">
+          <AlertCircle size={13} /> {error}
+        </p>
+      )}
+    </form>
+  );
+}
+
 // ── Category Upload Section ───────────────────────────────────────────────────
 function CategorySection({ category, toast, uploading, setUploading }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [preview, setPreview] = useState(null);
+  const isYouTube = category.type === "video";
 
   useEffect(() => {
     async function load() {
+      if (isYouTube) {
+        const { data, error } = await supabase
+          .from(YOUTUBE_TABLE)
+          .select("*")
+          .eq("category", category.id)
+          .order("created_at", { ascending: false });
+        if (!error && data) {
+          setItems(data.map(row => ({
+            id: row.id,
+            name: row.youtube_url,
+            url: getYouTubeThumbnail(row.video_id),
+            videoId: row.video_id,
+            type: "youtube",
+            size: "",
+          })));
+        }
+        setLoading(false);
+        return;
+      }
+
       const bucketKey = category.bucket;
       const bucketName = BUCKETS[bucketKey];
       if (!bucketName) { setLoading(false); return; }
@@ -341,7 +452,7 @@ function CategorySection({ category, toast, uploading, setUploading }) {
       setLoading(false);
     }
     load();
-  }, [category]);
+  }, [category, isYouTube]);
 
   const handleUpload = async (files) => {
     setUploading(true);
@@ -363,7 +474,38 @@ function CategorySection({ category, toast, uploading, setUploading }) {
     setUploading(false);
   };
 
+  const handleAddYouTubeLink = async (youtubeUrl, videoId) => {
+    setUploading(true);
+    const { data, error } = await supabase
+      .from(YOUTUBE_TABLE)
+      .insert({ category: category.id, youtube_url: youtubeUrl, video_id: videoId })
+      .select()
+      .single();
+    setUploading(false);
+    if (error) {
+      toast("Failed to add YouTube link", "error");
+      return false;
+    }
+    setItems(p => [{
+      id: data.id,
+      name: data.youtube_url,
+      url: getYouTubeThumbnail(data.video_id),
+      videoId: data.video_id,
+      type: "youtube",
+      size: "",
+    }, ...p]);
+    toast("YouTube video added ▶");
+    return true;
+  };
+
   const handleDelete = async (item) => {
+    if (isYouTube) {
+      const { error } = await supabase.from(YOUTUBE_TABLE).delete().eq("id", item.id);
+      if (error) { toast("Delete failed", "error"); return; }
+      setItems(p => p.filter(x => x.id !== item.id));
+      toast("Video removed");
+      return;
+    }
     const { error } = await supabase.storage.from(BUCKETS[category.bucket]).remove([item.path]);
     if (error) { toast("Delete failed", "error"); return; }
     setItems(p => p.filter(x => x.id !== item.id));
@@ -381,17 +523,23 @@ function CategorySection({ category, toast, uploading, setUploading }) {
       <div>
         <h2 className="text-white text-2xl font-bold">{category.label}</h2>
         <p className="text-white/50 text-sm mt-1">
-          {items.length} file{items.length !== 1 ? "s" : ""} · saved to <span className="text-[#C8A45D]">{BUCKETS[category.bucket]}</span> bucket
+          {isYouTube
+            ? <>{items.length} video{items.length !== 1 ? "s" : ""} · YouTube links</>
+            : <>{items.length} file{items.length !== 1 ? "s" : ""} · saved to <span className="text-[#C8A45D]">{BUCKETS[category.bucket]}</span> bucket</>}
         </p>
       </div>
 
-      <DropZone
-        accept={accept}
-        label={category.type === "photo" ? "photos" : "videos"}
-        icon={icon}
-        onFiles={handleUpload}
-        uploading={uploading}
-      />
+      {isYouTube ? (
+        <YouTubeLinkForm onAdd={handleAddYouTubeLink} adding={uploading} />
+      ) : (
+        <DropZone
+          accept={accept}
+          label={category.type === "photo" ? "photos" : "videos"}
+          icon={icon}
+          onFiles={handleUpload}
+          uploading={uploading}
+        />
+      )}
 
       {loading ? (
         <div className="flex justify-center py-10">
@@ -455,15 +603,19 @@ export default function AdminPage() {
           });
         setPhotos(photoItems);
 
-        const { data: videoFiles, error: videoErr } = await supabase.storage
-          .from(BUCKETS.videos).list("", { limit: 200, sortBy: { column: "created_at", order: "desc" } });
+        // All video categories are now YouTube links (no file upload), stored
+        // in the youtube_videos table rather than a storage bucket.
+        const { data: youtubeRows, error: videoErr } = await supabase
+          .from(YOUTUBE_TABLE).select("*").order("created_at", { ascending: false });
         if (videoErr) throw videoErr;
-        const videoItems = (videoFiles || [])
-          .filter(f => f.name !== ".emptyFolderPlaceholder")
-          .map(f => {
-            const { data } = supabase.storage.from(BUCKETS.videos).getPublicUrl(f.name);
-            return { id: uid(), name: f.name, url: data.publicUrl, type: "video", size: fmtSize(f.metadata?.size || 0), path: f.name };
-          });
+        const videoItems = (youtubeRows || []).map(row => ({
+          id: row.id,
+          name: row.youtube_url,
+          url: getYouTubeThumbnail(row.video_id),
+          videoId: row.video_id,
+          type: "youtube",
+          size: "",
+        }));
         setVideos(videoItems);
 
         const { data: msgData, error: msgErr } = await supabase
@@ -504,11 +656,17 @@ export default function AdminPage() {
   }, [toast]);
 
   const deleteItem = useCallback(async (item) => {
-    const bucket = item.type === "photo" ? BUCKETS.photos : BUCKETS.videos;
+    if (item.type === "youtube") {
+      const { error } = await supabase.from(YOUTUBE_TABLE).delete().eq("id", item.id);
+      if (error) { toast("Delete failed", "error"); return; }
+      setVideos((v) => v.filter((x) => x.id !== item.id));
+      toast("Video removed");
+      return;
+    }
+    const bucket = BUCKETS.photos;
     const { error } = await supabase.storage.from(bucket).remove([item.path]);
     if (error) { toast("Delete failed", "error"); return; }
-    if (item.type === "photo") setPhotos((p) => p.filter((x) => x.id !== item.id));
-    else setVideos((v) => v.filter((x) => x.id !== item.id));
+    setPhotos((p) => p.filter((x) => x.id !== item.id));
     toast("Removed from cloud");
   }, [toast]);
 

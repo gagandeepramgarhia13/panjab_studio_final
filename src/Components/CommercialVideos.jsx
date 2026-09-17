@@ -1,30 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Maximize2, X, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { supabase, BUCKETS } from "../supabase";
+import { supabase, YOUTUBE_TABLE } from "../supabase";
 import SectionGlow from "./SectionGlow";
+import YouTubeVideoCard from "./YouTubeVideoCard";
 
 export default function CommercialVideos() {
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selected, setSelected] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchVideos() {
-            const { data, error } = await supabase.storage
-                .from(BUCKETS.commercialVideos)
-                .list("", { limit: 200, sortBy: { column: "created_at", order: "desc" } });
-
-            if (!error && data) {
-                const items = data
-                    .filter((f) => f.name !== ".emptyFolderPlaceholder")
-                    .map((f) => {
-                        const { data: urlData } = supabase.storage.from(BUCKETS.commercialVideos).getPublicUrl(f.name);
-                        return { src: urlData.publicUrl, name: f.name };
-                    });
-                setVideos(items);
-            }
+            const { data, error } = await supabase
+                .from(YOUTUBE_TABLE)
+                .select("*")
+                .eq("category", "commercial-videos")
+                .order("created_at", { ascending: false });
+            if (!error && data) setVideos(data);
             setLoading(false);
         }
         fetchVideos();
@@ -67,48 +60,17 @@ export default function CommercialVideos() {
                     </div>
                 ) : videos.length === 0 ? (
                     <div className="relative z-10 text-center py-24 text-white/30">
-                        <p className="text-lg">No videos uploaded yet.</p>
-                        <p className="text-sm mt-2">Upload to the <span className="text-[#C8A45D]">commercial-videos</span> bucket in Admin.</p>
+                        <p className="text-lg">No videos added yet.</p>
+                        <p className="text-sm mt-2">Add a YouTube link from the <span className="text-[#C8A45D]">Admin</span> panel.</p>
                     </div>
                 ) : (
                     <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {videos.map((vid, index) => (
-                            <div key={vid.src} className="relative overflow-hidden rounded-2xl group cursor-pointer transition-transform duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.35)]"
-                                onClick={() => setSelected(vid.src)}>
-                                <video
-                                    src={vid.src}
-                                    className="w-full h-auto block"
-                                    preload="metadata"
-                                    muted
-                                />
-                                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition pointer-events-none"></div>
-                                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ boxShadow: "inset 0 0 0 2px rgba(200,164,93,0.7)" }} />
-                                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                    <div className="bg-white/80 text-black rounded-full px-4 py-2 text-sm font-semibold">
-                                        ▶ click to play
-                                    </div>
-                                </div>
-                                <button onClick={(e) => { e.stopPropagation(); setSelected(vid.src); }}
-                                    className="absolute bottom-3 right-3 z-20 flex items-center gap-2 bg-white/90 text-black text-sm font-semibold px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition hover:bg-white">
-                                    <Maximize2 size={15} /> View
-                                </button>
-                            </div>
+                        {videos.map((vid) => (
+                            <YouTubeVideoCard key={vid.id} videoId={vid.video_id} />
                         ))}
                     </div>
                 )}
             </div>
-
-            {/* Video Lightbox */}
-            {selected && (
-                <div className="fixed inset-0 bg-black/90 z-[99999] flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setSelected(null)}>
-                    <div className="relative max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
-                        <button onClick={() => setSelected(null)} className="absolute -top-10 right-0 text-white/60 hover:text-white transition-colors z-[100000]">
-                            <X size={24} />
-                        </button>
-                        <video src={selected} controls autoPlay className="w-full max-h-[85vh] object-contain rounded-xl mx-auto" />
-                    </div>
-                </div>
-            )}
         </section>
     );
 }
