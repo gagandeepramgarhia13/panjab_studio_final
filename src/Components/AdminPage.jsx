@@ -8,7 +8,18 @@ import {
 } from "lucide-react";
 import { supabase, BUCKETS, YOUTUBE_TABLE } from "../supabase";
 import { getYouTubeId, getYouTubeThumbnail, getYouTubeWatchUrl } from "../utility/youtube";
-import { Link2, Youtube } from "lucide-react";
+import { Link2 } from "lucide-react";
+
+// lucide-react@1.7.0 (the version pinned in this project) doesn't export a
+// "Youtube" icon, so the badge/icon uses a small inline SVG glyph instead of
+// a lucide import — avoids depending on an icon this package version lacks.
+function YouTubeGlyph({ size = 16, className = "" }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} className={className} fill="currentColor">
+      <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4L15.8 12Z" />
+    </svg>
+  );
+}
 
 // ── Toast ────────────────────────────────────────────────────────────────────
 function Toast({ toasts }) {
@@ -78,7 +89,7 @@ function MediaCard({ item, onDelete, onPreview }) {
           </div>}
         {item.type === "youtube" && (
           <div className="absolute top-2 left-2 flex items-center gap-1 bg-black/70 text-white text-[10px] font-semibold px-2 py-1 rounded-full">
-            <Youtube size={11} className="text-red-500" /> YouTube
+            <YouTubeGlyph size={11} className="text-red-500" /> YouTube
           </div>
         )}
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3">
@@ -363,7 +374,7 @@ function YouTubeLinkForm({ onAdd, adding }) {
     <form onSubmit={handleSubmit} className="rounded-2xl border-2 border-dashed border-white/20 bg-white/5 p-6 space-y-3">
       <div className="flex items-center gap-3">
         <div className="w-12 h-12 shrink-0 rounded-full bg-[#C8A45D]/15 border border-[#C8A45D]/30 flex items-center justify-center">
-          <Youtube size={22} className="text-[#C8A45D]" />
+          <YouTubeGlyph size={22} className="text-[#C8A45D]" />
         </div>
         <div>
           <p className="text-white font-semibold text-sm">Add a YouTube video</p>
