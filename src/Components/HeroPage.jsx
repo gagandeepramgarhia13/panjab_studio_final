@@ -17,13 +17,15 @@ const Hero = () => {
   // CTA rendering blurred and faded on page load before any scrolling).
   const [heroRef, exit] = useTopExitProgress(); // 0 at top → 1 once scrolled past the hero's own height
 
-  const videoScale = 1 + exit * 0.18;
-  const videoY = exit * 40;
-  const headingY = -exit * 70;
-  const headingZ = -exit * 160;
-  const headingBlur = exit * 3.5;
-  const headingOpacity = Math.max(0, 1 - exit * 1.3);
-  const ctaY = -exit * 34;
+  // Kept deliberately simple/smooth: plain opacity + a small vertical drift,
+  // no blur and no Z-depth/rotation — those were the ones causing a jerky,
+  // "jumping" feel on scroll. Opacity fades out well before full scroll
+  // (×1.6) so the text is fully gone before it would otherwise look stuck.
+  const videoScale = 1 + exit * 0.12;
+  const videoY = exit * 30;
+  const headingY = -exit * 40;
+  const headingOpacity = Math.max(0, 1 - exit * 1.6);
+  const ctaY = -exit * 20;
 
   return (
     // NOTE: `perspective` (scroll-3d-scene) is applied to this INNER wrapper
@@ -79,8 +81,7 @@ const Hero = () => {
             data-aos-duration="900"
             className="depth-el-scroll text-3d-gold text-3xl md:text-5xl font-serif mb-6 leading-tight"
             style={{
-              transform: `translate3d(0, ${headingY}px, ${headingZ}px)`,
-              filter: headingBlur > 0.2 ? `blur(${headingBlur}px)` : "none",
+              transform: `translate3d(0, ${headingY}px, 0)`,
               opacity: headingOpacity,
             }}
           >

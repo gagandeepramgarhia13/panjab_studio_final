@@ -149,13 +149,16 @@ body * {
   will-change: transform;
 }
 
-/* For elements whose transform/opacity/filter is driven CONTINUOUSLY by
-   scroll position every frame (e.g. the Hero exit effect) rather than a
-   one-shot reveal-on-enter — no CSS transition here, or the transition
-   fights the rAF-driven inline-style updates and produces a laggy,
-   rubber-banding feel instead of tracking scroll 1:1. */
+/* For elements whose transform/opacity is driven CONTINUOUSLY by scroll
+   position every frame (e.g. the Hero exit effect) rather than a one-shot
+   reveal-on-enter. A very short linear transition (roughly one animation
+   frame) smooths out the raw per-scroll-event value jumps into a fluid
+   motion, without the longer eased transition (used by .depth-el) that
+   was fighting the rAF-driven updates and causing a laggy/rubber-banding
+   "jerk" feel. */
 .depth-el-scroll {
-  will-change: transform, opacity, filter;
+  transition: transform 0.12s linear, opacity 0.12s linear;
+  will-change: transform, opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {
