@@ -55,7 +55,7 @@ export default function TiltCard({ children, className = "", max = 6, glare = tr
       ref={wrapRef}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
-      className={`relative will-change-transform transition-transform duration-300 ease-out [transform-style:preserve-3d] ${className}`}
+      className={`relative pointer-events-auto will-change-transform transition-transform duration-300 ease-out [transform-style:preserve-3d] ${className}`}
       {...rest}
     >
       {glare && (

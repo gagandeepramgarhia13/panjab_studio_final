@@ -131,8 +131,18 @@ body * {
    move through; `.depth-el` is the base transition for anything animated by
    useDepthReveal, so each component only sets the *target* transform/style
    inline (computed from scroll progress) and the easing/timing lives here,
-   once. transform + opacity + filter only — GPU-friendly, never triggers
-   layout. Respects prefers-reduced-motion globally as a hard cutoff. */
+   once. transform + opacity ONLY — deliberately no `filter` — both stay on
+   the compositor thread (cheap, GPU-only, never repaints or triggers
+   layout), which is also what keeps clicks/taps responsive on a card while
+   it is still mid-animation: a `filter` (blur) recomputed every scroll
+   frame forces a full repaint each time, and that repaint cost is what was
+   delaying hit-testing until the animation settled. Respects
+   prefers-reduced-motion globally as a hard cutoff.
+
+   Every element carrying this class is meant to stay interactive at every
+   point in its animation — cards/buttons never go pointer-events: none
+   here. Only purely decorative layers (SectionGlow, HomeAmbientBackground,
+   TiltCard's glare) opt out of pointer events, and they do so explicitly. */
 .scroll-3d-scene {
   perspective: 1400px;
   transform-style: preserve-3d;
@@ -140,9 +150,9 @@ body * {
 
 .depth-el {
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.45s ease,
-    filter 0.45s ease;
+    opacity 0.45s ease;
   will-change: transform, opacity;
+  pointer-events: auto;
 }
 
 .parallax-el {
@@ -159,6 +169,7 @@ body * {
 .depth-el-scroll {
   transition: transform 0.12s linear, opacity 0.12s linear;
   will-change: transform, opacity;
+  pointer-events: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {

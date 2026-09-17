@@ -196,11 +196,21 @@ export function useParallax(speed = 0.3, { max = 120 } = {}) {
 
 /**
  * useDepthReveal — a "comes forward from depth" entrance: starts pushed
- * back in Z with a slight rotation/blur/scale-down, and eases to its
- * resting transform as it crosses into view. Unlike a one-shot fade, the
- * transform is driven by the same continuous scroll progress used
- * elsewhere, so it keeps a subtle relationship with scroll position after
- * the initial reveal instead of just switching a class once.
+ * back in Z with a slight rotation/scale-down, and eases to its resting
+ * transform as it crosses into view. Unlike a one-shot fade, the transform
+ * is driven by the same continuous scroll progress used elsewhere, so it
+ * keeps a subtle relationship with scroll position after the initial
+ * reveal instead of just switching a class once.
+ *
+ * Deliberately transform/opacity ONLY — no `filter`. `transform` and
+ * `opacity` are the two CSS properties browsers can animate purely on the
+ * compositor thread; `filter` (blur in particular) forces a full repaint
+ * on every single frame it changes. Recomputing a blur value on every
+ * scroll tick was expensive enough to visibly delay hit-testing/click
+ * handling on cards mid-animation (you'd scroll, the card looked right,
+ * but a click didn't register until the animation — and the blur repaint
+ * cost — had settled). Dropping the blur removes both the unwanted visual
+ * effect and that interaction lag, while every other 3D transform stays.
  *
  * `depth`: 0 (subtle — body text/buttons) to 1 (strong — hero/major art).
  */
@@ -237,12 +247,10 @@ export function useDepthReveal({ depth = 0.6, delay = 0 } = {}) {
       const translateY = 46 * effectiveDepth * (1 - eased);
       const rotateX = 10 * effectiveDepth * (1 - eased);
       const scale = 1 - 0.08 * effectiveDepth * (1 - eased);
-      const blur = 6 * effectiveDepth * (1 - eased);
       const opacity = 0.15 + 0.85 * eased;
 
       setStyle({
         opacity,
-        filter: blur > 0.3 ? `blur(${blur.toFixed(1)}px)` : "none",
         transform: `translate3d(0, ${translateY.toFixed(1)}px, ${translateZ.toFixed(1)}px) rotateX(${rotateX.toFixed(1)}deg) scale3d(${scale.toFixed(3)}, ${scale.toFixed(3)}, 1)`,
         transitionDelay: `${delay}ms`,
       });
