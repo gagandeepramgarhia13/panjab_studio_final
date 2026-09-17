@@ -35,7 +35,7 @@ export default function HomeOurTeam() {
   if (loading || members.length === 0) return null;
 
   return (
-    <section className="relative w-full overflow-hidden bg-[var(--surface)] py-14 sm:py-16 md:py-20 px-4 sm:px-6">
+    <section className="relative w-full overflow-hidden bg-[var(--background)] py-14 sm:py-16 md:py-20 px-4 sm:px-6">
       <SectionGlow variant="dark" />
       <div className="relative z-10 max-w-5xl mx-auto">
 

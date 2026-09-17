@@ -26,6 +26,10 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/20 to-black/60"></div>
       <div className="absolute inset-0 bg-black/35"></div>
 
+      {/* Soft fade into the page background so the hero blends seamlessly
+          into the section below instead of a hard seam/band. */}
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[var(--background)] pointer-events-none"></div>
+
       {/* FOLLOW US (DESKTOP) */}
       <div className="hidden lg:flex absolute left-5 top-1/2 -translate-y-1/2 z-20 flex-col items-center gap-2">
         <div className="bg-white/10 backdrop-blur-md border border-white/10 px-2 py-3 rounded-md flex flex-col items-center gap-3">

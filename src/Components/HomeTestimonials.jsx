@@ -6,7 +6,7 @@ import SectionGlow from "./SectionGlow";
 export default function HomeTestimonials() {
 
   return (
-    <section className="w-full py-20 bg-[var(--surface)] flex items-center justify-center text-center relative overflow-hidden">
+    <section className="w-full py-20 bg-[var(--background)] flex items-center justify-center text-center relative overflow-hidden">
 
       <SectionGlow variant="dark" />
 

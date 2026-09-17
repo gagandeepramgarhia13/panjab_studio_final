@@ -38,7 +38,7 @@ export default function HomeGallery() {
     }, []);
 
     return (
-        <section className="relative w-full overflow-hidden bg-[var(--surface)] bg-no-repeat bg-cover py-16 px-4">
+        <section className="relative w-full overflow-hidden bg-[var(--background)] bg-no-repeat bg-cover py-16 px-4">
             <SectionGlow variant="dark" />
             <div className="relative z-10">
 

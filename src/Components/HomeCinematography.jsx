@@ -7,7 +7,7 @@ export default function HomeCinematography() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative w-full overflow-hidden bg-[var(--surface)] py-14 sm:py-20 md:py-24 px-4 sm:px-6">
+    <section className="relative w-full overflow-hidden bg-[var(--background)] py-14 sm:py-20 md:py-24 px-4 sm:px-6">
       <SectionGlow variant="dark" />
       <div className="relative z-10 max-w-6xl mx-auto">
 

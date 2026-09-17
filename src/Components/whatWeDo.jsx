@@ -9,7 +9,7 @@ export default function WhatWeDo() {
     <section className="relative w-full overflow-hidden">
 
       {/* Background */}
-      <div className="absolute inset-0 bg-[var(--background-secondary)]"></div>
+      <div className="absolute inset-0 bg-[var(--background)]"></div>
       <SectionGlow variant="dark" />
 
       <div className="relative z-10">

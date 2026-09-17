@@ -4,7 +4,7 @@ export default function HomeCTA() {
   const phoneNumber = "+447873600056";
 
   return (
-    <section className="relative w-full py-16 sm:py-24 px-4 sm:px-6 bg-[var(--background-secondary)] overflow-hidden">
+    <section className="relative w-full py-16 sm:py-24 px-4 sm:px-6 bg-[var(--background)] overflow-hidden">
       <div
         className="absolute inset-0 opacity-25 bg-cover bg-center"
         style={{
