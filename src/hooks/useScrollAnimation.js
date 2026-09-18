@@ -195,22 +195,20 @@ export function useParallax(speed = 0.3, { max = 120 } = {}) {
 }
 
 /**
- * useDepthReveal — a "comes forward from depth" entrance: starts pushed
- * back in Z with a slight rotation/scale-down, and eases to its resting
- * transform as it crosses into view. Unlike a one-shot fade, the transform
- * is driven by the same continuous scroll progress used elsewhere, so it
- * keeps a subtle relationship with scroll position after the initial
- * reveal instead of just switching a class once.
+ * useDepthReveal — a simple, smooth "fade + slide up" entrance driven by
+ * scroll position (not a one-shot trigger), used across the Home page's
+ * cards/sections.
  *
- * Deliberately transform/opacity ONLY — no `filter`. `transform` and
- * `opacity` are the two CSS properties browsers can animate purely on the
- * compositor thread; `filter` (blur in particular) forces a full repaint
- * on every single frame it changes. Recomputing a blur value on every
- * scroll tick was expensive enough to visibly delay hit-testing/click
- * handling on cards mid-animation (you'd scroll, the card looked right,
- * but a click didn't register until the animation — and the blur repaint
- * cost — had settled). Dropping the blur removes both the unwanted visual
- * effect and that interaction lag, while every other 3D transform stays.
+ * Previously this also added rotateX + translateZ (a true 3D tilt, needing
+ * a `perspective` ancestor) to make elements look like they were "coming
+ * forward" out of depth. That combination — perspective + rotateX +
+ * translateZ, recomputed every scroll frame — is exactly the kind of
+ * transform that makes Chrome/Safari drop sub-pixel text/image
+ * anti-aliasing while it's mid-transform, which reads as a soft "blur"
+ * while scrolling even though no `filter` is involved. Removed per
+ * feedback that this looked blurry and should just be simple scrolling:
+ * now it's translateY + opacity only, both compositor-only and immune to
+ * that rendering artifact, so scrolling stays crisp the whole time.
  *
  * `depth`: 0 (subtle — body text/buttons) to 1 (strong — hero/major art).
  */
@@ -235,7 +233,7 @@ export function useDepthReveal({ depth = 0.6, delay = 0 } = {}) {
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight || 1;
       // Reveal window: element fully "arrived" once its top has crossed
-      // ~78% up the viewport; before that it's still coming forward.
+      // ~78% up the viewport; before that it's still sliding/fading in.
       const enterAt = vh * 0.92;
       const settledAt = vh * 0.35;
       let t = (enterAt - rect.top) / (enterAt - settledAt);
@@ -243,15 +241,12 @@ export function useDepthReveal({ depth = 0.6, delay = 0 } = {}) {
       // ease-out cubic
       const eased = 1 - Math.pow(1 - t, 3);
 
-      const translateZ = -140 * effectiveDepth * (1 - eased);
-      const translateY = 46 * effectiveDepth * (1 - eased);
-      const rotateX = 10 * effectiveDepth * (1 - eased);
-      const scale = 1 - 0.08 * effectiveDepth * (1 - eased);
+      const translateY = 32 * effectiveDepth * (1 - eased);
       const opacity = 0.15 + 0.85 * eased;
 
       setStyle({
         opacity,
-        transform: `translate3d(0, ${translateY.toFixed(1)}px, ${translateZ.toFixed(1)}px) rotateX(${rotateX.toFixed(1)}deg) scale3d(${scale.toFixed(3)}, ${scale.toFixed(3)}, 1)`,
+        transform: `translate3d(0, ${translateY.toFixed(1)}px, 0)`,
         transitionDelay: `${delay}ms`,
       });
     };
