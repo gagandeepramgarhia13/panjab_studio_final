@@ -12,10 +12,23 @@ import { useParallax, useDepthReveal } from "../hooks/useScrollAnimation";
 function GalleryItem({ img, index, onOpen }) {
   const [ref, style] = useDepthReveal({ depth: 0.4, delay: (index % 6) * 60 });
 
+  // Desktop (real cursor) keeps the explicit "View" button as the ONLY way
+  // to open a photo. Touch devices (no real hover) get the whole tile
+  // tappable, since there's no hover state to reveal the button on mobile.
+  const supportsHover = () =>
+    typeof window !== "undefined" &&
+    window.matchMedia &&
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  const handleTileClick = () => {
+    if (!supportsHover()) onOpen();
+  };
+
   return (
     <div
       ref={ref}
-      className="depth-el relative mb-4 overflow-hidden rounded-xl group break-inside-avoid transition-transform duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.35)]"
+      onClick={handleTileClick}
+      className="depth-el relative mb-4 overflow-hidden rounded-xl group break-inside-avoid transition-transform duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.35)] cursor-pointer md:cursor-default"
       style={style}
     >
       <img
@@ -26,8 +39,11 @@ function GalleryItem({ img, index, onOpen }) {
       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition pointer-events-none"></div>
       <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ boxShadow: "inset 0 0 0 2px rgba(200,164,93,0.7)" }} />
       <button
-        onClick={onOpen}
-        className="absolute bottom-3 right-3 z-20 flex items-center gap-2 bg-white/90 text-black text-sm font-semibold px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition hover:bg-white"
+        onClick={(e) => {
+          e.stopPropagation();
+          onOpen();
+        }}
+        className="absolute bottom-3 right-3 z-20 flex items-center gap-2 bg-white/90 text-black text-sm font-semibold px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition hover:bg-white md:opacity-0"
       >
         <Maximize2 size={15} />
         View
@@ -149,13 +165,20 @@ export default function Photography() {
           className="fixed inset-0 bg-black/90 z-[99999] flex items-center justify-center p-4 backdrop-blur-sm"
           onClick={() => setSelected(null)}
         >
+          {/* Pinned to the viewport corner (not the image wrapper), so it
+              stays visible and reachable no matter how tall/portrait the
+              photo is — previously it sat just above the image wrapper,
+              which could push it off-screen or too close to the navbar for
+              tall photos. A solid circular backdrop also keeps it visible
+              against light/bright photos. */}
+          <button
+            onClick={() => setSelected(null)}
+            aria-label="Close"
+            className="fixed top-4 right-4 md:top-6 md:right-6 z-[100000] flex items-center justify-center w-10 h-10 rounded-full bg-black/70 text-white ring-1 ring-white/20 backdrop-blur-sm hover:bg-black/90 transition-colors"
+          >
+            <X size={20} />
+          </button>
           <div className="relative max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
-            <button
-              onClick={() => setSelected(null)}
-              className="absolute -top-10 right-0 text-white/60 hover:text-white transition-colors z-[100000]"
-            >
-              <X size={24} />
-            </button>
             <img
               src={selected}
               alt="Full view"
